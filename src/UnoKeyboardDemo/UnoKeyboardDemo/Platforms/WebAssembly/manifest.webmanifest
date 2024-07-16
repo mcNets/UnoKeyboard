@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "UnoKeyboardDemo",
+  "display": "standalone",
+  "name": "UnoKeyboardDemo",
+  "short_name": "UnoKeyboardDemo",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}

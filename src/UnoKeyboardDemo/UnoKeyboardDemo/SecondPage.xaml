@@ -1,0 +1,70 @@
+﻿<Page x:Class="UnoKeyboardDemo.SecondPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:UnoKeyboardDemo"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:utu="using:Uno.Toolkit.UI"
+      xmlns:mck="using:UnoKeyboard"
+      xmlns:mckct="using:UnoKeyboard.Controls"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+  <StackPanel utu:SafeArea.Insets="VisibleBounds"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Spacing="20">
+
+    <TextBlock Text="UNO Keyboard Page 2"
+               Foreground="Violet"
+               FontSize="30"
+               HorizontalAlignment="Center" />
+
+    <StackPanel Orientation="Horizontal"
+                Spacing="10"
+                HorizontalAlignment="Center">
+
+      <TextBlock Text="Field 4:"
+                 VerticalAlignment="Center" />
+
+      <TextBox Width="200"
+               VerticalAlignment="Center" />
+
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal"
+                Spacing="10"
+                HorizontalAlignment="Center">
+
+      <TextBlock Text="Field 5:"
+                 VerticalAlignment="Center" />
+
+      <ComboBox Width="200"
+                HorizontalAlignment="Center"
+                SelectedIndex="1">
+        <ComboBoxItem Content="Item 1" />
+        <ComboBoxItem Content="Item 2" />
+        <ComboBoxItem Content="Item 3" />
+      </ComboBox>
+
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal"
+                Spacing="10"
+                HorizontalAlignment="Center">
+
+      <TextBlock Text="Field 6:"
+                 VerticalAlignment="Center" />
+
+      <TextBox Width="200"
+               VerticalAlignment="Center" />
+
+    </StackPanel>
+
+    <Button Content="Go to Main page."
+            HorizontalAlignment="Center"
+            Click="Button_Click" />
+
+  </StackPanel>
+
+</Page>

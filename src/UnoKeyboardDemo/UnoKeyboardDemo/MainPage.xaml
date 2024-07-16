@@ -1,0 +1,75 @@
+﻿<Page x:Class="UnoKeyboardDemo.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:UnoKeyboardDemo"
+      xmlns:utu="using:Uno.Toolkit.UI"
+      xmlns:mck="using:UnoKeyboard"
+      xmlns:mckct="using:UnoKeyboard.Controls"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+  <StackPanel utu:SafeArea.Insets="VisibleBounds"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Spacing="20">
+
+    <TextBlock Text="UNO Keyboard Page 1"
+               FontSize="30"
+               mck:McWindowEx.KeyboardType="Alphanumeric"
+               HorizontalAlignment="Center" />
+
+    <Button Content="Go to Page 2"
+            HorizontalAlignment="Center"
+            Click="Button_Click" />
+
+    <StackPanel Orientation="Horizontal"
+                Spacing="10"
+                HorizontalAlignment="Center">
+
+      <TextBlock Text="Field 1:"
+                 VerticalAlignment="Center" />
+
+      <TextBox Width="200"
+               VerticalAlignment="Center" />
+
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal"
+                Spacing="10"
+                HorizontalAlignment="Center">
+
+      <TextBlock Text="Field 2:"
+                 VerticalAlignment="Center" />
+
+      <ComboBox Width="200"
+                HorizontalAlignment="Center"
+                SelectedIndex="1">
+        <ComboBoxItem Content="Item 1" />
+        <ComboBoxItem Content="Item 2" />
+        <ComboBoxItem Content="Item 3" />
+      </ComboBox>
+
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal"
+                Spacing="10"
+                HorizontalAlignment="Center">
+
+      <TextBlock Text="Field 3:"
+                 VerticalAlignment="Center" />
+
+      <TextBox Width="200"
+               VerticalAlignment="Center" />
+
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal">
+
+      <mckct:KeyControl IsShiftActive="True" />
+
+      <mckct:KeyControl IsShiftActive="False" />
+
+    </StackPanel>
+
+  </StackPanel>
+
+</Page>
