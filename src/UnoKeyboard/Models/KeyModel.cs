@@ -1,3 +1,3 @@
 namespace UnoKeyboard.Models;
 
-public record KeyModel(KeyType Type, int Page, int Row, int Col, string UChar, string LChar, int UCode, int LCode);
+public record KeyModel(KeyType KeyType, int Page, int Row, int Col, double WithFactor, string UChar, string LChar, int UCode, int LCode);

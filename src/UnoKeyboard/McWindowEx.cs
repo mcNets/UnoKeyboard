@@ -16,11 +16,8 @@ public static class McWindowEx
     /// UIElements for the keyboard.
     /// </summary>
     /// <param name="window"></param>
-    public static void AddKeyboard(this Window window)
+    public static void AddKeyboard(this Window window, double height)
     {
-        //FocusManager.LosingFocus += OnLosingFocus2;
-        //FocusManager.GettingFocus += OnGettingFocus2;
-
         Grid mainGrid = new()
         {
             RowDefinitions =
@@ -41,8 +38,8 @@ public static class McWindowEx
         Grid.SetRow(scrollViewer, 0);
 
         // Row 1 = Keyboard
-        _keyboard.Height = 250;
         _keyboard.Visibility = Visibility.Collapsed;
+        _keyboard.Height = height;
         Grid.SetRow(_keyboard, 1);
 
         mainGrid.Children.Add(scrollViewer);

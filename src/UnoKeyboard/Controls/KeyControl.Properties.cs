@@ -1,4 +1,5 @@
-﻿using UnoKeyboard.Models;
+﻿using Microsoft.UI.Xaml.Documents;
+using UnoKeyboard.Models;
 
 namespace UnoKeyboard.Controls;
 
@@ -44,7 +45,21 @@ public sealed partial class KeyControl
     {
         if (d is KeyControl key && e.NewValue != null)
         {
-            key.KeyText = key.IsShiftActive ? char.ConvertFromUtf32(key.Key.UCode) : char.ConvertFromUtf32(key.Key.LCode);
+            switch(key.Key.KeyType)
+            {
+                case KeyType.Text:
+                    key.KeyText = key.IsShiftActive ? char.ConvertFromUtf32(key.Key.UCode) : char.ConvertFromUtf32(key.Key.LCode);
+                    break;
+
+                case KeyType.Space:
+                    key.KeyText = string.Empty;
+                    break;
+
+                case KeyType.Shift:
+                    key.Glyph = key.Key.UChar;
+                    break;
+            }
+        
         }
     }
 
@@ -63,4 +78,17 @@ public sealed partial class KeyControl
                                     typeof(string),
                                     typeof(KeyControl),
                                     new PropertyMetadata(string.Empty));
+
+    public string Glyph
+    {
+        get { return (string)GetValue(GlyphProperty); }
+        set { SetValue(GlyphProperty, value); }
+    }
+
+    public static readonly DependencyProperty GlyphProperty =
+        DependencyProperty.Register(nameof(Glyph), 
+                                    typeof(string), 
+                                    typeof(KeyControl), 
+                                    new PropertyMetadata(string.Empty));
+
 }

@@ -4,6 +4,8 @@ namespace UnoKeyboard.Controls;
 
 public sealed partial class KeyboardControl
 {
+    private int _currentPage = 0;
+
     /// <summary>
     /// KeyboardModel assigned to the control
     /// </summary>
@@ -28,7 +30,21 @@ public sealed partial class KeyboardControl
     {
         if (d is KeyboardControl key && e.NewValue != null)
         {
+            key.CurrentPage = 0;
             key.InvalidateKeyboard();
+        }
+    }
+
+    /// <summary>
+    /// Current page of the current keyboard
+    /// </summary>
+    public int CurrentPage 
+    { 
+        get => _currentPage;
+        set
+        {
+            _currentPage = value;
+            InvalidateKeyboard();
         }
     }
 }

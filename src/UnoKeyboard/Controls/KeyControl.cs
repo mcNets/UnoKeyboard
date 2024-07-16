@@ -9,14 +9,15 @@ public sealed partial class KeyControl : Control
     private Grid? _root;
     private Border? _border;
     private TextBlock? _keyText;
+    private FontIcon? _icon;
 
     public KeyControl()
     {
         DefaultStyleKey = typeof(KeyControl);
 
-        Key = new KeyModel(KeyType.Text, 0, 0, 0, "Q", "q", 0x0051, 0x0071);
+        Key = new KeyModel(KeyType.Text, 0, 0, 0, 1, "Q", "q", 0x0051, 0x0071);
         IsShiftActive = true;
-        IsTabStop = true;
+        //IsTabStop = true;
     }
 
     public event EventHandler<KeyEventArgs>? Click;
@@ -46,13 +47,36 @@ public sealed partial class KeyControl : Control
         _keyText = GetTemplateChild("PART_Text") as TextBlock;
         ArgumentNullException.ThrowIfNull(_keyText, nameof(_keyText));
 
-        var binding = new Binding()
+        var bindText = new Binding()
         {
             Source = this,
             Path = new PropertyPath("KeyText"),
             Mode = BindingMode.OneWay
         };
 
-        _keyText.SetBinding(TextBlock.TextProperty, binding);
+        _keyText.SetBinding(TextBlock.TextProperty, bindText);
+
+        _icon = GetTemplateChild("PART_Icon") as FontIcon;
+        ArgumentNullException.ThrowIfNull(_icon, nameof(_icon));
+
+        var bindIcon = new Binding()
+        {
+            Source = this,
+            Path = new PropertyPath("Glyph"),
+            Mode = BindingMode.OneWay
+        };
+
+        _icon.SetBinding(FontIcon.GlyphProperty, bindIcon);
+
+        if (Key.KeyType == KeyType.Text)
+        {
+            _keyText.Visibility = Visibility.Visible;
+            _icon.Visibility = Visibility.Collapsed;
+        }
+        else
+        {
+            _keyText.Visibility = Visibility.Collapsed;
+            _icon.Visibility = Visibility.Visible;
+        }
     }
 }
