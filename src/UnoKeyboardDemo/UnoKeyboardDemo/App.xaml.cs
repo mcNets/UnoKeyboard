@@ -25,14 +25,6 @@ public partial class App : Application
         MainWindow.EnableHotReload();
 #endif
 
-        // Adds UnoKeuboard to the Window
-        MainWindow.AddKeyboard();
-
-        if (RootFrame.Content == null)
-        {
-            RootFrame.Navigate(typeof(MainPage), args.Arguments);
-        }
-
         // Do not repeat app initialization when the Window already has content,
         // just ensure that the window is active
         //if (MainWindow.Content is not Frame rootFrame)
@@ -53,6 +45,15 @@ public partial class App : Application
         //    // parameter
         //    rootFrame.Navigate(typeof(MainPage), args.Arguments);
         //}
+
+        // Adds UnoKeyboard to the Window
+        MainWindow.AddKeyboard();
+
+        // Navigate using McWindowEx.RootFrame
+        if (RootFrame.Content == null)
+        {
+            RootFrame.Navigate(typeof(MainPage), args.Arguments);
+        }
 
         MainWindow.SetWindowIcon();
 

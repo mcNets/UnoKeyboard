@@ -1,15 +1,15 @@
+using UnoKeyboard.Models;
+
 namespace UnoKeyboard;
 
 public class KeyEventArgs : RoutedEventArgs
 {
-    public KeyEventArgs(string keyId, string keyText, bool isShiftActive)
+    public KeyEventArgs(KeyModel key, bool isShiftActive)
     {
-        KeyId = keyId;
-        KeyText = keyText;
+        Key = key;
         IsShiftActive = isShiftActive;
     }
 
-    public string KeyId { get; }
-    public string KeyText { get; }
+    public KeyModel Key { get; }
     public bool IsShiftActive { get; }
 }

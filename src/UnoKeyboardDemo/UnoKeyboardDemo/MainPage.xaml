@@ -62,13 +62,13 @@
 
     </StackPanel>
 
-    <StackPanel Orientation="Horizontal">
+    <!--<StackPanel Orientation="Horizontal">
 
       <mckct:KeyControl IsShiftActive="True" />
 
       <mckct:KeyControl IsShiftActive="False" />
 
-    </StackPanel>
+    </StackPanel>-->
 
   </StackPanel>
 

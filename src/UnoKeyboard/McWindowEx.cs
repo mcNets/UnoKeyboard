@@ -1,10 +1,11 @@
 using Microsoft.UI.Xaml.Input;
+using UnoKeyboard.Controls;
 
 namespace UnoKeyboard;
 
 public static class McWindowEx
 {
-    private static Border _keyboard = new();
+    private static KeyboardControl _keyboard = new();
 
     /// <summary>
     /// Once the keyboard is added to the window users should use RootFrame to navigate.
@@ -17,6 +18,9 @@ public static class McWindowEx
     /// <param name="window"></param>
     public static void AddKeyboard(this Window window)
     {
+        //FocusManager.LosingFocus += OnLosingFocus2;
+        //FocusManager.GettingFocus += OnGettingFocus2;
+
         Grid mainGrid = new()
         {
             RowDefinitions =
@@ -37,22 +41,41 @@ public static class McWindowEx
         Grid.SetRow(scrollViewer, 0);
 
         // Row 1 = Keyboard
-        _keyboard = new Border
-        {
-            Name = "MyKeyboard",
-            Background = new SolidColorBrush(Microsoft.UI.Colors.DarkGray),
-            Height = 300,
-            BorderThickness = new Thickness(5),
-            BorderBrush = new SolidColorBrush(Microsoft.UI.Colors.Violet),
-            Visibility = Visibility.Collapsed,
-            CornerRadius = new CornerRadius(5),
-        };
+        _keyboard.Height = 250;
+        _keyboard.Visibility = Visibility.Collapsed;
         Grid.SetRow(_keyboard, 1);
 
         mainGrid.Children.Add(scrollViewer);
         mainGrid.Children.Add(_keyboard);
 
         window.Content = mainGrid;
+    }
+
+    private static void OnGettingFocus2(object? sender, GettingFocusEventArgs args)
+    {
+        if (args.NewFocusedElement is TextBox textBox
+            && _keyboard != null
+            && _keyboard.Visibility == Visibility.Collapsed)
+        {
+            var kbrType = textBox.GetValue(KeyboardTypeProperty);
+
+            _keyboard.Visibility = Visibility.Visible;
+        }
+    }
+
+    private static void OnLosingFocus2(object? sender, LosingFocusEventArgs args)
+    {
+        if (args.NewFocusedElement is KeyboardControl || args.NewFocusedElement is KeyControl)
+        {
+            args.Cancel = true;
+            return;
+        }
+
+        if (_keyboard != null
+            && _keyboard.Visibility == Visibility.Visible)
+        {
+            _keyboard.Visibility = Visibility.Collapsed;
+        }
     }
 
     /// <summary>
@@ -62,6 +85,13 @@ public static class McWindowEx
     /// <param name="args"></param>
     private static void OnLosingFocus(UIElement sender, LosingFocusEventArgs args)
     {
+        if ((args.NewFocusedElement is null || args.NewFocusedElement is KeyControl) 
+            && args.OldFocusedElement is TextBox)
+        {
+            args.Cancel = true;
+            return;
+        }
+
         if (_keyboard != null
             && _keyboard.Visibility == Visibility.Visible)
         {
