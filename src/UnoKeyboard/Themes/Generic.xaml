@@ -6,7 +6,7 @@
     <ResourceDictionary Source="ms-appx:///UnoKeyboard/UnoKeyboard.xaml" />
   </ResourceDictionary.MergedDictionaries>-->
 
-	<Style TargetType="local:KeyControl">
+	<!--<Style TargetType="local:KeyControl2">
 		<Setter Property="Foreground"
 				Value="{ThemeResource TextFillColorPrimaryBrush}" />
 		<Setter Property="Background"
@@ -24,7 +24,7 @@
 			
 			<Setter.Value>
 				
-				<ControlTemplate TargetType="local:KeyControl">
+				<ControlTemplate TargetType="local:KeyControl2">
 
 					<Grid x:Name="PART_Root"
 						  Width="{TemplateBinding Width}"
@@ -47,14 +47,19 @@
 										   FontSize="{TemplateBinding FontSize}"
 										   HorizontalAlignment="Center"
 										   VerticalAlignment="Center" />
+								
+								<Viewbox Height="{Binding ElementName=PART_Text, Path=ActualHeight, Mode=OneWay}">
 
-								<FontIcon x:Name="PART_Icon"
-										  Glyph="{Binding KeyText, Mode=OneWay}"
-										  Foreground="{TemplateBinding Foreground}"
-										  FontFamily="{TemplateBinding FontFamily}"
-										  FontSize="{TemplateBinding FontSize}"
-										  HorizontalAlignment="Center"
-										  VerticalAlignment="Center" />
+									<Path x:Name="PART_Icon"
+											Data="{Binding Glyph, Mode=OneWay}"
+											Foreground="{TemplateBinding Foreground}"
+											Width="10"
+											Height="10"
+											HorizontalAlignment="Center"
+											VerticalAlignment="Center" />
+
+								</Viewbox>
+
 							</Grid>
 							
 						</Border>
@@ -67,6 +72,6 @@
 
 		</Setter>
 
-	</Style>
+	</Style>-->
 
 </ResourceDictionary>

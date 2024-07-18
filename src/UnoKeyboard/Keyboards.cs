@@ -13,8 +13,8 @@ public static class Keyboards
                     "en-alfa",
                     KeyboardType.Alphanumeric,
                     2,  // Pages
-                    4,  // Lines per page
-                    10, // Max keys per line
+                    4,  // Max. lines per page
+                    10, // Max. keys per line
                     [
                         new KeyModel(KeyType.Text, 0, 0, 0, 1, "Q", "q", 0x0051, 0x0071),
                         new KeyModel(KeyType.Text, 0, 0, 1, 1, "W", "w", 0x0057, 0x0077),
@@ -37,7 +37,7 @@ public static class Keyboards
                         new KeyModel(KeyType.Text, 0, 1, 7, 1, "K", "k", 0x004B, 0x006B),
                         new KeyModel(KeyType.Text, 0, 1, 8, 1, "L", "l", 0x004C, 0x006C),
 
-                        new KeyModel(KeyType.Shift, 0, 2, 0, 1, "\\uF0AD", "\\uF0AD", 0xF0AD, 0xF0AD),
+                        new KeyModel(KeyType.Shift, 0, 2, 0, 1, "", "",   0x0000, 0x0000),
                         new KeyModel(KeyType.Text,  0, 2, 1, 1, "Z", "s", 0x005A, 0x007A),
                         new KeyModel(KeyType.Text,  0, 2, 2, 1, "X", "s", 0x0058, 0x0078),
                         new KeyModel(KeyType.Text,  0, 2, 3, 1, "C", "s", 0x0043, 0x0063),

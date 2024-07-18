@@ -7,26 +7,35 @@ public sealed partial class KeyboardControl : Panel
     // Used to center every row of keys
     private List<double> _rowWidth = [];
 
+    // Padding between the keys and the border of the control
     private double _padding = 15;
 
     public KeyboardControl()
     {
-        Background = (Brush)Application.Current.Resources["SystemControlBackgroundBaseLowBrush"];
-        IsTabStop = true;
-
-        // By default, the control will use the first keyboard of the "en" language
+        ApplyThemedResources();
+        
+        // By default, the control will use the first keyboard of the dictionary
         Keyboard = Keyboards.Keyboard["en"][0];
-        CurrentPage = 0;
+        
+        ActualThemeChanged += (s,e) => { ApplyThemedResources(); };
+    }
+
+    private void ApplyThemedResources()
+    {
+        Background = (Brush)Application.Current.Resources["ControlSolidFillColorDefaultBrush"];
+        KeyBackground = (Brush)Application.Current.Resources["ControlFillColorDefaultBrush"];
+        KeyForeground = (Brush)Application.Current.Resources["TextFillColorPrimaryBrush"];
+        KeyBorderBrush = (Brush)Application.Current.Resources["ControlStrokeColorSecondaryBrush"];
     }
 
     protected override Size MeasureOverride(Size availableSize)
     {
-        double keyWidth = (availableSize.Width - (_padding * 2)) / Keyboard.NKeys;
-        double keyHeight = (availableSize.Height - (_padding * 2)) / Keyboard.NLines;
+        double keyWidth = (availableSize.Width - (_padding * 2)) / Keyboard.MaxKeys;
+        double keyHeight = (availableSize.Height - (_padding * 2)) / Keyboard.Lines;
 
         _rowWidth.Clear();
 
-        for (int i = 0; i < Keyboard.NLines; i++)
+        for (int i = 0; i < Keyboard.Lines; i++)
         {
             _rowWidth.Add(0);
         }
@@ -95,7 +104,7 @@ public sealed partial class KeyboardControl : Panel
     {
         for (int x = 0; x < Keyboard.Keys.Count; x++)
         {
-            Children.Add(new KeyControl() { Key = Keyboard.Keys[x] });
+            Children.Add(new KeyControl(this) { Key = Keyboard.Keys[x] });
         }
     }
 }

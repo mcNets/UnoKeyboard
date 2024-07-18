@@ -46,7 +46,7 @@ public partial class App : Application
         //    rootFrame.Navigate(typeof(MainPage), args.Arguments);
         //}
 
-        // Adds UnoKeyboard to the Window
+        // Add UnoKeyboard to the Window
         MainWindow.AddKeyboard(height: 200);
 
         // Navigate using McWindowEx.RootFrame

@@ -1,4 +1,6 @@
+using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
+using System.Runtime.CompilerServices;
 using UnoKeyboard.Controls;
 
 namespace UnoKeyboard;
@@ -6,6 +8,8 @@ namespace UnoKeyboard;
 public static class McWindowEx
 {
     private static KeyboardControl _keyboard = new();
+
+    public static KeyboardControl Keyboard => _keyboard;
 
     /// <summary>
     /// Once the keyboard is added to the window users should use RootFrame to navigate.
@@ -33,6 +37,7 @@ public static class McWindowEx
         ScrollViewer scrollViewer = new()
         {
             VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+            HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
             Content = RootFrame
         };
         Grid.SetRow(scrollViewer, 0);
@@ -46,33 +51,6 @@ public static class McWindowEx
         mainGrid.Children.Add(_keyboard);
 
         window.Content = mainGrid;
-    }
-
-    private static void OnGettingFocus2(object? sender, GettingFocusEventArgs args)
-    {
-        if (args.NewFocusedElement is TextBox textBox
-            && _keyboard != null
-            && _keyboard.Visibility == Visibility.Collapsed)
-        {
-            var kbrType = textBox.GetValue(KeyboardTypeProperty);
-
-            _keyboard.Visibility = Visibility.Visible;
-        }
-    }
-
-    private static void OnLosingFocus2(object? sender, LosingFocusEventArgs args)
-    {
-        if (args.NewFocusedElement is KeyboardControl || args.NewFocusedElement is KeyControl)
-        {
-            args.Cancel = true;
-            return;
-        }
-
-        if (_keyboard != null
-            && _keyboard.Visibility == Visibility.Visible)
-        {
-            _keyboard.Visibility = Visibility.Collapsed;
-        }
     }
 
     /// <summary>
