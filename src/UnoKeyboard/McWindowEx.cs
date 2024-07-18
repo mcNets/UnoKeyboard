@@ -1,6 +1,4 @@
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using System.Runtime.CompilerServices;
 using UnoKeyboard.Controls;
 
 namespace UnoKeyboard;
@@ -20,7 +18,7 @@ public static class McWindowEx
     /// UIElements for the keyboard.
     /// </summary>
     /// <param name="window"></param>
-    public static void AddKeyboard(this Window window, double height)
+    public static void AddKeyboard(this Window window, double height, FontFamily? fontFamily = null, double fontSize = 0)
     {
         Grid mainGrid = new()
         {
@@ -30,6 +28,8 @@ public static class McWindowEx
                 new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) }
             }
         };
+        //mainGrid.GettingFocus += _keyboard.OnGettingFocus;
+        //mainGrid.LosingFocus += _keyboard.OnLosingFocus;
         mainGrid.GettingFocus += OnGettingFocus;
         mainGrid.LosingFocus += OnLosingFocus;
 
@@ -45,6 +45,8 @@ public static class McWindowEx
         // Row 1 = Keyboard
         _keyboard.Visibility = Visibility.Collapsed;
         _keyboard.Height = height;
+        if (fontFamily != null) { _keyboard.KeyFontFamily = fontFamily; }
+        if (fontSize > 0) { _keyboard.KeyFontSize = fontSize; }
         Grid.SetRow(_keyboard, 1);
 
         mainGrid.Children.Add(scrollViewer);
@@ -60,7 +62,7 @@ public static class McWindowEx
     /// <param name="args"></param>
     private static void OnLosingFocus(UIElement sender, LosingFocusEventArgs args)
     {
-        if ((args.NewFocusedElement is null || args.NewFocusedElement is KeyControl) 
+        if ((args.NewFocusedElement is null || args.NewFocusedElement is KeyControl)
             && args.OldFocusedElement is TextBox)
         {
             args.Cancel = true;
@@ -82,14 +84,21 @@ public static class McWindowEx
     private static void OnGettingFocus(UIElement sender, GettingFocusEventArgs args)
     {
         if (args.NewFocusedElement is TextBox textBox
-            && _keyboard != null 
+            && _keyboard != null
             && _keyboard.Visibility == Visibility.Collapsed)
         {
             var kbrType = textBox.GetValue(KeyboardTypeProperty);
+            
+            _keyboard.CurrentTextBox = textBox;
+            if (string.IsNullOrEmpty(textBox.Text))
+            {
+                _keyboard.IsShiftActive = true;
+            }
 
             _keyboard.Visibility = Visibility.Visible;
         }
     }
+
 
     /// <summary>
     /// Represents the type of keyboard to be used.
@@ -98,7 +107,7 @@ public static class McWindowEx
         "KeyboardType",
         typeof(KeyboardType),
         typeof(McWindowEx),
-        new PropertyMetadata("Alfanumeric"));
+        new PropertyMetadata("None"));
 
     public static void SetKeyboardType(DependencyObject element, KeyboardType value)
     {

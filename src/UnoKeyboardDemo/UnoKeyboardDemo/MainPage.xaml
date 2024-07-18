@@ -30,7 +30,6 @@
 
     <TextBlock Text="UNO Keyboard Page 1"
                FontSize="30"
-               mck:McWindowEx.KeyboardType="Alphanumeric"
                HorizontalAlignment="Center" />
 
     <Button Content="Go to Page 2"
@@ -46,7 +45,8 @@
                  VerticalAlignment="Center" />
 
       <TextBox Width="200"
-               VerticalAlignment="Center" />
+               VerticalAlignment="Center"
+               mck:McWindowEx.KeyboardType="Alphanumeric" />
 
     </StackPanel>
 

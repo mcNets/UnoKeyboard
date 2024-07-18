@@ -48,14 +48,14 @@ public sealed partial class KeyboardControl
         }
     }
 
-    public bool IsShifActive
+    public bool IsShiftActive
     {
-        get { return (bool)GetValue(IsShifActiveProperty); }
-        set { SetValue(IsShifActiveProperty, value); }
+        get { return (bool)GetValue(IsShiftActiveProperty); }
+        set { SetValue(IsShiftActiveProperty, value); }
     }
 
-    public static readonly DependencyProperty IsShifActiveProperty =
-        DependencyProperty.Register(nameof(IsShifActive), 
+    public static readonly DependencyProperty IsShiftActiveProperty =
+        DependencyProperty.Register(nameof(IsShiftActive), 
                                     typeof(bool), 
                                     typeof(KeyboardControl), 
                                     new PropertyMetadata(false));
@@ -107,4 +107,28 @@ public sealed partial class KeyboardControl
                                     typeof(Thickness), 
                                     typeof(KeyboardControl), 
                                     new PropertyMetadata(new Thickness(1)));
+
+    public FontFamily KeyFontFamily
+    {
+        get { return (FontFamily)GetValue(KeyFontFamilyProperty); }
+        set { SetValue(KeyFontFamilyProperty, value); }
+    }
+
+    public static readonly DependencyProperty KeyFontFamilyProperty =
+        DependencyProperty.Register(nameof(KeyFontFamily),
+                                    typeof(FontFamily),
+                                    typeof(KeyboardControl),
+                                    new PropertyMetadata(new FontFamily("Segoe UI")));
+
+    public double KeyFontSize
+    {
+        get { return (double)GetValue(KeyFontSizeProperty); }
+        set { SetValue(KeyFontSizeProperty, value); }
+    }
+
+    public static readonly DependencyProperty KeyFontSizeProperty =
+        DependencyProperty.Register(nameof(KeyFontSize),
+                                    typeof(double),
+                                    typeof(KeyboardControl),
+                                    new PropertyMetadata(14.0));
 }

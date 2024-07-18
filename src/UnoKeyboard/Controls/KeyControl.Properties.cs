@@ -5,25 +5,6 @@ namespace UnoKeyboard.Controls;
 public sealed partial class KeyControl
 {
     /// <summary>
-    /// Read-only property that returns the current text of the key.
-    /// </summary>
-    //public string KeyText => IsShiftActive ? char.ConvertFromUtf32(Key.LCode) : char.ConvertFromUtf32(Key.UCode);
-
-
-
-    public string KeyText
-    {
-        get { return (string)GetValue(KeyTextProperty); }
-        set { SetValue(KeyTextProperty, value); }
-    }
-
-    // Using a DependencyProperty as the backing store for KeyText.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty KeyTextProperty =
-        DependencyProperty.Register("KeyText", typeof(string), typeof(KeyControl), new PropertyMetadata(string.Empty));
-
-
-
-    /// <summary>
     /// KeyModel assigned to the control
     /// </summary>
     public KeyModel Key
@@ -46,6 +27,21 @@ public sealed partial class KeyControl
             ctl.InvalidateKey();
         }
     }
+
+    /// <summary>
+    /// Value represented in the key
+    /// </summary>    
+    public string KeyText
+    {
+        get { return (string)GetValue(KeyTextProperty); }
+        set { SetValue(KeyTextProperty, value); }
+    }
+
+    public static readonly DependencyProperty KeyTextProperty =
+        DependencyProperty.Register(nameof(KeyText), 
+                                    typeof(string), 
+                                    typeof(KeyControl), 
+                                    new PropertyMetadata(string.Empty));
 
     /// <summary>
     /// IsShiftActive is a flag to indicate wheather use UCode or LCode of the KeyModel.
@@ -71,98 +67,7 @@ public sealed partial class KeyControl
                 return;
             }
 
-            if (ctl.ControlBorder.Child is TextBox textBox)
-            {
-                ctl.KeyText = ctl.IsShiftActive ? char.ConvertFromUtf32(ctl.Key.UCode) : char.ConvertFromUtf32(ctl.Key.LCode);
-                //textBox.Text = ctl.KeyText;
-            }
+            ctl.KeyText = ctl.IsShiftActive ? char.ConvertFromUtf32(ctl.Key.UCode) : char.ConvertFromUtf32(ctl.Key.LCode);
         }
     }
-
-    public Brush BorderBrush
-    {
-        get { return (Brush)GetValue(BorderBrushProperty); }
-        set { SetValue(BorderBrushProperty, value); }
-    }
-
-    public Brush Foreground
-    {
-        get { return (Brush)GetValue(ForegroundProperty); }
-        set { SetValue(ForegroundProperty, value); }
-    }
-
-    public static readonly DependencyProperty ForegroundProperty =
-        DependencyProperty.Register(nameof(Foreground), 
-                                    typeof(Brush), 
-                                    typeof(KeyControl), 
-                                    new PropertyMetadata(null));
-
-    public static readonly DependencyProperty BorderBrushProperty =
-        DependencyProperty.Register(nameof(BorderBrush), 
-                                    typeof(Brush), 
-                                    typeof(KeyControl), 
-                                    new PropertyMetadata(null));
-
-    public Thickness BorderThickness
-    {
-        get { return (Thickness)GetValue(BorderStrokeThickness); }
-        set { SetValue(BorderStrokeThickness, value); }
-    }
-
-    public static readonly DependencyProperty BorderStrokeThickness =
-        DependencyProperty.Register(nameof(BorderThickness), 
-                                    typeof(Thickness), 
-                                    typeof(KeyControl), 
-                                    new PropertyMetadata(new Thickness(0)));
-
-    public CornerRadius CornerRadius
-    {
-        get { return (CornerRadius)GetValue(CornerRadiusProperty); }
-        set { SetValue(CornerRadiusProperty, value); }
-    }
-
-    public static readonly DependencyProperty CornerRadiusProperty =
-        DependencyProperty.Register(nameof(CornerRadius), 
-                                    typeof(CornerRadius), 
-                                    typeof(KeyControl), 
-                                    new PropertyMetadata(new CornerRadius(5)));
-
-    public FontFamily FontFamily
-    {
-        get { return (FontFamily)GetValue(FontFamilyProperty); }
-        set { SetValue(FontFamilyProperty, value); }
-    }
-
-    public static readonly DependencyProperty FontFamilyProperty =
-        DependencyProperty.Register(nameof(FontFamily), 
-                                    typeof(FontFamily), 
-                                    typeof(KeyControl), 
-                                    new PropertyMetadata(new FontFamily("Segoe UI")));
-
-    public double FontSize
-    {
-        get { return (double)GetValue(FontSizeProperty); }
-        set { SetValue(FontSizeProperty, value); }
-    }
-
-    public static readonly DependencyProperty FontSizeProperty =
-        DependencyProperty.Register(nameof(FontSize), 
-                                    typeof(double), 
-                                    typeof(KeyControl), 
-                                    new PropertyMetadata(14.0));
-
-    public Brush KeyBackground
-    {
-        get { return (Brush)GetValue(KeyBackgroundProperty); }
-        set { SetValue(KeyBackgroundProperty, value); }
-    }
-
-    public static readonly DependencyProperty KeyBackgroundProperty =
-        DependencyProperty.Register(nameof(KeyBackground), 
-                                    typeof(Brush), 
-                                    typeof(KeyControl), 
-                                    new PropertyMetadata(null));
-
-
-
 }

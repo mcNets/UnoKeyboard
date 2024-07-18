@@ -1,3 +1,5 @@
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 using Windows.Foundation;
 
 namespace UnoKeyboard.Controls;
@@ -10,14 +12,25 @@ public sealed partial class KeyboardControl : Panel
     // Padding between the keys and the border of the control
     private double _padding = 15;
 
+    private TextBox? _currentTextBox;
+
+    public TextBox? CurrentTextBox
+    {
+        get { return _currentTextBox; }
+        set { _currentTextBox = value; }
+    }
+
     public KeyboardControl()
     {
+        Visibility = Visibility.Collapsed;
+        IsTabStop = true;
+
         ApplyThemedResources();
-        
+
         // By default, the control will use the first keyboard of the dictionary
         Keyboard = Keyboards.Keyboard["en"][0];
-        
-        ActualThemeChanged += (s,e) => { ApplyThemedResources(); };
+
+        ActualThemeChanged += (s, e) => { ApplyThemedResources(); };
     }
 
     private void ApplyThemedResources()
@@ -42,7 +55,7 @@ public sealed partial class KeyboardControl : Panel
 
         for (int i = 0; i < Children.Count; i++)
         {
-            if (Children[i] is KeyControl key )
+            if (Children[i] is KeyControl key)
             {
                 key.Width = keyWidth;
                 key.Height = keyHeight;
@@ -76,7 +89,17 @@ public sealed partial class KeyboardControl : Panel
     private void InvalidateKeyboard()
     {
         if (Keyboard == null)
-        { return; }
+        {
+            return;
+        }
+
+        if (Children.Count > 0)
+        {
+            for (int i = 0; i < Children.Count; i++)
+            {
+                ((KeyControl)Children[i]).KeyClicked -= OnKeyClicked;
+            }
+        }
 
         Children.Clear();
 
@@ -97,6 +120,8 @@ public sealed partial class KeyboardControl : Panel
 
     private void BuildNumericKeyboard()
     {
+        var kc = new KeyControl(this) { Key = Keyboard.Keys[0] };
+        kc.KeyClicked += OnKeyClicked;
         throw new NotImplementedException();
     }
 
@@ -104,7 +129,12 @@ public sealed partial class KeyboardControl : Panel
     {
         for (int x = 0; x < Keyboard.Keys.Count; x++)
         {
-            Children.Add(new KeyControl(this) { Key = Keyboard.Keys[x] });
+            var key = new KeyControl(this)
+            {
+                Key = Keyboard.Keys[x],
+            };
+            key.KeyClicked += OnKeyClicked;
+            Children.Add(key);
         }
     }
 }

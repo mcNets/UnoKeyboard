@@ -7,7 +7,8 @@ public enum KeyType
     Backspace,
     Enter,
     Shift,
-    Page,
+    Page1,
+    Page2,
     Left,
     Right,
 }

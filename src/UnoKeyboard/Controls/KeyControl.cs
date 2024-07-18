@@ -9,9 +9,12 @@ public sealed partial class KeyControl : Panel
     private Border ControlBorder { get; set; }
     private KeyboardControl Keyboard { get; set; }
 
+    public event EventHandler<KeyEventArgs>? KeyClicked;
+
     public KeyControl(KeyboardControl keyboard)
     {
         Keyboard = keyboard;
+        IsTabStop = true;
 
         Background = new SolidColorBrush(Colors.Transparent);
 
@@ -22,7 +25,7 @@ public sealed partial class KeyControl : Panel
                 Background = Keyboard.KeyBackground,
                 BorderBrush = Keyboard.KeyBorderBrush,
                 BorderThickness = Keyboard.KeyBorderThickness,
-                CornerRadius = this.CornerRadius,
+                CornerRadius = new CornerRadius(5),
             });
 
         // Binds ControlBorder.Background to Keyboard.KeyBackground
@@ -48,12 +51,24 @@ public sealed partial class KeyControl : Panel
             Path = new PropertyPath("KeyBorderThickness"),
             Mode = BindingMode.OneWay,
         });
+
+        // Binds IsShiftActive to the Keyboard.IsShiftActive
+        BindingOperations.SetBinding(this, KeyControl.IsShiftActiveProperty, new Binding()
+        {
+            Source = Keyboard,
+            Path = new PropertyPath("IsShiftActive"),
+            Mode = BindingMode.OneWay,
+        });
+
+        this.Tapped += (s, e) =>
+        {
+            Focus(FocusState.Programmatic);
+            KeyClicked?.Invoke(this, new KeyEventArgs(Key, IsShiftActive));
+        };
     }
 
     private void InvalidateKey()
     {
-        ControlBorder.Child = null;
-
         if (Key.KeyType == KeyType.Text)
         {
             SetContentText();
@@ -68,16 +83,18 @@ public sealed partial class KeyControl : Panel
 
     private void SetContentText()
     {
+        ControlBorder.Child = null;
+
         var tb = new TextBlock()
         {
             Foreground = Keyboard.KeyForeground,
-            FontFamily = this.FontFamily,
-            FontSize = this.FontSize,
+            FontFamily = Keyboard.KeyFontFamily,
+            FontSize = Keyboard.KeyFontSize,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        // binding tb.Text to KeyText
+        // Binds tb.Text to KeyText
         BindingOperations.SetBinding(tb, TextBlock.TextProperty, new Binding()
         {
             Source = this,
@@ -98,25 +115,45 @@ public sealed partial class KeyControl : Panel
 
     private void SetContentPath()
     {
-        // Measure the height of a text block with a single character to set the size of the path
-        var textBlock = new TextBlock
-        {
-            Text = "A",
-            FontFamily = this.FontFamily,
-            FontSize = this.FontSize,
-        };
+        ControlBorder.Child = null;
 
-        textBlock.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-        var textBlockHeight = textBlock.DesiredSize.Height;
+        PathGeometry pathGeometry = new();
+        double with = 10;
+        double height = 10;
+
+        switch (Key.KeyType)
+        {
+            case  KeyType.Shift:
+                with = 10;
+                height = 10;
+                pathGeometry = KeyPathGeometry.Shift;
+                break;
+
+            case KeyType.Backspace:
+                with = 10;
+                height = 16;
+                pathGeometry = KeyPathGeometry.Backspace;
+                break;
+
+            case KeyType.Enter:
+                with = 10;
+                height = 12;
+                pathGeometry = KeyPathGeometry.Enter;
+                break;
+
+            case KeyType.Space:
+                with = 10;
+                height = 10;
+                break;
+        }
 
         var path = new Microsoft.UI.Xaml.Shapes.Path()
         {
             Stroke = Keyboard.KeyForeground,
             StrokeThickness = 1,
-            Stretch = Stretch.Uniform,
-            Height = 10,
-            Width = 10,
-            Data = KeyPathGeometry.Shift,
+            Height = with,
+            Width = height,
+            Data = pathGeometry,
         };
 
         // Binds path.Stroke to Keyboard.KeyForeground
@@ -127,11 +164,30 @@ public sealed partial class KeyControl : Panel
             Mode = BindingMode.OneWay,
         });
 
+        var size = CalculateFontSize();
+
         ControlBorder.Child = new Viewbox()
         {
-            Height = textBlockHeight,
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            Height = size.Height,
+            Stretch = Stretch.Uniform,
             Child = path
         };
+    }
+
+    private Size CalculateFontSize()
+    {
+        // Measure the height of a text block with a single character to set the size of the path
+        var textBlock = new TextBlock
+        {
+            Text = IsShiftActive ? "A" : "a",
+            FontFamily = Keyboard.KeyFontFamily,
+            FontSize = Keyboard.KeyFontSize,
+        };
+
+        textBlock.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+        return textBlock.DesiredSize;
     }
 
     protected override Size MeasureOverride(Size availableSize)
@@ -146,10 +202,6 @@ public sealed partial class KeyControl : Panel
     {
         ControlBorder.Arrange(new Rect(0, 0, finalSize.Width, finalSize.Height));
         ControlBorder.Child?.Arrange(new Rect(0, 0, finalSize.Width, finalSize.Height));
-        if (ControlBorder.Child is Viewbox viewBox)
-        {
-            //viewBox.Child?.Arrange(new Rect(0, 0, finalSize.Width, finalSize.Height));
-        }
         return base.ArrangeOverride(finalSize);
     }
  
