@@ -17,7 +17,7 @@ public sealed partial class KeyboardControl
 
         if (Visibility == Visibility.Visible)
         {
-            _currentTextBox = null;
+            TextControl = null;
 
             Visibility = Visibility.Collapsed;
         }
@@ -28,14 +28,13 @@ public sealed partial class KeyboardControl
         if (args.NewFocusedElement is TextBox textBox
             && Visibility == Visibility.Collapsed)
         {
-            _currentTextBox = textBox;
+            TextControl = textBox;
 
             var kbrType = textBox.GetValue(McWindowEx.KeyboardTypeProperty);
             if (kbrType != null)
             {
 
             }
-
 
             Visibility = Visibility.Visible;
         }
@@ -45,38 +44,69 @@ public sealed partial class KeyboardControl
     {
         int index;
 
-        if (_currentTextBox == null)
+        if (TextControl == null || e.Key == null)
         {
             return;
         }
 
         switch (e.Key.KeyType )
         {
+            case KeyType.Left:
+                index = TextControl.SelectionStart;
+                if (index > 0)
+                {
+                    TextControl.SelectionStart = index - 1;
+                    TextControl.SelectionLength = 0;
+                }
+                break;
+
+            case KeyType.Right:
+                index = TextControl.SelectionStart;
+                if (index < TextControl.Text.Length)
+                {
+                    TextControl.SelectionStart = index + 1;
+                    TextControl.SelectionLength = 0;
+                }
+                break;
+
             case KeyType.Shift:
                 IsShiftActive = !IsShiftActive;
                 break;
 
             case KeyType.Backspace:
-                index = _currentTextBox.SelectionStart;
+                index = TextControl.SelectionStart;
                 if (index > 0)
                 {
-                    _currentTextBox.Text = _currentTextBox.Text.Remove(index - 1, 1);
-                    _currentTextBox.SelectionStart = index - 1;
+                    TextControl.Text = TextControl.Text.Remove(index - 1, 1);
+                    TextControl.SelectionStart = index - 1;
+                }
+                break;
+
+            case KeyType.NextPage:
+                if (Keyboard.Pages > CurrentPage + 1)
+                {
+                    CurrentPage++;
+                }
+                break;
+
+            case KeyType.PrevPage:
+                if (CurrentPage > 0)
+                {
+                    CurrentPage--;
                 }
                 break;
 
             case KeyType.Enter:
                 break;
 
-            case KeyType.Space:
-                _currentTextBox.Text += " ";
+            case KeyType.Text:
+                index = TextControl.SelectionStart;
+                TextControl.Text = TextControl.Text.Insert(index, IsShiftActive ? e.Key.UValue : e.Key.LValue);
+                TextControl.SelectionStart = index + 1; 
                 break;
 
             default:
-                index = _currentTextBox.SelectionStart;
-                _currentTextBox.Text = _currentTextBox.Text.Insert(index, IsShiftActive ? e.Key.UChar : e.Key.LChar);
-                _currentTextBox.SelectionStart = index + 1; 
-                break;
+                throw new NotImplementedException();
         }
         
     }

@@ -5,6 +5,7 @@
       xmlns:utu="using:Uno.Toolkit.UI"
       xmlns:mck="using:UnoKeyboard"
       xmlns:mckct="using:UnoKeyboard.Controls"
+      FontSize="40"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
   <StackPanel utu:SafeArea.Insets="VisibleBounds"
@@ -34,6 +35,8 @@
 
     <Button Content="Go to Page 2"
             HorizontalAlignment="Center"
+            FontSize="30"
+            Height="100"
             Click="Button_Click" />
 
     <StackPanel Orientation="Horizontal"
@@ -42,10 +45,12 @@
 
       <TextBlock x:Name="Field1"
                  Text="Field 1:"
+                 FontSize="30"
                  VerticalAlignment="Center" />
 
       <TextBox Width="200"
                VerticalAlignment="Center"
+               FontSize="30"
                mck:McWindowEx.KeyboardType="Alphanumeric" />
 
     </StackPanel>
@@ -55,10 +60,12 @@
                 HorizontalAlignment="Center">
 
       <TextBlock Text="Field 2:"
-                 VerticalAlignment="Center" />
+                 VerticalAlignment="Center"
+                 FontSize="30" />
 
       <ComboBox Width="200"
                 HorizontalAlignment="Center"
+                FontSize="30"
                 SelectedIndex="1">
         <ComboBoxItem Content="Item 1" />
         <ComboBoxItem Content="Item 2" />
@@ -72,9 +79,11 @@
                 HorizontalAlignment="Center">
 
       <TextBlock Text="Field 3:"
+                 FontSize="30"
                  VerticalAlignment="Center" />
 
       <TextBox Width="200"
+               FontSize="30"
                VerticalAlignment="Center" />
 
     </StackPanel>

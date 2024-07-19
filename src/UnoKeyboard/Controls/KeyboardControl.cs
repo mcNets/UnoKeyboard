@@ -9,28 +9,15 @@ public sealed partial class KeyboardControl : Panel
     // Used to center every row of keys
     private List<double> _rowWidth = [];
 
-    // Padding between the keys and the border of the control
-    private double _padding = 15;
-
-    private TextBox? _currentTextBox;
-
-    public TextBox? CurrentTextBox
-    {
-        get { return _currentTextBox; }
-        set { _currentTextBox = value; }
-    }
-
     public KeyboardControl()
     {
         Visibility = Visibility.Collapsed;
-        IsTabStop = true;
 
         ApplyThemedResources();
 
-        // By default, the control will use the first keyboard of the dictionary
-        Keyboard = Keyboards.Keyboard["en"][0];
-
         ActualThemeChanged += (s, e) => { ApplyThemedResources(); };
+
+        Keyboard = Keyboards.Keyboard["en-alfa"];
     }
 
     private void ApplyThemedResources()
@@ -39,15 +26,21 @@ public sealed partial class KeyboardControl : Panel
         KeyBackground = (Brush)Application.Current.Resources["ControlFillColorDefaultBrush"];
         KeyForeground = (Brush)Application.Current.Resources["TextFillColorPrimaryBrush"];
         KeyBorderBrush = (Brush)Application.Current.Resources["ControlStrokeColorSecondaryBrush"];
+        KeySpecialKeyBackground = (Brush)Application.Current.Resources["AccentFillColorTertiaryBrush"];
     }
 
     protected override Size MeasureOverride(Size availableSize)
     {
-        double keyWidth = (availableSize.Width - (_padding * 2)) / Keyboard.MaxKeys;
-        double keyHeight = (availableSize.Height - (_padding * 2)) / Keyboard.Lines;
+        if (Keyboard == null)
+        {
+            return base.MeasureOverride(availableSize);
+        }
 
+        double keyWidth = (availableSize.Width - (Padding * 2)) / Keyboard.MaxKeys;
+        double keyHeight = (availableSize.Height - (Padding * 2)) / Keyboard.Lines;
+
+        // Create and initialize the row width list
         _rowWidth.Clear();
-
         for (int i = 0; i < Keyboard.Lines; i++)
         {
             _rowWidth.Add(0);
@@ -57,12 +50,12 @@ public sealed partial class KeyboardControl : Panel
         {
             if (Children[i] is KeyControl key)
             {
-                key.Width = keyWidth;
+                key.Width = keyWidth * key.Key.WithFactor;
                 key.Height = keyHeight;
 
                 _rowWidth[key.Key.Row] += key.Width;
 
-                key.Measure(new Size(keyWidth, keyHeight));
+                key.Measure(new Size(key.Width, key.Height));
             }
         }
 
@@ -71,15 +64,39 @@ public sealed partial class KeyboardControl : Panel
 
     protected override Size ArrangeOverride(Size finalSize)
     {
-        double realWidth = finalSize.Width - (_padding * 2);
-
-        for (int i = 0; i < Children.Count; i++)
+        if (Keyboard == null || Children.Count == 0 )
         {
-            if (Children[i] is KeyControl key)
+            return base.ArrangeOverride(finalSize);
+        }
+
+        double innerWidth = finalSize.Width - (Padding * 2);
+
+        // get an ordered list of KeyControl children
+        var childs = Children
+                        .Where(c => c is KeyControl)
+                        .OrderBy(c => (c as KeyControl)?.Key.Row)
+                        .ThenBy(c => (c as KeyControl)?.Key.Col)
+                        .ToList();
+
+
+        double posX = 0;
+        double posY = Padding;
+
+        for (int i = 0; i < childs.Count; i++)
+        {
+            if (childs[i] is KeyControl key)
             {
-                double x = (key.Width * key.Key.Col) + _padding + ((realWidth - _rowWidth[key.Key.Row]) / 2.0);
-                double y = (key.Height * key.Key.Row) + _padding;
-                key.Arrange(new Rect(x, y, key.Width, key.Height));
+                if (key.Key.Col == 0)
+                {
+                    posX = Padding + ((innerWidth - _rowWidth[key.Key.Row]) / 2.0);
+                    posY = Padding + (key.Height * key.Key.Row);
+                }
+
+                // double x = (key.Width * key.Key.Col) + Padding + ((innerWidth - _rowWidth[key.Key.Row]) / 2.0);
+                // double y = (key.Height * key.Key.Row) + Padding;
+                // key.Arrange(new Rect(x, y, key.Width, key.Height));
+                key.Arrange(new Rect(posX, posY, key.Width, key.Height));
+                posX += key.Width;
             }
         }
 
@@ -93,48 +110,37 @@ public sealed partial class KeyboardControl : Panel
             return;
         }
 
+        // Unregister the event to avoid memory leaks
         if (Children.Count > 0)
         {
             for (int i = 0; i < Children.Count; i++)
             {
-                ((KeyControl)Children[i]).KeyClicked -= OnKeyClicked;
+                if (Children[i] is KeyControl key)
+                {
+                    key.KeyClicked -= OnKeyClicked;
+                }
             }
         }
 
         Children.Clear();
 
-        switch (Keyboard.Type)
-        {
-            case KeyboardType.Numeric:
-                BuildNumericKeyboard();
-                break;
+        var keys = Keyboard.Keys
+            .Where(k => k.Page == CurrentPage)
+            .OrderBy(k => k.Row)
+            .ThenBy(k => k.Col)
+            .ToList();
 
-            default:
-                BuildAlfanumericKeyboard();
-                break;
-        }
-
-        // Forces InvalidateMeasure and InvalidateArrange.
-        UpdateLayout();
-    }
-
-    private void BuildNumericKeyboard()
-    {
-        var kc = new KeyControl(this) { Key = Keyboard.Keys[0] };
-        kc.KeyClicked += OnKeyClicked;
-        throw new NotImplementedException();
-    }
-
-    private void BuildAlfanumericKeyboard()
-    {
-        for (int x = 0; x < Keyboard.Keys.Count; x++)
+        for (int x = 0; x < keys.Count; x++)
         {
             var key = new KeyControl(this)
             {
-                Key = Keyboard.Keys[x],
+                Key = keys[x],
             };
             key.KeyClicked += OnKeyClicked;
             Children.Add(key);
         }
+
+        // Forces InvalidateMeasure and InvalidateArrange.
+        UpdateLayout();
     }
 }

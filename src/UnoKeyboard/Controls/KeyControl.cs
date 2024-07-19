@@ -7,6 +7,7 @@ namespace UnoKeyboard.Controls;
 public sealed partial class KeyControl : Panel
 {
     private Border ControlBorder { get; set; }
+
     private KeyboardControl Keyboard { get; set; }
 
     public event EventHandler<KeyEventArgs>? KeyClicked;
@@ -14,19 +15,26 @@ public sealed partial class KeyControl : Panel
     public KeyControl(KeyboardControl keyboard)
     {
         Keyboard = keyboard;
-        IsTabStop = true;
 
         Background = new SolidColorBrush(Colors.Transparent);
 
         Children.Add(
             ControlBorder = new Border()
             {
-                Margin = new Thickness(2),
+                Margin = Keyboard.KeyMargin,
                 Background = Keyboard.KeyBackground,
                 BorderBrush = Keyboard.KeyBorderBrush,
                 BorderThickness = Keyboard.KeyBorderThickness,
                 CornerRadius = new CornerRadius(5),
             });
+
+        // Binds ControlBorder.Margin to Keyboard.KeyMargin
+        BindingOperations.SetBinding(ControlBorder, Border.MarginProperty, new Binding()
+        {
+            Source = Keyboard,
+            Path = new PropertyPath("KeyMargin"),
+            Mode = BindingMode.OneWay,
+        });
 
         // Binds ControlBorder.Background to Keyboard.KeyBackground
         BindingOperations.SetBinding(ControlBorder, Border.BackgroundProperty, new Binding()
@@ -73,6 +81,10 @@ public sealed partial class KeyControl : Panel
         {
             SetContentText();
         }
+        else if (Key.KeyType == KeyType.NextPage || Key.KeyType == KeyType.PrevPage)
+        {
+            SetContentText(Key.UChar);
+        }
         else
         {
             SetContentPath();
@@ -81,7 +93,7 @@ public sealed partial class KeyControl : Panel
         UpdateLayout();
     }
 
-    private void SetContentText()
+    private void SetContentText(string? text = null)
     {
         ControlBorder.Child = null;
 
@@ -94,13 +106,20 @@ public sealed partial class KeyControl : Panel
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        // Binds tb.Text to KeyText
-        BindingOperations.SetBinding(tb, TextBlock.TextProperty, new Binding()
+        if (Key.KeyType == KeyType.Text)
         {
-            Source = this,
-            Path = new PropertyPath("KeyText"),
-            Mode = BindingMode.OneWay,
-        });
+            // Binds tb.Text to KeyText
+            BindingOperations.SetBinding(tb, TextBlock.TextProperty, new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath("KeyText"),
+                Mode = BindingMode.OneWay,
+            });
+        }
+        else
+        {
+            tb.Text = text;
+        }
 
         // Binds tb.Foreground to Keyboard.KeyForeground
         BindingOperations.SetBinding(tb, TextBlock.ForegroundProperty, new Binding()
@@ -141,9 +160,16 @@ public sealed partial class KeyControl : Panel
                 pathGeometry = KeyPathGeometry.Enter;
                 break;
 
-            case KeyType.Space:
+            case KeyType.Left:
                 with = 10;
                 height = 10;
+                pathGeometry = KeyPathGeometry.Shift;
+                break;
+
+            case KeyType.Right:
+                with = 10;
+                height = 10;
+                pathGeometry = KeyPathGeometry.Shift;
                 break;
         }
 
@@ -164,7 +190,7 @@ public sealed partial class KeyControl : Panel
             Mode = BindingMode.OneWay,
         });
 
-        var size = CalculateFontSize();
+        var size =  CalculateFontSize();
 
         ControlBorder.Child = new Viewbox()
         {
@@ -184,6 +210,8 @@ public sealed partial class KeyControl : Panel
             Text = IsShiftActive ? "A" : "a",
             FontFamily = Keyboard.KeyFontFamily,
             FontSize = Keyboard.KeyFontSize,
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Center,
         };
 
         textBlock.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));

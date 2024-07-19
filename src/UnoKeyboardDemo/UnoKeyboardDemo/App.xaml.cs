@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 using Uno.Resizetizer;
+using Windows.UI.ViewManagement;
 
 namespace UnoKeyboardDemo;
 public partial class App : Application
@@ -47,7 +48,7 @@ public partial class App : Application
         //}
 
         // Add UnoKeyboard to the Window
-        MainWindow.AddKeyboard(height: 300);
+        MainWindow.AddKeyboard(height: 400);
 
         // Navigate using McWindowEx.RootFrame
         if (RootFrame.Content == null)
@@ -59,6 +60,11 @@ public partial class App : Application
 
         // Ensure the current window is active
         MainWindow.Activate();
+
+        if (Environment.OSVersion.Platform == PlatformID.Unix)
+        {
+            ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+        }
     }
 
     /// <summary>

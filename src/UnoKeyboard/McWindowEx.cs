@@ -89,7 +89,7 @@ public static class McWindowEx
         {
             var kbrType = textBox.GetValue(KeyboardTypeProperty);
             
-            _keyboard.CurrentTextBox = textBox;
+            _keyboard.TextControl = textBox;
             if (string.IsNullOrEmpty(textBox.Text))
             {
                 _keyboard.IsShiftActive = true;

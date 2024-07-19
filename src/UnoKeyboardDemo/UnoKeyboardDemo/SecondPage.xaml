@@ -7,6 +7,8 @@
       xmlns:utu="using:Uno.Toolkit.UI"
       xmlns:mck="using:UnoKeyboard"
       xmlns:mckct="using:UnoKeyboard.Controls"
+      FontSize="40"
+      
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -25,9 +27,11 @@
                 HorizontalAlignment="Center">
 
       <TextBlock Text="Field 4:"
+                 FontSize="30"
                  VerticalAlignment="Center" />
 
       <TextBox Width="200"
+               FontSize="30"
                VerticalAlignment="Center" />
 
     </StackPanel>
@@ -37,9 +41,11 @@
                 HorizontalAlignment="Center">
 
       <TextBlock Text="Field 5:"
+                 FontSize="30"
                  VerticalAlignment="Center" />
 
       <ComboBox Width="200"
+                FontSize="30"
                 HorizontalAlignment="Center"
                 SelectedIndex="1">
         <ComboBoxItem Content="Item 1" />
@@ -53,16 +59,20 @@
                 Spacing="10"
                 HorizontalAlignment="Center">
 
-      <TextBlock Text="Field 6:"
+      <TextBlock FontSize="30"
+                 Text="Field 6:"
                  VerticalAlignment="Center" />
 
-      <TextBox Width="200"
+      <TextBox FontSize="30"
+               Width="200"
                VerticalAlignment="Center" />
 
     </StackPanel>
 
     <Button Content="Go to Main page."
+            FontSize="30"
             HorizontalAlignment="Center"
+            Height="70"
             Click="Button_Click" />
 
   </StackPanel>
