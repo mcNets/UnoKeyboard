@@ -30,7 +30,7 @@ public sealed partial class KeyboardControl
         {
             TextControl = textBox;
 
-            var kbrType = textBox.GetValue(McWindowEx.KeyboardTypeProperty);
+            var kbrType = textBox.GetValue(McWindowEx.KeyboardIdProperty);
             if (kbrType != null)
             {
 
@@ -102,7 +102,15 @@ public sealed partial class KeyboardControl
             case KeyType.Text:
                 index = TextControl.SelectionStart;
                 TextControl.Text = TextControl.Text.Insert(index, IsShiftActive ? e.Key.UValue : e.Key.LValue);
-                TextControl.SelectionStart = index + 1; 
+                TextControl.SelectionStart = index + 1;
+                if (IsShiftActive)
+                {
+                    IsShiftActive = false;
+                }
+                if (e.Key.UChar == ".")
+                {
+                    IsShiftActive = true;
+                }
                 break;
 
             default:

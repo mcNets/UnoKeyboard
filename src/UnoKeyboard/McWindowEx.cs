@@ -3,6 +3,8 @@ using UnoKeyboard.Controls;
 
 namespace UnoKeyboard;
 
+using KeyboardId = System.String;
+
 public static class McWindowEx
 {
     private static KeyboardControl _keyboard = new();
@@ -87,7 +89,22 @@ public static class McWindowEx
             && _keyboard != null
             && _keyboard.Visibility == Visibility.Collapsed)
         {
-            var kbrType = textBox.GetValue(KeyboardTypeProperty);
+            var kbrType = textBox.GetValue(KeyboardIdProperty);
+
+            if (kbrType is string kbrId)
+            {
+                if (kbrId == "None")
+                {
+                    if (_keyboard.Keyboard.Id != Keyboards.Keyboard.First().Key) 
+                    {
+                        _keyboard.Keyboard = Keyboards.Keyboard.First().Value;
+                    }
+                }
+                else if (_keyboard.Keyboard.Id != kbrId)
+                {
+                    _keyboard.Keyboard = Keyboards.Keyboard[kbrId];
+                }
+            }
             
             _keyboard.TextControl = textBox;
             if (string.IsNullOrEmpty(textBox.Text))
@@ -103,19 +120,19 @@ public static class McWindowEx
     /// <summary>
     /// Represents the type of keyboard to be used.
     /// </summary>
-    public static readonly DependencyProperty KeyboardTypeProperty = DependencyProperty.RegisterAttached(
-        "KeyboardType",
-        typeof(KeyboardType),
+    public static readonly DependencyProperty KeyboardIdProperty = DependencyProperty.RegisterAttached(
+        nameof(KeyboardId),
+        typeof(string),
         typeof(McWindowEx),
         new PropertyMetadata("None"));
 
-    public static void SetKeyboardType(DependencyObject element, KeyboardType value)
+    public static void SetKeyboardType(DependencyObject element, string value)
     {
-        element.SetValue(KeyboardTypeProperty, value);
+        element.SetValue(KeyboardIdProperty, value);
     }
 
-    public static KeyboardType GetKeyboardType(DependencyObject element)
+    public static string GetKeyboardType(DependencyObject element)
     {
-        return (KeyboardType)element.GetValue(KeyboardTypeProperty);
+        return (string)element.GetValue(KeyboardIdProperty);
     }
 }

@@ -12,8 +12,9 @@ public static class Keyboards
                 "en-alfa",
                 KeyboardType.Alphanumeric,
                 2,  // Pages
-                5,  // Max. lines per page
+                5,  // Max. rows per page
                 10, // Max. keys per line
+                    // KeyModel(KeyType KeyType, int Page, int Row, int Col, double WithFactor, string UChar, string LChar, int UCode, int LCode)
                 [
                     new KeyModel(KeyType.Text, 0, 0, 0, 1, "1", "1", 0x0031, 0x0031),
                     new KeyModel(KeyType.Text, 0, 0, 1, 1, "2", "2", 0x0032, 0x0032),
@@ -105,10 +106,46 @@ public static class Keyboards
                     new KeyModel(KeyType.Text, 1, 3, 7, 1, "ª", "ª", 0x00AA, 0x00AA),
                     new KeyModel(KeyType.Text, 1, 3, 8, 1, "€", "€", 0x20AC, 0x20AC),
 
-                    new KeyModel(KeyType.PrevPage, 1, 4, 0, 2, "ABC", "ANC", 0x0002, 0x0002),
-                    new KeyModel(KeyType.Text,     1, 4, 1, 5, " ",   " ",   0x0020, 0x0020),
-                    new KeyModel(KeyType.Text,     1, 4, 2, 1, ",",   ",",   0x002C, 0x002C),
-                    new KeyModel(KeyType.Enter,    1, 4, 3, 2, "",    "",    0x0000, 0x0000),
+                    new KeyModel(KeyType.PrevPage, 1, 4, 0, 2, "ABC",   "ABC",   0x0002, 0x0002),
+                    new KeyModel(KeyType.Text,     1, 4, 1, 5, " ",     " ",     0x0020, 0x0020),
+                    new KeyModel(KeyType.Text,     1, 4, 2, 1, ",",     ",",     0x002C, 0x002C),
+                    new KeyModel(KeyType.Enter,    1, 4, 3, 2, "Enter", "Enter", 0x0000, 0x0000),
+                ]
+            )
+        },
+        {
+            "numeric",
+            new KeyboardModel(
+                "numeric",
+                KeyboardType.Numeric,
+                1,  // Pages
+                4,  // Max. rows per page
+                9,  // Max. keys per line
+                    // KeyModel(KeyType KeyType, int Page, int Row, int Col, double WithFactor, string UChar, string LChar, int UCode, int LCode)
+                [
+                    new KeyModel(KeyType.Text, 0, 0, 0, 1, "+", "+", 0x002B, 0x002B),
+                    new KeyModel(KeyType.Text, 0, 0, 1, 2, "1", "1", 0x0031, 0x0031),
+                    new KeyModel(KeyType.Text, 0, 0, 2, 2, "2", "2", 0x0032, 0x0032),
+                    new KeyModel(KeyType.Text, 0, 0, 3, 2, "3", "3", 0x0033, 0x0033),
+                    new KeyModel(KeyType.Text, 0, 0, 4, 1, "%", "%", 0x0025, 0x0025),
+                    
+                    new KeyModel(KeyType.Text, 0, 1, 0, 1, "-", "-", 0x002D, 0x002D),
+                    new KeyModel(KeyType.Text, 0, 1, 1, 2, "4", "4", 0x0034, 0x0034),
+                    new KeyModel(KeyType.Text, 0, 1, 2, 2, "5", "5", 0x0035, 0x0035),
+                    new KeyModel(KeyType.Text, 0, 1, 3, 2, "6", "6", 0x0036, 0x0036),
+                    new KeyModel(KeyType.Text, 0, 1, 4, 1, " ", " ", 0x0020, 0x0020),
+
+                    new KeyModel(KeyType.Text,      0, 2, 0, 1, "*", "*", 0x002A, 0x002A),
+                    new KeyModel(KeyType.Text,      0, 2, 1, 2, "7", "7", 0x0037, 0x0037),
+                    new KeyModel(KeyType.Text,      0, 2, 2, 2, "8", "8", 0x0038, 0x0038),
+                    new KeyModel(KeyType.Text,      0, 2, 3, 2, "9", "9", 0x0039, 0x0039),
+                    new KeyModel(KeyType.Backspace, 0, 2, 4, 1, "",  "",  0x0000, 0x0000),
+
+                    new KeyModel(KeyType.Text,  0, 3, 0, 1, "/",     "/",     0x002F, 0x002F),
+                    new KeyModel(KeyType.Text,  0, 3, 1, 2, ".",     ".",     0x002E, 0x002E),
+                    new KeyModel(KeyType.Text,  0, 3, 2, 2, "0",     "0",     0x0030, 0x0030),
+                    new KeyModel(KeyType.Text,  0, 3, 3, 2, ",",     ",",     0x002C, 0x002C),
+                    new KeyModel(KeyType.Enter, 0, 3, 4, 1, "Enter", "Enter", 0x0000, 0x0000),
                 ]
             )
         }
