@@ -61,10 +61,11 @@
 
       <TextBlock FontSize="30"
                  Text="Field 6:"
-                 VerticalAlignment="Center" />
+                 VerticalAlignment="Center"/>
 
       <TextBox FontSize="30"
                Width="200"
+               mck:McWindowEx.KeyboardType="numeric"
                VerticalAlignment="Center" />
 
     </StackPanel>

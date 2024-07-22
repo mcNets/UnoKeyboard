@@ -13,7 +13,8 @@ public sealed partial class KeyboardControl : Panel
 
         ActualThemeChanged += (s, e) => { ApplyThemedResources(); };
 
-        Keyboard = Keyboards.Keyboard["numeric"];
+        // By default it uses the first keyboard of the dictionary
+        Keyboard = Keyboards.Keyboard.FirstOrDefault().Value;
 
         Loaded += (s, e) => { ApplyThemedResources(); };
     }
@@ -34,10 +35,11 @@ public sealed partial class KeyboardControl : Panel
             return base.MeasureOverride(availableSize);
         }
 
+        // Calculates the width and height of each key
         double keyWidth = (availableSize.Width - (Padding * 2)) / Keyboard.MaxKeys;
         double keyHeight = (availableSize.Height - (Padding * 2)) / Keyboard.Rows;
 
-        // Create and initialize the row width list
+        // Creates and initialize the rowWidth list
         _rowWidth.Clear();
         for (int i = 0; i < Keyboard.Rows; i++)
         {
@@ -51,6 +53,7 @@ public sealed partial class KeyboardControl : Panel
                 key.Width = keyWidth * key.Key.WithFactor;
                 key.Height = keyHeight;
 
+                // Used in ArrangeOverride to center the keys.
                 _rowWidth[key.Key.Row] += key.Width;
 
                 key.Measure(new Size(key.Width, key.Height));
@@ -73,7 +76,6 @@ public sealed partial class KeyboardControl : Panel
                         .OrderBy(c => (c as KeyControl)?.Key.Row)
                         .ThenBy(c => (c as KeyControl)?.Key.Col)
                         .ToList();
-
 
         // Used to center the keys in the middle of the keyboard
         double innerWidth = finalSize.Width - (Padding * 2);

@@ -23,7 +23,7 @@ public sealed partial class KeyControl
     {
         if (d is KeyControl ctl && e.NewValue != null)
         {
-            ctl.KeyText = ctl.IsShiftActive ? ctl.Key.UValue : ctl.Key.LValue;
+            ctl.KeyText = ctl.IsShiftActive ? ctl.Key.VKey.UValue : ctl.Key.VKey.LValue;
             ctl.InvalidateKey();
         }
     }
@@ -62,12 +62,12 @@ public sealed partial class KeyControl
     {
         if (d is KeyControl ctl && e.NewValue != null)
         {
-            if (ctl.Key == null || ctl.Key.KeyType != KeyType.Text)
+            if (ctl.Key == null || ctl.Key.VKey.KType != KeyType.Text)
             {
                 return;
             }
 
-            ctl.KeyText = ctl.IsShiftActive ? char.ConvertFromUtf32(ctl.Key.UCode) : char.ConvertFromUtf32(ctl.Key.LCode);
+            ctl.KeyText = ctl.IsShiftActive ? ctl.Key.VKey.UValue : ctl.Key.VKey.LValue;
         }
     }
 }

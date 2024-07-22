@@ -107,11 +107,13 @@ public static class McWindowEx
             }
             
             _keyboard.TextControl = textBox;
+
             if (string.IsNullOrEmpty(textBox.Text))
             {
                 _keyboard.IsShiftActive = true;
             }
 
+            _keyboard.CurrentPage = 0;
             _keyboard.Visibility = Visibility.Visible;
         }
     }
