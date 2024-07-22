@@ -1,3 +1,4 @@
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Input;
 using UnoKeyboard.Controls;
 
@@ -16,12 +17,16 @@ public static class McWindowEx
     /// </summary>
     public static Frame RootFrame = new();
 
+    private static DispatcherQueue? _dispatcher;
+
     /// <summary>
     /// UIElements for the keyboard.
     /// </summary>
     /// <param name="window"></param>
     public static void AddKeyboard(this Window window, double height, FontFamily? fontFamily = null, double fontSize = 0)
     {
+        _dispatcher = window.DispatcherQueue;
+
         Grid mainGrid = new()
         {
             RowDefinitions =
@@ -73,7 +78,7 @@ public static class McWindowEx
         if (_keyboard != null
             && _keyboard.Visibility == Visibility.Visible)
         {
-            _keyboard.Visibility = Visibility.Collapsed;
+            _dispatcher?.TryEnqueue(() => _keyboard.Visibility = Visibility.Collapsed);
         }
     }
 
@@ -107,13 +112,16 @@ public static class McWindowEx
             
             _keyboard.TextControl = textBox;
 
-            if (string.IsNullOrEmpty(textBox.Text))
+            _dispatcher?.TryEnqueue(() =>
             {
-                _keyboard.IsShiftActive = true;
-            }
+                if (string.IsNullOrEmpty(textBox.Text))
+                {
+                    _keyboard.IsShiftActive = true;
+                }
 
-            _keyboard.CurrentPage = 0;
-            _keyboard.Visibility = Visibility.Visible;
+                _keyboard.CurrentPage = 0;
+                _keyboard.Visibility = Visibility.Visible;
+            });
         }
     }
 
