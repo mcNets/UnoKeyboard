@@ -1,5 +1,3 @@
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Windows.Foundation;
 
 namespace UnoKeyboard.Controls;
@@ -13,11 +11,12 @@ public sealed partial class KeyboardControl : Panel
     {
         Visibility = Visibility.Collapsed;
 
-        ApplyThemedResources();
-
         ActualThemeChanged += (s, e) => { ApplyThemedResources(); };
 
-        Keyboard = Keyboards.Keyboard["en-alfa"];
+        // By default it uses the first keyboard of the dictionary
+        Keyboard = Keyboards.Keyboard.FirstOrDefault().Value;
+
+        Loaded += (s, e) => { ApplyThemedResources(); };
     }
 
     private void ApplyThemedResources()
@@ -36,12 +35,13 @@ public sealed partial class KeyboardControl : Panel
             return base.MeasureOverride(availableSize);
         }
 
+        // Calculates the width and height of each key
         double keyWidth = (availableSize.Width - (Padding * 2)) / Keyboard.MaxKeys;
-        double keyHeight = (availableSize.Height - (Padding * 2)) / Keyboard.Lines;
+        double keyHeight = (availableSize.Height - (Padding * 2)) / Keyboard.Rows;
 
-        // Create and initialize the row width list
+        // Creates and initialize the rowWidth list
         _rowWidth.Clear();
-        for (int i = 0; i < Keyboard.Lines; i++)
+        for (int i = 0; i < Keyboard.Rows; i++)
         {
             _rowWidth.Add(0);
         }
@@ -53,6 +53,7 @@ public sealed partial class KeyboardControl : Panel
                 key.Width = keyWidth * key.Key.WithFactor;
                 key.Height = keyHeight;
 
+                // Used in ArrangeOverride to center the keys.
                 _rowWidth[key.Key.Row] += key.Width;
 
                 key.Measure(new Size(key.Width, key.Height));
@@ -69,15 +70,15 @@ public sealed partial class KeyboardControl : Panel
             return base.ArrangeOverride(finalSize);
         }
 
-        double innerWidth = finalSize.Width - (Padding * 2);
-
-        // get an ordered list of KeyControl children
+        // Get an ordered list of KeyControl children by row and column
         var childs = Children
                         .Where(c => c is KeyControl)
                         .OrderBy(c => (c as KeyControl)?.Key.Row)
                         .ThenBy(c => (c as KeyControl)?.Key.Col)
                         .ToList();
 
+        // Used to center the keys in the middle of the keyboard
+        double innerWidth = finalSize.Width - (Padding * 2);
 
         double posX = 0;
         double posY = Padding;
@@ -92,10 +93,8 @@ public sealed partial class KeyboardControl : Panel
                     posY = Padding + (key.Height * key.Key.Row);
                 }
 
-                // double x = (key.Width * key.Key.Col) + Padding + ((innerWidth - _rowWidth[key.Key.Row]) / 2.0);
-                // double y = (key.Height * key.Key.Row) + Padding;
-                // key.Arrange(new Rect(x, y, key.Width, key.Height));
                 key.Arrange(new Rect(posX, posY, key.Width, key.Height));
+
                 posX += key.Width;
             }
         }
@@ -110,7 +109,7 @@ public sealed partial class KeyboardControl : Panel
             return;
         }
 
-        // Unregister the event to avoid memory leaks
+        // Unregister the KeyClicked event of the previous keys
         if (Children.Count > 0)
         {
             for (int i = 0; i < Children.Count; i++)
@@ -124,19 +123,18 @@ public sealed partial class KeyboardControl : Panel
 
         Children.Clear();
 
+        // Get the keys for the current page order by row and column
         var keys = Keyboard.Keys
-            .Where(k => k.Page == CurrentPage)
-            .OrderBy(k => k.Row)
-            .ThenBy(k => k.Col)
-            .ToList();
+                    .Where(k => k.Page == CurrentPage)
+                    .OrderBy(k => k.Row)
+                    .ThenBy(k => k.Col)
+                    .ToList();
 
         for (int x = 0; x < keys.Count; x++)
         {
-            var key = new KeyControl(this)
-            {
-                Key = keys[x],
-            };
+            var key = new KeyControl(this) { Key = keys[x] };
             key.KeyClicked += OnKeyClicked;
+
             Children.Add(key);
         }
 

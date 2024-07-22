@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI;
 using Microsoft.UI.Xaml.Data;
+using UnoKeyboard.Models;
 using Windows.Foundation;
 
 namespace UnoKeyboard.Controls;
@@ -14,9 +15,11 @@ public sealed partial class KeyControl : Panel
 
     public KeyControl(KeyboardControl keyboard)
     {
-        Keyboard = keyboard;
-
         Background = new SolidColorBrush(Colors.Transparent);
+        VerticalAlignment = VerticalAlignment.Center;
+        HorizontalAlignment = HorizontalAlignment.Center;
+
+        Keyboard = keyboard;
 
         Children.Add(
             ControlBorder = new Border()
@@ -77,17 +80,18 @@ public sealed partial class KeyControl : Panel
 
     private void InvalidateKey()
     {
-        if (Key.KeyType == KeyType.Text)
+        if (Key.VKey.KType == KeyType.Text)
         {
             SetContentText();
         }
-        else if (Key.KeyType == KeyType.NextPage || Key.KeyType == KeyType.PrevPage)
+        else if (Key.VKey.KType == KeyType.Symbols 
+                || Key.VKey.KType == KeyType.Alfa)
         {
-            SetContentText(Key.UChar);
+            SetContentText(Key.VKey.UChar);
         }
         else
         {
-            SetContentPath();
+            SetContentPath(Key);
         }
 
         UpdateLayout();
@@ -106,7 +110,7 @@ public sealed partial class KeyControl : Panel
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        if (Key.KeyType == KeyType.Text)
+        if (Key.VKey.KType == KeyType.Text)
         {
             // Binds tb.Text to KeyText
             BindingOperations.SetBinding(tb, TextBlock.TextProperty, new Binding()
@@ -132,54 +136,17 @@ public sealed partial class KeyControl : Panel
         ControlBorder.Child = tb;
     }
 
-    private void SetContentPath()
+    private void SetContentPath(KeyModel key)
     {
         ControlBorder.Child = null;
-
-        PathGeometry pathGeometry = new();
-        double with = 10;
-        double height = 10;
-
-        switch (Key.KeyType)
-        {
-            case  KeyType.Shift:
-                with = 10;
-                height = 10;
-                pathGeometry = KeyPathGeometry.Shift;
-                break;
-
-            case KeyType.Backspace:
-                with = 10;
-                height = 16;
-                pathGeometry = KeyPathGeometry.Backspace;
-                break;
-
-            case KeyType.Enter:
-                with = 10;
-                height = 12;
-                pathGeometry = KeyPathGeometry.Enter;
-                break;
-
-            case KeyType.Left:
-                with = 10;
-                height = 10;
-                pathGeometry = KeyPathGeometry.Shift;
-                break;
-
-            case KeyType.Right:
-                with = 10;
-                height = 10;
-                pathGeometry = KeyPathGeometry.Shift;
-                break;
-        }
 
         var path = new Microsoft.UI.Xaml.Shapes.Path()
         {
             Stroke = Keyboard.KeyForeground,
             StrokeThickness = 1,
-            Height = with,
-            Width = height,
-            Data = pathGeometry,
+            Height = key.VKey.GeometryHeight,
+            Width = key.VKey.GeometryWidth,
+            Data = key.VKey.Geometry,
         };
 
         // Binds path.Stroke to Keyboard.KeyForeground
@@ -192,10 +159,9 @@ public sealed partial class KeyControl : Panel
 
         var size =  CalculateFontSize();
 
+        // Content resized by the Viewbox
         ControlBorder.Child = new Viewbox()
         {
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalAlignment = HorizontalAlignment.Center,
             Height = size.Height,
             Stretch = Stretch.Uniform,
             Child = path
@@ -204,7 +170,7 @@ public sealed partial class KeyControl : Panel
 
     private Size CalculateFontSize()
     {
-        // Measure the height of a text block with a single character to set the size of the path
+        // Measure the height of a TextBlock with a single character to set the size of the path
         var textBlock = new TextBlock
         {
             Text = IsShiftActive ? "A" : "a",

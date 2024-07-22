@@ -1,3 +1,7 @@
-namespace UnoKeyboard.Models;
+﻿namespace UnoKeyboard.Models;
 
-public record KeyboardModel(string Id, KeyboardType Type, int Pages, int Lines, int MaxKeys, List<KeyModel> Keys);
+public record KeyboardModel(string Id, 
+                            int Pages, 
+                            int Rows, 
+                            int MaxKeys, 
+                            List<KeyModel> Keys);

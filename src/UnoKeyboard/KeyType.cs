@@ -3,11 +3,12 @@
 public enum KeyType
 {
     Text,
-    Backspace,
+    Back,
     Enter,
     Shift,
-    NextPage,
-    PrevPage,
+    Symbols,
+    Alfa,
     Left,
     Right,
+    Space
 }
