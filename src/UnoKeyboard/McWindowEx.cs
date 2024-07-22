@@ -30,12 +30,8 @@ public static class McWindowEx
                 new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) }
             }
         };
-        //mainGrid.GettingFocus += _keyboard.OnGettingFocus;
-        //mainGrid.LosingFocus += _keyboard.OnLosingFocus;
-        mainGrid.GettingFocus += OnGettingFocus;
-        mainGrid.LosingFocus += OnLosingFocus;
 
-        // Row 0 = ScrollViewer warpping the original content.
+        // Row 0 = ScrollViewer warpping the RootFram.
         ScrollViewer scrollViewer = new()
         {
             VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
@@ -55,6 +51,9 @@ public static class McWindowEx
         mainGrid.Children.Add(_keyboard);
 
         window.Content = mainGrid;
+
+        mainGrid.GettingFocus += OnGettingFocus;
+        mainGrid.LosingFocus += OnLosingFocus;
     }
 
     /// <summary>

@@ -6,39 +6,39 @@ namespace UnoKeyboard.Controls;
 
 public sealed partial class KeyboardControl
 {
-    public void OnLosingFocus(UIElement sender, LosingFocusEventArgs args)
-    {
-        if ((args.NewFocusedElement is KeyControl)
-            && Visibility == Visibility.Visible)
-        {
-            args.Cancel = true;
-            return;
-        }
+    //public void OnLosingFocus(UIElement sender, LosingFocusEventArgs args)
+    //{
+    //    if ((args.NewFocusedElement is KeyControl)
+    //        && Visibility == Visibility.Visible)
+    //    {
+    //        args.Cancel = true;
+    //        return;
+    //    }
 
-        if (Visibility == Visibility.Visible)
-        {
-            TextControl = null;
+    //    if (Visibility == Visibility.Visible)
+    //    {
+    //        TextControl = null;
 
-            Visibility = Visibility.Collapsed;
-        }
-    }
+    //        Visibility = Visibility.Collapsed;
+    //    }
+    //}
 
-    public void OnGettingFocus(UIElement sender, GettingFocusEventArgs args)
-    {
-        if (args.NewFocusedElement is TextBox textBox
-            && Visibility == Visibility.Collapsed)
-        {
-            TextControl = textBox;
+    //public void OnGettingFocus(UIElement sender, GettingFocusEventArgs args)
+    //{
+    //    if (args.NewFocusedElement is TextBox textBox
+    //        && Visibility == Visibility.Collapsed)
+    //    {
+    //        TextControl = textBox;
 
-            var kbrType = textBox.GetValue(McWindowEx.KeyboardIdProperty);
-            if (kbrType != null)
-            {
+    //        var kbrType = textBox.GetValue(McWindowEx.KeyboardIdProperty);
+    //        if (kbrType != null)
+    //        {
 
-            }
+    //        }
 
-            Visibility = Visibility.Visible;
-        }
-    }
+    //        Visibility = Visibility.Visible;
+    //    }
+    //}
 
     private void OnKeyClicked(object? sender, KeyEventArgs e)
     {
@@ -49,7 +49,7 @@ public sealed partial class KeyboardControl
             return;
         }
 
-        switch (e.Key.VKey.KType )
+        switch (e.Key.VKey.KType)
         {
             case KeyType.Left:
                 currentPos = TextControl.SelectionStart;
@@ -105,19 +105,16 @@ public sealed partial class KeyboardControl
                 currentPos = TextControl.SelectionStart;
                 TextControl.Text = TextControl.Text.Insert(currentPos, IsShiftActive ? e.Key.VKey.UValue : e.Key.VKey.LValue);
                 TextControl.SelectionStart = currentPos + 1;
+                
                 if (IsShiftActive)
                 {
                     IsShiftActive = false;
-                }
-                if (e.Key.VKey.UChar == ".")
-                {
-                    IsShiftActive = true;
                 }
                 break;
 
             default:
                 throw new NotImplementedException();
         }
-        
+
     }
 }
