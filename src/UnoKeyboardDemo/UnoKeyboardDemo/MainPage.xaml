@@ -51,7 +51,7 @@
       <TextBox Width="200"
                VerticalAlignment="Center"
                FontSize="30"
-               mck:McWindowEx.KeyboardType="Alphanumeric" />
+               mck:McWindowEx.KeyboardType="numeric" />
 
     </StackPanel>
 
@@ -84,7 +84,8 @@
 
       <TextBox Width="200"
                FontSize="30"
-               VerticalAlignment="Center" />
+               VerticalAlignment="Center"
+               mck:McWindowEx.KeyboardType="en-alfa" />
 
     </StackPanel>
 

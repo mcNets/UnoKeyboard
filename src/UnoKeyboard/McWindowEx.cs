@@ -1,7 +1,10 @@
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Input;
 using UnoKeyboard.Controls;
 
 namespace UnoKeyboard;
+
+using KeyboardId = System.String;
 
 public static class McWindowEx
 {
@@ -14,12 +17,16 @@ public static class McWindowEx
     /// </summary>
     public static Frame RootFrame = new();
 
+    private static DispatcherQueue? _dispatcher;
+
     /// <summary>
     /// UIElements for the keyboard.
     /// </summary>
     /// <param name="window"></param>
     public static void AddKeyboard(this Window window, double height, FontFamily? fontFamily = null, double fontSize = 0)
     {
+        _dispatcher = window.DispatcherQueue;
+
         Grid mainGrid = new()
         {
             RowDefinitions =
@@ -28,12 +35,8 @@ public static class McWindowEx
                 new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) }
             }
         };
-        //mainGrid.GettingFocus += _keyboard.OnGettingFocus;
-        //mainGrid.LosingFocus += _keyboard.OnLosingFocus;
-        mainGrid.GettingFocus += OnGettingFocus;
-        mainGrid.LosingFocus += OnLosingFocus;
 
-        // Row 0 = ScrollViewer warpping the original content.
+        // Row 0 = ScrollViewer warpping the RootFram.
         ScrollViewer scrollViewer = new()
         {
             VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
@@ -53,6 +56,9 @@ public static class McWindowEx
         mainGrid.Children.Add(_keyboard);
 
         window.Content = mainGrid;
+
+        mainGrid.GettingFocus += OnGettingFocus;
+        mainGrid.LosingFocus += OnLosingFocus;
     }
 
     /// <summary>
@@ -72,7 +78,7 @@ public static class McWindowEx
         if (_keyboard != null
             && _keyboard.Visibility == Visibility.Visible)
         {
-            _keyboard.Visibility = Visibility.Collapsed;
+            _dispatcher?.TryEnqueue(() => _keyboard.Visibility = Visibility.Collapsed);
         }
     }
 
@@ -87,15 +93,35 @@ public static class McWindowEx
             && _keyboard != null
             && _keyboard.Visibility == Visibility.Collapsed)
         {
-            var kbrType = textBox.GetValue(KeyboardTypeProperty);
+            var kbrType = textBox.GetValue(KeyboardIdProperty);
+
+            if (kbrType is string kbrId)
+            {
+                if (kbrId == "None")
+                {
+                    if (_keyboard.Keyboard.Id != Keyboards.Keyboard.First().Key) 
+                    {
+                        _keyboard.Keyboard = Keyboards.Keyboard.First().Value;
+                    }
+                }
+                else if (_keyboard.Keyboard.Id != kbrId)
+                {
+                    _keyboard.Keyboard = Keyboards.Keyboard[kbrId];
+                }
+            }
             
             _keyboard.TextControl = textBox;
-            if (string.IsNullOrEmpty(textBox.Text))
-            {
-                _keyboard.IsShiftActive = true;
-            }
 
-            _keyboard.Visibility = Visibility.Visible;
+            _dispatcher?.TryEnqueue(() =>
+            {
+                if (string.IsNullOrEmpty(textBox.Text))
+                {
+                    _keyboard.IsShiftActive = true;
+                }
+
+                _keyboard.CurrentPage = 0;
+                _keyboard.Visibility = Visibility.Visible;
+            });
         }
     }
 
@@ -103,19 +129,19 @@ public static class McWindowEx
     /// <summary>
     /// Represents the type of keyboard to be used.
     /// </summary>
-    public static readonly DependencyProperty KeyboardTypeProperty = DependencyProperty.RegisterAttached(
-        "KeyboardType",
-        typeof(KeyboardType),
+    public static readonly DependencyProperty KeyboardIdProperty = DependencyProperty.RegisterAttached(
+        nameof(KeyboardId),
+        typeof(string),
         typeof(McWindowEx),
         new PropertyMetadata("None"));
 
-    public static void SetKeyboardType(DependencyObject element, KeyboardType value)
+    public static void SetKeyboardType(DependencyObject element, string value)
     {
-        element.SetValue(KeyboardTypeProperty, value);
+        element.SetValue(KeyboardIdProperty, value);
     }
 
-    public static KeyboardType GetKeyboardType(DependencyObject element)
+    public static string GetKeyboardType(DependencyObject element)
     {
-        return (KeyboardType)element.GetValue(KeyboardTypeProperty);
+        return (string)element.GetValue(KeyboardIdProperty);
     }
 }

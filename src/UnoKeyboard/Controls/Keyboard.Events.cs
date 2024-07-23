@@ -6,65 +6,65 @@ namespace UnoKeyboard.Controls;
 
 public sealed partial class KeyboardControl
 {
-    public void OnLosingFocus(UIElement sender, LosingFocusEventArgs args)
-    {
-        if ((args.NewFocusedElement is KeyControl)
-            && Visibility == Visibility.Visible)
-        {
-            args.Cancel = true;
-            return;
-        }
+    //public void OnLosingFocus(UIElement sender, LosingFocusEventArgs args)
+    //{
+    //    if ((args.NewFocusedElement is KeyControl)
+    //        && Visibility == Visibility.Visible)
+    //    {
+    //        args.Cancel = true;
+    //        return;
+    //    }
 
-        if (Visibility == Visibility.Visible)
-        {
-            TextControl = null;
+    //    if (Visibility == Visibility.Visible)
+    //    {
+    //        TextControl = null;
 
-            Visibility = Visibility.Collapsed;
-        }
-    }
+    //        Visibility = Visibility.Collapsed;
+    //    }
+    //}
 
-    public void OnGettingFocus(UIElement sender, GettingFocusEventArgs args)
-    {
-        if (args.NewFocusedElement is TextBox textBox
-            && Visibility == Visibility.Collapsed)
-        {
-            TextControl = textBox;
+    //public void OnGettingFocus(UIElement sender, GettingFocusEventArgs args)
+    //{
+    //    if (args.NewFocusedElement is TextBox textBox
+    //        && Visibility == Visibility.Collapsed)
+    //    {
+    //        TextControl = textBox;
 
-            var kbrType = textBox.GetValue(McWindowEx.KeyboardTypeProperty);
-            if (kbrType != null)
-            {
+    //        var kbrType = textBox.GetValue(McWindowEx.KeyboardIdProperty);
+    //        if (kbrType != null)
+    //        {
 
-            }
+    //        }
 
-            Visibility = Visibility.Visible;
-        }
-    }
+    //        Visibility = Visibility.Visible;
+    //    }
+    //}
 
     private void OnKeyClicked(object? sender, KeyEventArgs e)
     {
-        int index;
+        int currentPos;
 
         if (TextControl == null || e.Key == null)
         {
             return;
         }
 
-        switch (e.Key.KeyType )
+        switch (e.Key.VKey.KType)
         {
             case KeyType.Left:
-                index = TextControl.SelectionStart;
-                if (index > 0)
+                currentPos = TextControl.SelectionStart;
+                if (currentPos > 0)
                 {
-                    TextControl.SelectionStart = index - 1;
+                    TextControl.SelectionStart = currentPos - 1;
                     TextControl.SelectionLength = 0;
                 }
                 break;
 
             case KeyType.Right:
-                index = TextControl.SelectionStart;
-                if (index < TextControl.Text.Length)
+                currentPos = TextControl.SelectionStart;
+                if (currentPos < TextControl.Text.Length)
                 {
-                    TextControl.SelectionStart = index + 1;
+                    TextControl.SelectionStart = currentPos + 1;
                     TextControl.SelectionLength = 0;
                 }
                 break;
@@ -73,23 +73,23 @@ public sealed partial class KeyboardControl
                 IsShiftActive = !IsShiftActive;
                 break;
 
-            case KeyType.Backspace:
-                index = TextControl.SelectionStart;
-                if (index > 0)
+            case KeyType.Back:
+                currentPos = TextControl.SelectionStart;
+                if (currentPos > 0)
                 {
-                    TextControl.Text = TextControl.Text.Remove(index - 1, 1);
-                    TextControl.SelectionStart = index - 1;
+                    TextControl.Text = TextControl.Text.Remove(currentPos - 1, 1);
+                    TextControl.SelectionStart = currentPos - 1;
                 }
                 break;
 
-            case KeyType.NextPage:
+            case KeyType.Symbols:
                 if (Keyboard.Pages > CurrentPage + 1)
                 {
                     CurrentPage++;
                 }
                 break;
 
-            case KeyType.PrevPage:
+            case KeyType.Alfa:
                 if (CurrentPage > 0)
                 {
                     CurrentPage--;
@@ -97,17 +97,24 @@ public sealed partial class KeyboardControl
                 break;
 
             case KeyType.Enter:
+                // TODO: Close the keyboard and focus next control.
                 break;
 
+            case KeyType.Space:
             case KeyType.Text:
-                index = TextControl.SelectionStart;
-                TextControl.Text = TextControl.Text.Insert(index, IsShiftActive ? e.Key.UValue : e.Key.LValue);
-                TextControl.SelectionStart = index + 1; 
+                currentPos = TextControl.SelectionStart;
+                TextControl.Text = TextControl.Text.Insert(currentPos, IsShiftActive ? e.Key.VKey.UValue : e.Key.VKey.LValue);
+                TextControl.SelectionStart = currentPos + 1;
+                
+                if (IsShiftActive)
+                {
+                    IsShiftActive = false;
+                }
                 break;
 
             default:
                 throw new NotImplementedException();
         }
-        
+
     }
 }

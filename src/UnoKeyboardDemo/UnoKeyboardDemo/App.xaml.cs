@@ -22,6 +22,7 @@ public partial class App : Application
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         MainWindow = new Window();
+        
 #if DEBUG
         MainWindow.EnableHotReload();
 #endif
@@ -48,7 +49,7 @@ public partial class App : Application
         //}
 
         // Add UnoKeyboard to the Window
-        MainWindow.AddKeyboard(height: 400);
+        MainWindow.AddKeyboard(height: 300);
 
         // Navigate using McWindowEx.RootFrame
         if (RootFrame.Content == null)
