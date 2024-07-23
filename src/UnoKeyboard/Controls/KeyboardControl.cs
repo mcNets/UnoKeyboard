@@ -14,9 +14,6 @@ public sealed partial class KeyboardControl : Panel
 
         ActualThemeChanged += (s, e) => { ApplyThemedResources(); };
 
-        // By default it uses the first keyboard of the dictionary
-        //Keyboard = Keyboards.Keyboard.FirstOrDefault().Value;
-
         Loaded += (s, e) => { ApplyThemedResources(); };
 
         FocusManager.GettingFocus += OnGettingFocus;
@@ -113,18 +110,6 @@ public sealed partial class KeyboardControl : Panel
             return;
         }
 
-        // Unregister the KeyClicked event of the previous keys
-        if (Children.Count > 0)
-        {
-            for (int i = 0; i < Children.Count; i++)
-            {
-                if (Children[i] is KeyControl key)
-                {
-                    key.KeyClicked -= OnKeyClicked;
-                }
-            }
-        }
-
         Children.Clear();
 
         // Gets the keys for the current page, ordered by row and column
@@ -134,14 +119,14 @@ public sealed partial class KeyboardControl : Panel
                     .ThenBy(k => k.Col)
                     .ToList();
 
+
         for (int x = 0; x < keys.Count; x++)
         {
             var key = new KeyControl(this) { Key = keys[x] };
-            key.KeyClicked += OnKeyClicked;
+            
+            key.KeyPressed = OnKeyClicked;
 
             Children.Add(key);
         }
-
-        //UpdateLayout();
     }
 }
