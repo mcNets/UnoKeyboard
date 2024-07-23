@@ -1,4 +1,5 @@
 ![UnoKeyboardDark](UnoKeyboardDark.png)
+
 # UnoKeyboard
 
 UnoKeyboard is an on-screen virtual keyboard designed for Desktop, WASM, and Windows platforms.
@@ -63,4 +64,4 @@ The extension class McWindowEx, adds a new attached property to allow customizat
          mck:McWindowEx.KeyboardType="numeric" />
 ```
 
-![UnoKeyboardDark](UnoKeyboardDark.png)
+![UnoKeyboardDark](UnoKeyboardLight.png)
