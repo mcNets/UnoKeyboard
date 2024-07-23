@@ -17,13 +17,16 @@ public sealed partial class KeyboardControl
     /// <summary>
     /// Gets or sets the current page of the keyboard.
     /// </summary>
-    public int CurrentPage 
-    { 
+    public int CurrentPage
+    {
         get => _currentPage;
         set
         {
-            _currentPage = value;
-            InvalidateKeyboard();
+            if (_currentPage != value)
+            {
+                _currentPage = value;
+                InvalidateKeyboard();
+            }
         }
     }
 
@@ -39,7 +42,7 @@ public sealed partial class KeyboardControl
     /// <summary>
     /// Gets or sets the KeyboardModel assigned to the control.
     /// </summary>
-    public KeyboardModel Keyboard
+    public KeyboardModel? Keyboard
     {
         get { return (KeyboardModel)GetValue(KeyboardProperty); }
         set { SetValue(KeyboardProperty, value); }
@@ -49,9 +52,9 @@ public sealed partial class KeyboardControl
     /// Identifies the Keyboard dependency property.
     /// </summary>
     public static readonly DependencyProperty KeyboardProperty =
-        DependencyProperty.Register(nameof(Keyboard), 
-                                    typeof(KeyboardModel), 
-                                    typeof(KeyboardControl), 
+        DependencyProperty.Register(nameof(Keyboard),
+                                    typeof(KeyboardModel),
+                                    typeof(KeyboardControl),
                                     new PropertyMetadata(null, OnKeyboardChanged));
 
     /// <summary>
@@ -61,10 +64,13 @@ public sealed partial class KeyboardControl
     /// <param name="e">The event arguments.</param>
     private static void OnKeyboardChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is KeyboardControl key && e.NewValue != null)
+        if (d is not KeyboardControl ctl)
         {
-            key.InvalidateKeyboard();
+            return;
         }
+
+        ctl.Keyboard = e.NewValue as KeyboardModel;
+        ctl.InvalidateKeyboard();
     }
 
     /// <summary>
@@ -80,9 +86,9 @@ public sealed partial class KeyboardControl
     /// Identifies the IsShiftActive dependency property.
     /// </summary>
     public static readonly DependencyProperty IsShiftActiveProperty =
-        DependencyProperty.Register(nameof(IsShiftActive), 
-                                    typeof(bool), 
-                                    typeof(KeyboardControl), 
+        DependencyProperty.Register(nameof(IsShiftActive),
+                                    typeof(bool),
+                                    typeof(KeyboardControl),
                                     new PropertyMetadata(false));
 
     /// <summary>
@@ -98,9 +104,9 @@ public sealed partial class KeyboardControl
     /// Identifies the KeyBackground dependency property.
     /// </summary>
     public static readonly DependencyProperty KeyBackgroundProperty =
-        DependencyProperty.Register(nameof(KeyBackground), 
-                                    typeof(Brush), 
-                                    typeof(KeyboardControl), 
+        DependencyProperty.Register(nameof(KeyBackground),
+                                    typeof(Brush),
+                                    typeof(KeyboardControl),
                                     new PropertyMetadata(null));
 
     /// <summary>
@@ -116,9 +122,9 @@ public sealed partial class KeyboardControl
     /// Identifies the KeyForeground dependency property.
     /// </summary>
     public static readonly DependencyProperty KeyForegroundProperty =
-        DependencyProperty.Register(nameof(KeyForeground), 
-                                    typeof(Brush), 
-                                    typeof(KeyboardControl), 
+        DependencyProperty.Register(nameof(KeyForeground),
+                                    typeof(Brush),
+                                    typeof(KeyboardControl),
                                     new PropertyMetadata(null));
 
     /// <summary>
@@ -134,9 +140,9 @@ public sealed partial class KeyboardControl
     /// Identifies the KeyBorderBrush dependency property.
     /// </summary>
     public static readonly DependencyProperty KeyBorderBrushProperty =
-        DependencyProperty.Register(nameof(KeyBorderBrush), 
-                                    typeof(Brush), 
-                                    typeof(KeyboardControl), 
+        DependencyProperty.Register(nameof(KeyBorderBrush),
+                                    typeof(Brush),
+                                    typeof(KeyboardControl),
                                     new PropertyMetadata(null));
 
     /// <summary>
@@ -152,9 +158,9 @@ public sealed partial class KeyboardControl
     /// Identifies the KeyBorderThickness dependency property.
     /// </summary>
     public static readonly DependencyProperty KeyBorderThicknessProperty =
-        DependencyProperty.Register(nameof(KeyBorderThickness), 
-                                    typeof(Thickness), 
-                                    typeof(KeyboardControl), 
+        DependencyProperty.Register(nameof(KeyBorderThickness),
+                                    typeof(Thickness),
+                                    typeof(KeyboardControl),
                                     new PropertyMetadata(new Thickness(1)));
 
     /// <summary>
@@ -165,16 +171,16 @@ public sealed partial class KeyboardControl
         get { return (Thickness)GetValue(KeyMarginProperty); }
         set { SetValue(KeyMarginProperty, value); }
     }
-    
+
     /// <summary>
     /// Identifies the KeyMargin dependency property.
     /// </summary>
-    public static readonly DependencyProperty KeyMarginProperty = 
-        DependencyProperty.Register(nameof(KeyMargin), 
-                                    typeof(Thickness), 
-                                    typeof(KeyboardControl), 
+    public static readonly DependencyProperty KeyMarginProperty =
+        DependencyProperty.Register(nameof(KeyMargin),
+                                    typeof(Thickness),
+                                    typeof(KeyboardControl),
                                     new PropertyMetadata(new Thickness(2)));
-    
+
     /// <summary>
     /// Gets or sets the font family used to draw the text of the keys.
     /// </summary>
@@ -219,14 +225,14 @@ public sealed partial class KeyboardControl
         get { return (double)GetValue(PaddingProperty); }
         set { SetValue(PaddingProperty, value); }
     }
-    
+
     /// <summary>
     /// Identifies the Padding dependency property.
     /// </summary>
-    public static readonly DependencyProperty PaddingProperty = 
-        DependencyProperty.Register(nameof(PaddingProperty), 
-                                    typeof(double), 
-                                    typeof(KeyboardControl), 
+    public static readonly DependencyProperty PaddingProperty =
+        DependencyProperty.Register(nameof(PaddingProperty),
+                                    typeof(double),
+                                    typeof(KeyboardControl),
                                     new PropertyMetadata(15.0));
 
     /// <summary>
@@ -241,11 +247,11 @@ public sealed partial class KeyboardControl
     /// <summary>
     /// Identifies the KeySpecialKeyBackgroumd dependency property.
     /// </summary>
-    public static readonly DependencyProperty KeySpecialKeyBackgroumdProperty = 
-        DependencyProperty.Register(nameof(KeySpecialKeyBackground), 
-                                    typeof(Brush), 
-                                    typeof(KeyboardControl), 
+    public static readonly DependencyProperty KeySpecialKeyBackgroumdProperty =
+        DependencyProperty.Register(nameof(KeySpecialKeyBackground),
+                                    typeof(Brush),
+                                    typeof(KeyboardControl),
                                     new PropertyMetadata(null
         ));
-    
+
 }

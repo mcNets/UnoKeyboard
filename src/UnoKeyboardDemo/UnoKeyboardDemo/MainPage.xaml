@@ -13,22 +13,6 @@
               VerticalAlignment="Center"
               Spacing="20">
 
-    <!--<Button x:Name="boto"
-            Width="150"
-            Height="150">
-      <Button.Content>
-        <Viewbox Stretch="UniformToFill">
-          <Path x:Name="UpArrow"
-                Stroke="White"
-                StrokeThickness="1"
-                Stretch="Uniform"
-                Height="10"
-                Width="10"
-                Data="M5,2 L2,4 M5,2 L8,4 M5,2 L5,10" />
-        </Viewbox>
-      </Button.Content>
-    </Button>-->
-
     <TextBlock Text="UNO Keyboard Page 1"
                FontSize="30"
                HorizontalAlignment="Center" />
