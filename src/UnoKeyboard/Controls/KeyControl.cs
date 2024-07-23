@@ -11,7 +11,7 @@ public sealed partial class KeyControl : Panel
 
     private KeyboardControl Keyboard { get; set; }
 
-    public event EventHandler<KeyEventArgs>? KeyClicked;
+    public Action<object, KeyEventArgs>? KeyPressed;
 
     public KeyControl(KeyboardControl keyboard)
     {
@@ -74,7 +74,10 @@ public sealed partial class KeyControl : Panel
         this.Tapped += (s, e) =>
         {
             Focus(FocusState.Programmatic);
-            KeyClicked?.Invoke(this, new KeyEventArgs(Key, IsShiftActive));
+
+            KeyPressed?.Invoke(this, new KeyEventArgs(Key, IsShiftActive));
+
+            // WINDOWS. Focus the TextBox when a key is pressed and the focus event cannot be canceled.
 
             //if (Keyboard.TextControl != null)
             //{
@@ -98,8 +101,6 @@ public sealed partial class KeyControl : Panel
         {
             SetContentPath(Key);
         }
-
-        //UpdateLayout();
     }
 
     private void SetContentText(string? text = null)
@@ -203,6 +204,4 @@ public sealed partial class KeyControl : Panel
         ControlBorder.Child?.Arrange(new Rect(0, 0, finalSize.Width, finalSize.Height));
         return base.ArrangeOverride(finalSize);
     }
- 
-
 }

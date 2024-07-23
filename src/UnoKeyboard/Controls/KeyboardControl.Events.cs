@@ -4,7 +4,7 @@ namespace UnoKeyboard.Controls;
 
 public sealed partial class KeyboardControl
 {
-    private void OnKeyClicked(object? sender, KeyEventArgs e)
+    public void OnKeyClicked(object? sender, KeyEventArgs e)
     {
         int currentPos;
 
@@ -115,13 +115,22 @@ public sealed partial class KeyboardControl
                     {
                         if (Keyboard is null || Keyboard.Id != Keyboards.Keyboard.First().Key)
                         {
+                            _currentPage = 0;
                             Keyboard = Keyboards.Keyboard.First().Value;
+                        }
+                        else
+                        {
+                            CurrentPage = 0;
                         }
                     }
                     else if (Keyboard is null || Keyboard.Id != keyboardId)
                     {
-                        var k = Keyboards.Keyboard[keyboardId];
-                        Keyboard = k;
+                        _currentPage = 0;
+                        Keyboard = Keyboards.Keyboard[keyboardId];
+                    }
+                    else
+                    {
+                        CurrentPage = 0;
                     }
                 }
 
