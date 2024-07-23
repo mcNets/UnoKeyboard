@@ -69,11 +69,10 @@ public static class VirtualKeys
     public static VirtualKeyModel RCurly = new ("RCurly", KeyType.Text, "}", "}", 0x007D, 0x007D, null, 0, 0);
     public static VirtualKeyModel Backslash = new ("Backslash", KeyType.Text, "\\",  "\\",  0x005C, 0x005C, null, 0, 0);
     public static VirtualKeyModel Quote = new ("Quote", KeyType.Text, "\"",  "\"",  0x002A, 0x002A, null, 0, 0);
-    public static VirtualKeyModel Space = new ("Space", KeyType.Space, " ", " ", 0x0020, 0x0020, KeyPathGeometry.Space, 10,  10);
-    public static VirtualKeyModel Enter = new ("Enter", KeyType.Enter, "", "", 0x0000, 0x0000, KeyPathGeometry.Enter, 10, 12);
-    public static VirtualKeyModel Shift = new ("Shift", KeyType.Shift, "", "", 0x0000, 0x0000, KeyPathGeometry.Shift, 10, 10);
-    public static VirtualKeyModel Back = new ("Back", KeyType.Back, "", "", 0x0000, 0x0000, KeyPathGeometry.Back, 12, 10);
+    public static VirtualKeyModel Space = new ("Space", KeyType.Space, " ", " ", 0x0020, 0x0020, KeyPathGeometry.Space, 13,  7);
+    public static VirtualKeyModel Enter = new ("Enter", KeyType.Enter, "", "", 0x0000, 0x0000, KeyPathGeometry.Enter, 13, 9);
+    public static VirtualKeyModel Shift = new ("Shift", KeyType.Shift, "", "", 0x0000, 0x0000, KeyPathGeometry.Shift, 9, 10);
+    public static VirtualKeyModel Back = new ("Back", KeyType.Back, "", "", 0x0000, 0x0000, KeyPathGeometry.Back, 14, 11);
     public static VirtualKeyModel Symbols = new ("Sybols", KeyType.Symbols, "&123", "&123", 0x0002, 0x0002, null, 0, 0);
     public static VirtualKeyModel Alfa = new ("Alfa", KeyType.Alfa, "ABC", "ABC", 0x0001, 0x0001, null,1, 4);
-
 }

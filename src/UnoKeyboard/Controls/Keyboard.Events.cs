@@ -1,45 +1,9 @@
-﻿using Microsoft.UI;
-using Microsoft.UI.Xaml.Input;
-using Windows.Data.Text;
+﻿using Microsoft.UI.Xaml.Input;
 
 namespace UnoKeyboard.Controls;
 
 public sealed partial class KeyboardControl
 {
-    //public void OnLosingFocus(UIElement sender, LosingFocusEventArgs args)
-    //{
-    //    if ((args.NewFocusedElement is KeyControl)
-    //        && Visibility == Visibility.Visible)
-    //    {
-    //        args.Cancel = true;
-    //        return;
-    //    }
-
-    //    if (Visibility == Visibility.Visible)
-    //    {
-    //        TextControl = null;
-
-    //        Visibility = Visibility.Collapsed;
-    //    }
-    //}
-
-    //public void OnGettingFocus(UIElement sender, GettingFocusEventArgs args)
-    //{
-    //    if (args.NewFocusedElement is TextBox textBox
-    //        && Visibility == Visibility.Collapsed)
-    //    {
-    //        TextControl = textBox;
-
-    //        var kbrType = textBox.GetValue(McWindowEx.KeyboardIdProperty);
-    //        if (kbrType != null)
-    //        {
-
-    //        }
-
-    //        Visibility = Visibility.Visible;
-    //    }
-    //}
-
     private void OnKeyClicked(object? sender, KeyEventArgs e)
     {
         int currentPos;
@@ -83,7 +47,7 @@ public sealed partial class KeyboardControl
                 break;
 
             case KeyType.Symbols:
-                if (Keyboard.Pages > CurrentPage + 1)
+                if (Keyboard is not null && Keyboard.Pages > CurrentPage + 1)
                 {
                     CurrentPage++;
                 }
@@ -97,7 +61,7 @@ public sealed partial class KeyboardControl
                 break;
 
             case KeyType.Enter:
-                // TODO: Close the keyboard and focus next control.
+                // TODO: What to do with the Enter key?
                 break;
 
             case KeyType.Space:
@@ -105,7 +69,7 @@ public sealed partial class KeyboardControl
                 currentPos = TextControl.SelectionStart;
                 TextControl.Text = TextControl.Text.Insert(currentPos, IsShiftActive ? e.Key.VKey.UValue : e.Key.VKey.LValue);
                 TextControl.SelectionStart = currentPos + 1;
-                
+
                 if (IsShiftActive)
                 {
                     IsShiftActive = false;
@@ -116,5 +80,55 @@ public sealed partial class KeyboardControl
                 throw new NotImplementedException();
         }
 
+    }
+
+    private void OnLosingFocus(object? sender, LosingFocusEventArgs args)
+    {
+        // THAT DOESN'T WORK FOR WINDOWS
+
+        // When a KeyControl gets the focus, the event has to be canceled so the TextBox doesn't lose the focus.
+        if ((args.NewFocusedElement is null || args.NewFocusedElement is KeyControl)
+            && args.OldFocusedElement is TextBox)
+        {
+            args.Cancel = true;
+            return;
+        }
+
+        if (Visibility == Visibility.Visible)
+        {
+            DispatcherQueue?.TryEnqueue(() => Visibility = Visibility.Collapsed);
+        }
+    }
+
+    private void OnGettingFocus(object? sender, GettingFocusEventArgs args)
+    {
+        if (args.NewFocusedElement is TextBox textBox)
+        {
+            DispatcherQueue?.TryEnqueue(() =>
+            {
+                // Gets the keyboard type from the attached property.
+                var kbrIdProp = textBox.GetValue(McWindowEx.KeyboardIdProperty);
+
+                if (kbrIdProp is string keyboardId)
+                {
+                    if (keyboardId == "None")
+                    {
+                        if (Keyboard is null || Keyboard.Id != Keyboards.Keyboard.First().Key)
+                        {
+                            Keyboard = Keyboards.Keyboard.First().Value;
+                        }
+                    }
+                    else if (Keyboard is null || Keyboard.Id != keyboardId)
+                    {
+                        var k = Keyboards.Keyboard[keyboardId];
+                        Keyboard = k;
+                    }
+                }
+
+                TextControl = textBox;
+
+                Visibility = Visibility.Visible;
+            });
+        }
     }
 }

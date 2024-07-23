@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml.Input;
 using Windows.Foundation;
 
 namespace UnoKeyboard.Controls;
@@ -14,9 +15,12 @@ public sealed partial class KeyboardControl : Panel
         ActualThemeChanged += (s, e) => { ApplyThemedResources(); };
 
         // By default it uses the first keyboard of the dictionary
-        Keyboard = Keyboards.Keyboard.FirstOrDefault().Value;
+        //Keyboard = Keyboards.Keyboard.FirstOrDefault().Value;
 
         Loaded += (s, e) => { ApplyThemedResources(); };
+
+        FocusManager.GettingFocus += OnGettingFocus;
+        FocusManager.LosingFocus += OnLosingFocus;
     }
 
     private void ApplyThemedResources()
@@ -53,7 +57,7 @@ public sealed partial class KeyboardControl : Panel
                 key.Width = keyWidth * key.Key.WithFactor;
                 key.Height = keyHeight;
 
-                // Used in ArrangeOverride to center the keys.
+                // Used in ArrangeOverride to center the key's row.
                 _rowWidth[key.Key.Row] += key.Width;
 
                 key.Measure(new Size(key.Width, key.Height));
@@ -123,7 +127,7 @@ public sealed partial class KeyboardControl : Panel
 
         Children.Clear();
 
-        // Get the keys for the current page order by row and column
+        // Gets the keys for the current page, ordered by row and column
         var keys = Keyboard.Keys
                     .Where(k => k.Page == CurrentPage)
                     .OrderBy(k => k.Row)
@@ -138,7 +142,6 @@ public sealed partial class KeyboardControl : Panel
             Children.Add(key);
         }
 
-        // Forces InvalidateMeasure and InvalidateArrange.
-        UpdateLayout();
+        //UpdateLayout();
     }
 }

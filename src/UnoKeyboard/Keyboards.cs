@@ -142,6 +142,20 @@ public static class Keyboards
                     new KeyModel(0, 3, 4, 1, VirtualKeys.Enter),
                 ]
             )
+        },
+        {
+            "test",
+            new KeyboardModel(
+                "test",
+                1,  // Pages
+                1,  // Max. rows per page
+                7,  // Max. keys per line
+                [
+                    new KeyModel(0, 0, 0, 1, VirtualKeys.Plus),
+                    new KeyModel(0, 0, 1, 2, VirtualKeys.N1),
+                    new KeyModel(0, 0, 2, 2, VirtualKeys.N2),
+                ]
+            )
         }
     };
 }

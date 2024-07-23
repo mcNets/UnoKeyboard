@@ -75,6 +75,11 @@ public sealed partial class KeyControl : Panel
         {
             Focus(FocusState.Programmatic);
             KeyClicked?.Invoke(this, new KeyEventArgs(Key, IsShiftActive));
+
+            //if (Keyboard.TextControl != null)
+            //{
+            //    Keyboard.TextControl.Focus(FocusState.Programmatic);
+            //}
         };
     }
 
@@ -94,7 +99,7 @@ public sealed partial class KeyControl : Panel
             SetContentPath(Key);
         }
 
-        UpdateLayout();
+        //UpdateLayout();
     }
 
     private void SetContentText(string? text = null)
