@@ -90,30 +90,30 @@ public static class McWindowEx
     private static void OnGettingFocus(UIElement sender, GettingFocusEventArgs args)
     {
         if (args.NewFocusedElement is TextBox textBox
-            && _keyboard != null
-            && _keyboard.Visibility == Visibility.Collapsed)
+            && _keyboard != null)
         {
-            var kbrType = textBox.GetValue(KeyboardIdProperty);
+            // Gets the keyboard type from the attached property.
+            var kbrIdProp = textBox.GetValue(KeyboardIdProperty);
 
-            if (kbrType is string kbrId)
+            if (kbrIdProp is string keyboardId)
             {
-                if (kbrId == "None")
+                if (keyboardId == "None")
                 {
                     if (_keyboard.Keyboard.Id != Keyboards.Keyboard.First().Key) 
                     {
                         _keyboard.Keyboard = Keyboards.Keyboard.First().Value;
                     }
                 }
-                else if (_keyboard.Keyboard.Id != kbrId)
+                else if (_keyboard.Keyboard.Id != keyboardId)
                 {
-                    _keyboard.Keyboard = Keyboards.Keyboard[kbrId];
+                    _keyboard.Keyboard = Keyboards.Keyboard[keyboardId];
                 }
             }
-            
-            _keyboard.TextControl = textBox;
 
             _dispatcher?.TryEnqueue(() =>
             {
+                _keyboard.TextControl = textBox;
+
                 if (string.IsNullOrEmpty(textBox.Text))
                 {
                     _keyboard.IsShiftActive = true;
@@ -127,7 +127,7 @@ public static class McWindowEx
 
 
     /// <summary>
-    /// Represents the type of keyboard to be used.
+    /// Attached property to set the keyboard type.
     /// </summary>
     public static readonly DependencyProperty KeyboardIdProperty = DependencyProperty.RegisterAttached(
         nameof(KeyboardId),
