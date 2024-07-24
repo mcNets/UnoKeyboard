@@ -41,6 +41,7 @@ public static class McWindowEx
 
         // Row 1 = Keyboard
         _keyboard.Visibility = Visibility.Collapsed;
+        _keyboard.HandleFocusManager = true;
         _keyboard.Height = height;
         if (fontFamily != null) { _keyboard.KeyFontFamily = fontFamily; }
         if (fontSize > 0) { _keyboard.KeyFontSize = fontSize; }

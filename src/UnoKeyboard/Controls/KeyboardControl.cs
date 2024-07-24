@@ -1,4 +1,3 @@
-using Microsoft.UI.Xaml.Input;
 using Windows.Foundation;
 
 namespace UnoKeyboard.Controls;
@@ -15,9 +14,6 @@ public sealed partial class KeyboardControl : Panel
         ActualThemeChanged += (s, e) => { ApplyThemedResources(); };
 
         Loaded += (s, e) => { ApplyThemedResources(); };
-
-        FocusManager.GettingFocus += OnGettingFocus;
-        FocusManager.LosingFocus += OnLosingFocus;
     }
 
     private void ApplyThemedResources()
@@ -51,10 +47,10 @@ public sealed partial class KeyboardControl : Panel
         {
             if (Children[i] is KeyControl key)
             {
-                key.Width = keyWidth * key.Key.WithFactor;
+                key.Width = keyWidth * key.Key.ColumnSpan;
                 key.Height = keyHeight;
 
-                // Used in ArrangeOverride to center the key's row.
+                // Used in ArrangeOverride to center the keys in the row.
                 _rowWidth[key.Key.Row] += key.Width;
 
                 key.Measure(new Size(key.Width, key.Height));
@@ -71,14 +67,14 @@ public sealed partial class KeyboardControl : Panel
             return base.ArrangeOverride(finalSize);
         }
 
-        // Get an ordered list of KeyControl children by row and column
+        // Get an ordered list of KeyControls children by row and column
         var childs = Children
                         .Where(c => c is KeyControl)
                         .OrderBy(c => (c as KeyControl)?.Key.Row)
-                        .ThenBy(c => (c as KeyControl)?.Key.Col)
+                        .ThenBy(c => (c as KeyControl)?.Key.Column)
                         .ToList();
 
-        // Used to center the keys in the middle of the keyboard
+        // Inner rectangle to place the keys.
         double innerWidth = finalSize.Width - (Padding * 2);
 
         double posX = 0;
@@ -88,7 +84,7 @@ public sealed partial class KeyboardControl : Panel
         {
             if (childs[i] is KeyControl key)
             {
-                if (key.Key.Col == 0)
+                if (key.Key.Column == 0)
                 {
                     posX = Padding + ((innerWidth - _rowWidth[key.Key.Row]) / 2.0);
                     posY = Padding + (key.Height * key.Key.Row);
@@ -116,7 +112,7 @@ public sealed partial class KeyboardControl : Panel
         var keys = Keyboard.Keys
                     .Where(k => k.Page == CurrentPage)
                     .OrderBy(k => k.Row)
-                    .ThenBy(k => k.Col)
+                    .ThenBy(k => k.Column)
                     .ToList();
 
 

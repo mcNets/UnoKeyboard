@@ -2,6 +2,6 @@ namespace UnoKeyboard.Models;
 
 public record KeyModel(int Page, 
                        int Row, 
-                       int Col, 
-                       double WithFactor,
+                       int Column, 
+                       double ColumnSpan,
                        VirtualKeyModel VKey);

@@ -151,20 +151,18 @@ public static class KeyPathGeometry
     /// Back 
     /// 
     ///   Width  = 14
-    ///   Height = 11 
+    ///   Height = 9 
     ///   
     ///   01234567890123
-    ///   .............. 0
-    ///   .............. 1 
-    ///   ....*********. 2
-    ///   ...*........*. 3
-    ///   ..*...*.*...*. 4 
-    ///   .*.....*....*. 5
-    ///   ..*...*.*...*. 6 
-    ///   ...*........*. 7
-    ///   ....*********. 8
-    ///   .............. 9
-    ///   .............. 0
+    ///   .............. 0 
+    ///   ....*********. 1
+    ///   ...*........*. 2
+    ///   ..*...*.*...*. 3 
+    ///   .*.....*....*. 4
+    ///   ..*...*.*...*. 5 
+    ///   ...*........*. 6
+    ///   ....*********. 7
+    ///   .............. 8
     /// 
     /// </summary>
     public static PathGeometry Back =>
@@ -174,32 +172,32 @@ public static class KeyPathGeometry
             [
                 new PathFigure()
                 {
-                    StartPoint = new Point(12, 2),
+                    StartPoint = new Point(12, 1),
                     Segments =
                     [
-                        new LineSegment() { Point = new Point(4, 2) },
-                        new LineSegment() { Point = new Point(1, 5) },
-                        new LineSegment() { Point = new Point(4, 8) },
-                        new LineSegment() { Point = new Point(12, 8) },
-                        new LineSegment() { Point = new Point(12, 2) },
+                        new LineSegment() { Point = new Point(4, 1) },
+                        new LineSegment() { Point = new Point(1, 4) },
+                        new LineSegment() { Point = new Point(4, 7) },
+                        new LineSegment() { Point = new Point(12, 7) },
+                        new LineSegment() { Point = new Point(12, 1) },
                     ],
                     IsClosed = false
                 },
                 new PathFigure()
                 {
-                    StartPoint = new Point(6, 4),
+                    StartPoint = new Point(6, 3),
                     Segments =
                     [
-                        new LineSegment() { Point = new Point(8, 6) },
+                        new LineSegment() { Point = new Point(8, 5) },
                     ],
                     IsClosed = false
                 },
                 new PathFigure()
                 {
-                    StartPoint = new Point(8, 4),
+                    StartPoint = new Point(8, 3),
                     Segments =
                     [
-                        new LineSegment() { Point = new Point(6, 6) },
+                        new LineSegment() { Point = new Point(6, 5) },
                     ],
                     IsClosed = false
                 },

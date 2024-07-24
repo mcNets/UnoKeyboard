@@ -1,4 +1,5 @@
-﻿using UnoKeyboard.Models;
+﻿using Microsoft.UI.Xaml.Input;
+using UnoKeyboard.Models;
 
 namespace UnoKeyboard.Controls;
 
@@ -251,7 +252,46 @@ public sealed partial class KeyboardControl
         DependencyProperty.Register(nameof(KeySpecialKeyBackground),
                                     typeof(Brush),
                                     typeof(KeyboardControl),
-                                    new PropertyMetadata(null
-        ));
+                                    new PropertyMetadata(null));
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to handle focus manager.
+    /// </summary>
+    public bool HandleFocusManager
+    {
+        get { return (bool)GetValue(HandleFocusManagerProperty); }
+        set { SetValue(HandleFocusManagerProperty, value); }
+    }
+
+    /// <summary>
+    /// Identifies the HandleFocusManager dependency property.
+    /// </summary>
+    public static readonly DependencyProperty HandleFocusManagerProperty =
+        DependencyProperty.Register(nameof(HandleFocusManager),
+                                    typeof(bool),
+                                    typeof(KeyboardControl),
+                                    new PropertyMetadata(false, OnHandleFocusManagerChanged));
+
+    
+    /// <summary>
+    /// Called when the HandleFocusManager property changes.
+    /// Subscribes or unsubscribes to the focus manager events.
+    /// </summary>
+    /// <param name="dependencyObject"></param>
+    /// <param name="args"></param>
+    private static void OnHandleFocusManagerChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+    {
+        if (dependencyObject is not KeyboardControl ctl) { return; }
+
+        if (ctl.HandleFocusManager)
+        {
+            FocusManager.GettingFocus += ctl.OnGettingFocus;
+            FocusManager.LosingFocus += ctl.OnLosingFocus;
+        }
+        else
+        {
+            FocusManager.GettingFocus -= ctl.OnGettingFocus;
+            FocusManager.LosingFocus -= ctl.OnLosingFocus;
+        }
+    }
 }

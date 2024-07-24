@@ -12,7 +12,7 @@
     <!-- Display name -->
     <ApplicationTitle>UnoKeyboardDemo</ApplicationTitle>
     <!-- App Identifier -->
-    <ApplicationId>com.companyname.UnoKeyboardDemo</ApplicationId>
+    <ApplicationId>com.mcnets.UnoKeyboardDemo</ApplicationId>
     <!-- Versions -->
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
