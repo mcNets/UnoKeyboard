@@ -73,16 +73,18 @@ public sealed partial class KeyControl : Panel
 
         this.Tapped += (s, e) =>
         {
+#if !WINDOWS
             Focus(FocusState.Programmatic);
+#endif
 
             KeyPressed?.Invoke(this, new KeyEventArgs(Key, IsShiftActive));
 
-            // WINDOWS. Focus the TextBox when a key is pressed and the focus event cannot be canceled.
-
-            //if (Keyboard.TextControl != null)
-            //{
-            //    Keyboard.TextControl.Focus(FocusState.Programmatic);
-            //}
+#if WINDOWS
+            if (Keyboard.TextControl != null)
+            {
+                Keyboard.TextControl.Focus(FocusState.Programmatic);
+            }
+#endif
         };
     }
 

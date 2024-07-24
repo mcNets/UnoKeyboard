@@ -85,7 +85,7 @@ public sealed partial class KeyboardControl
     private void OnLosingFocus(object? sender, LosingFocusEventArgs args)
     {
         // THAT DOESN'T WORK FOR WINDOWS
-
+#if !WINDOWS
         // When a KeyControl gets the focus, the event has to be canceled so the TextBox doesn't lose the focus.
         if ((args.NewFocusedElement is null || args.NewFocusedElement is KeyControl)
             && args.OldFocusedElement is TextBox)
@@ -93,7 +93,7 @@ public sealed partial class KeyboardControl
             args.Cancel = true;
             return;
         }
-
+#endif 
         if (Visibility == Visibility.Visible)
         {
             DispatcherQueue?.TryEnqueue(() => Visibility = Visibility.Collapsed);

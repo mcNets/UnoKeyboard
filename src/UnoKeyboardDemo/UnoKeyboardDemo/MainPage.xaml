@@ -24,8 +24,7 @@
       <Button.Content>
         <PathIcon x:Name="IconTheme"
                   HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"
-                  Data="{StaticResource SunIcon}"/>
+                  VerticalAlignment="Stretch"/>
       </Button.Content>
     </Button>
 
