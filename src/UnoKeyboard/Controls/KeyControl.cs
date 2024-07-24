@@ -158,15 +158,9 @@ public sealed partial class KeyControl : Panel
 
         ControlBorder.Child = null;
 
-        var viewBox = new Viewbox()
-        {
-            Height = size.Height,
-        };
-
         var path = new Microsoft.UI.Xaml.Shapes.Path();
         path.Stroke = Keyboard.KeyForeground;
         path.StrokeThickness = 1;
-        path.Stretch = Stretch.Uniform;
         path.Height = key.VKey.GeometryHeight;
         path.Width = key.VKey.GeometryWidth;
         path.Data = key.VKey.KeyId switch
@@ -187,8 +181,12 @@ public sealed partial class KeyControl : Panel
         });
 
         // Content resized by the Viewbox
-        viewBox.Child = path;
-
+        ControlBorder.Child = new Viewbox()
+        {
+            Height = size.Height,
+            Stretch = Stretch.Uniform,
+            Child = path,
+        };
     }
 
     private Size CalculateFontSize()
