@@ -65,6 +65,11 @@ public sealed partial class KeyboardControl
                 break;
 
             case KeyType.Space:
+                currentPos = TextControl.SelectionStart;
+                TextControl.Text = TextControl.Text.Insert(currentPos, " ");
+                TextControl.SelectionStart = currentPos + 1;
+                break;
+                
             case KeyType.Text:
                 currentPos = TextControl.SelectionStart;
                 TextControl.Text = TextControl.Text.Insert(currentPos, IsShiftActive ? e.Key.VKey.UValue : e.Key.VKey.LValue);
