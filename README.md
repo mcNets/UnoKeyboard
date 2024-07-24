@@ -2,7 +2,7 @@
 
 UnoKeyboard is an on-screen virtual keyboard designed for Desktop, WASM, and Windows platforms.
 
-![UnoKeyboardDark](UnoKeyboardLight.png) ![UnoKeyboardDark](UnoKeyboardDark.png) 
+![UnoKeyboardDark](UnoKeyboardLight.jpg) ![UnoKeyboardDark](UnoKeyboardDark.jpg) 
 
 ## Features
 

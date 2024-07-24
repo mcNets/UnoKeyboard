@@ -8,78 +8,38 @@
       FontSize="40"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-  <StackPanel utu:SafeArea.Insets="VisibleBounds"
-              HorizontalAlignment="Center"
+  <StackPanel HorizontalAlignment="Center"
               VerticalAlignment="Center"
               Spacing="20">
 
-    <TextBlock Text="UNO Keyboard Page 1"
-               FontSize="30"
-               HorizontalAlignment="Center" />
+  <TextBlock Text="UNO Keyboard"
+             FontSize="30"
+             HorizontalAlignment="Center" />
 
-    <Button Content="Go to Page 2"
+    <Button x:Name="ThemeButton"
             HorizontalAlignment="Center"
-            FontSize="30"
-            Height="100"
-            Click="Button_Click" />
+            Click="Theme_Click"
+            Width="50"
+            Height="50">
+      <Button.Content>
+        <PathIcon x:Name="IconTheme"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Data="{StaticResource SunIcon}"/>
+      </Button.Content>
+    </Button>
 
-    <StackPanel Orientation="Horizontal"
-                Spacing="10"
-                HorizontalAlignment="Center">
+    <TextBox Width="400"
+             VerticalAlignment="Center"
+             FontSize="30"
+             Header="Numeric keyboard:"
+             mck:McWindowEx.KeyboardType="numeric" />
 
-      <TextBlock x:Name="Field1"
-                 Text="Field 1:"
-                 FontSize="30"
-                 VerticalAlignment="Center" />
-
-      <TextBox Width="200"
-               VerticalAlignment="Center"
-               FontSize="30"
-               mck:McWindowEx.KeyboardType="numeric" />
-
-    </StackPanel>
-
-    <StackPanel Orientation="Horizontal"
-                Spacing="10"
-                HorizontalAlignment="Center">
-
-      <TextBlock Text="Field 2:"
-                 VerticalAlignment="Center"
-                 FontSize="30" />
-
-      <ComboBox Width="200"
-                HorizontalAlignment="Center"
-                FontSize="30"
-                SelectedIndex="1">
-        <ComboBoxItem Content="Item 1" />
-        <ComboBoxItem Content="Item 2" />
-        <ComboBoxItem Content="Item 3" />
-      </ComboBox>
-
-    </StackPanel>
-
-    <StackPanel Orientation="Horizontal"
-                Spacing="10"
-                HorizontalAlignment="Center">
-
-      <TextBlock Text="Field 3:"
-                 FontSize="30"
-                 VerticalAlignment="Center" />
-
-      <TextBox Width="200"
-               FontSize="30"
-               VerticalAlignment="Center"
-               mck:McWindowEx.KeyboardType="en-alfa" />
-
-    </StackPanel>
-
-    <!--<StackPanel Orientation="Horizontal">
-
-      <mckct:KeyControl IsShiftActive="True" />
-
-      <mckct:KeyControl IsShiftActive="False" />
-
-    </StackPanel>-->
+    <TextBox Width="400"
+             FontSize="30"
+             VerticalAlignment="Center"
+             Header="Alphanumeric keyboard:"
+             mck:McWindowEx.KeyboardType="en-alfa" />
 
   </StackPanel>
 
