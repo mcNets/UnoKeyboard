@@ -90,18 +90,26 @@ public sealed partial class KeyControl : Panel
 
     private void InvalidateKey()
     {
-        if (Key.VKey.KType == KeyType.Text)
+
+        try
         {
-            SetContentText();
+            if (Key.VKey.KType == KeyType.Text)
+            {
+                SetContentText();
+            }
+            else if (Key.VKey.KType == KeyType.Symbols
+                    || Key.VKey.KType == KeyType.Alfa)
+            {
+                SetContentText(Key.VKey.UChar);
+            }
+            else
+            {
+                SetContentPath(Key);
+            }
         }
-        else if (Key.VKey.KType == KeyType.Symbols 
-                || Key.VKey.KType == KeyType.Alfa)
+        catch (Exception ex)
         {
-            SetContentText(Key.VKey.UChar);
-        }
-        else
-        {
-            SetContentPath(Key);
+            throw;
         }
     }
 
@@ -146,15 +154,28 @@ public sealed partial class KeyControl : Panel
 
     private void SetContentPath(KeyModel key)
     {
+        var size =  CalculateFontSize();
+
         ControlBorder.Child = null;
 
-        var path = new Microsoft.UI.Xaml.Shapes.Path()
+        var viewBox = new Viewbox()
         {
-            Stroke = Keyboard.KeyForeground,
-            StrokeThickness = 1,
-            Height = key.VKey.GeometryHeight,
-            Width = key.VKey.GeometryWidth,
-            Data = key.VKey.Geometry,
+            Height = size.Height,
+        };
+
+        var path = new Microsoft.UI.Xaml.Shapes.Path();
+        path.Stroke = Keyboard.KeyForeground;
+        path.StrokeThickness = 1;
+        path.Stretch = Stretch.Uniform;
+        path.Height = key.VKey.GeometryHeight;
+        path.Width = key.VKey.GeometryWidth;
+        path.Data = key.VKey.KeyId switch
+        {
+            "Space" => KeyPathGeometry.Space,
+            "Back" => KeyPathGeometry.Back,
+            "Shift" => KeyPathGeometry.Shift,
+            "Enter" => KeyPathGeometry.Enter,
+            _ => null,
         };
 
         // Binds path.Stroke to Keyboard.KeyForeground
@@ -165,15 +186,9 @@ public sealed partial class KeyControl : Panel
             Mode = BindingMode.OneWay,
         });
 
-        var size =  CalculateFontSize();
-
         // Content resized by the Viewbox
-        ControlBorder.Child = new Viewbox()
-        {
-            Height = size.Height,
-            Stretch = Stretch.Uniform,
-            Child = path
-        };
+        viewBox.Child = path;
+
     }
 
     private Size CalculateFontSize()

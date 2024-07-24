@@ -69,10 +69,10 @@ public static class VirtualKeys
         { "RCurly",         new VirtualKeyModel("RCurly",       KeyType.Text,       "}",    "}",    0x007D, 0x007D, null, 0, 0) },
         { "Backslash",      new VirtualKeyModel("Backslash",    KeyType.Text,       "\\",   "\\",   0x005C, 0x005C, null, 0, 0) },
         { "Quote",          new VirtualKeyModel("Quote",        KeyType.Text,       "\"",   "\"",   0x002A, 0x002A, null, 0, 0) },
-        { "Space",          new VirtualKeyModel("Space",        KeyType.Space,      " ",    " ",    0x0020, 0x0020, KeyPathGeometry.Space, 13, 7) },
+        { "Space",          new VirtualKeyModel("Space",        KeyType.Space,      " ",    " ",    0x0000, 0x0000, KeyPathGeometry.Space, 13, 7) },
         { "Enter",          new VirtualKeyModel("Enter",        KeyType.Enter,      "",     "",     0x0000, 0x0000, KeyPathGeometry.Enter, 13, 9) },
-        { "Shift",          new VirtualKeyModel("Shift",        KeyType.Shift,      "",     "",     0x0000, 0x0000, KeyPathGeometry.Shift, 9, 10) },
-        { "Back",           new VirtualKeyModel("Back",         KeyType.Back,       "",     "",     0x0000, 0x0000, KeyPathGeometry.Back, 14, 9) },
+        { "Shift",          new VirtualKeyModel("Shift",        KeyType.Shift,      "",     "",     0x0000, 0x0000, KeyPathGeometry.Shift, 9, 10) }, 
+        { "Back",           new VirtualKeyModel("Back",         KeyType.Back,       "",     "",     0x0000, 0x0000, KeyPathGeometry.Back,  14, 9) },
         { "Symbols",        new VirtualKeyModel("Symbols",      KeyType.Symbols,    "&123", "&123", 0x0002, 0x0002, null, 0, 0) },
         { "Alfa",           new VirtualKeyModel("Alfa",         KeyType.Alfa,       "ABC",  "ABC",  0x0001, 0x0001, null, 1, 4) }
     };
