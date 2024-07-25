@@ -91,8 +91,7 @@ public sealed partial class KeyControl : Panel
     private void InvalidateKey()
     {
 
-        try
-        {
+        // try {
             if (Key.VKey.KType == KeyType.Text)
             {
                 SetContentText();
@@ -106,11 +105,7 @@ public sealed partial class KeyControl : Panel
             {
                 SetContentPath(Key);
             }
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
+        // } catch (Exception ex) { throw; }
     }
 
     private void SetContentText(string? text = null)
@@ -163,6 +158,8 @@ public sealed partial class KeyControl : Panel
         path.StrokeThickness = 1;
         path.Height = key.VKey.GeometryHeight;
         path.Width = key.VKey.GeometryWidth;
+        
+        // For some reason if I use key.VKey.Geometry, it throws an exception randomly.
         path.Data = key.VKey.KeyId switch
         {
             "Space" => KeyPathGeometry.Space,
