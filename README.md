@@ -17,7 +17,7 @@ This library provides an extension method for the `Window` class to display the 
 
 The method generates a scaffold with the keyboard layout and adds it to the `Window` content. You can then use the new RootFrame to publish your actual content.
 
-To activate the main window, add the following line to your `App.xaml.cs` file:The control manages focus events using the FocusManager, so the keyboard will be shown whenever a control receives focus.
+To activate the main window, add the following line to your `App.xaml.cs` file. The control manages focus events using FocusManager, so the keyboard will be shown whenever any TextBox control gets the focus.
 
 ```csharp
 MainWindow.AddKeyboard(height: 300);
@@ -27,12 +27,15 @@ MainWindow.AddKeyboard(height: 300);
 
 The extension class `McWindowEx` introduces a new attached property `KeyboardType` that allows keyboard customization. Two default keyboards are provided:
 
-- alfa-en
+- en-alfa
 - numeric
 
-To use a specific keyboard, add the  attached property to your XAML code:
+To use a specific keyboard, set the attached property `KeyboardType` in your TextBox control:
 
-```xaml
+```xml
+<Page 
+    xmlns:mck="using:UnoKeyboard" />
+
 <TextBox Width="200"
          VerticalAlignment="Center"
          FontSize="30"
