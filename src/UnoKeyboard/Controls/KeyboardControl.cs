@@ -1,4 +1,3 @@
-using UnoKeyboard.Models;
 using Windows.Foundation;
 
 namespace UnoKeyboard.Controls;
@@ -68,7 +67,7 @@ public sealed partial class KeyboardControl : Panel
             return base.ArrangeOverride(finalSize);
         }
 
-        // Get an ordered list of KeyControls children by row and column
+        // Get the list of KeyControls ordered by row and column
         var childs = Children
                         .Where(c => c is KeyControl)
                         .OrderBy(c => (c as KeyControl)?.Key.Row)
