@@ -53,4 +53,4 @@ To use a specific keyboard, set the attached property `KeyboardType` in your Tex
 
 Two static dictionaries are used to define the Keyyboard and the Keys. You can add more keys and keyboard layouts by adding new entries to these dictionaries.
 
-[Keyboards class](Keyboards.cs)
+[Keyboards class](src/UnoKeyboard/Keyboards.cs)
