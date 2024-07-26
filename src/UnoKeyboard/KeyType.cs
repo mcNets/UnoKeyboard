@@ -1,5 +1,8 @@
 ﻿namespace UnoKeyboard;
 
+/// <summary>
+/// Represents the type of a key.
+/// </summary>
 public enum KeyType
 {
     Text,

@@ -1,5 +1,8 @@
 namespace UnoKeyboard.Models;
 
+/// <summary>
+/// Dictionary of virtual keys.
+/// </summary>
 public static class VirtualKeys
 {
     public static Dictionary<string, VirtualKeyModel> Key = new()
@@ -77,6 +80,12 @@ public static class VirtualKeys
         { "Alfa",           new VirtualKeyModel("Alfa",         KeyType.Alfa,       "ABC",  "ABC",  0x0001, 0x0001, null, 1, 4) }
     };
 
+    /// <summary>
+    /// Gets the virtual key model.
+    /// </summary>
+    /// <param name="key">The key identifier.</param>
+    /// <returns>The virtual key model.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown when the key is not found.</exception>
     public static VirtualKeyModel Get(string key)
     {
         if (Key.TryGetValue(key, out VirtualKeyModel? value))

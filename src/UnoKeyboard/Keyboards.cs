@@ -1,8 +1,10 @@
-using Microsoft.UI.Xaml.Documents;
 using UnoKeyboard.Models;
 
 namespace UnoKeyboard;
 
+/// <summary>
+/// Represents a collection of keyboards.
+/// </summary>
 public static class Keyboards
 {
     public static Dictionary<string, KeyboardModel> Keyboard = new()

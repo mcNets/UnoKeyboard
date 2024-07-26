@@ -4,15 +4,16 @@ namespace UnoKeyboard;
 
 using KeyboardId = System.String;
 
+/// <summary>
+/// Extension methods for the Window class.
+/// </summary>
 public static class McWindowEx
 {
     private static KeyboardControl _keyboard = new();
 
     public static KeyboardControl Keyboard => _keyboard;
 
-    /// <summary>
-    /// Once the keyboard is added to the window users should use RootFrame to navigate.
-    /// </summary>
+    // Once the keyboard is added to the window, users should use RootFrame to add new content.
     public static Frame RootFrame = new();
 
     /// <summary>
