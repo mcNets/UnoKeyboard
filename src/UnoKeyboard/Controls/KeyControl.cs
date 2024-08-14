@@ -73,13 +73,13 @@ public sealed partial class KeyControl : Panel
 
         this.Tapped += (s, e) =>
         {
-#if !WINDOWS
+#if HAS_UNO
             Focus(FocusState.Programmatic);
 #endif
 
             KeyPressed?.Invoke(this, new KeyEventArgs(Key, IsShiftActive));
 
-#if WINDOWS
+#if !HAS_UNO
             if (Keyboard.TextControl != null)
             {
                 Keyboard.TextControl.Focus(FocusState.Programmatic);
@@ -90,25 +90,22 @@ public sealed partial class KeyControl : Panel
 
     private void InvalidateKey()
     {
-
-        // try {
-            if (Key.VKey.KType == KeyType.Text)
-            {
-                SetContentText();
-            }
-            else if (Key.VKey.KType == KeyType.Symbols
-                    || Key.VKey.KType == KeyType.Alfa)
-            {
-                SetContentText(Key.VKey.UChar);
-            }
-            else
-            {
-                SetContentPath(Key);
-            }
-        // } catch (Exception ex) { throw; }
+        if (Key.VKey.KType == KeyType.Text)
+        {
+            SetKeyContentText();
+        }
+        else if (Key.VKey.KType == KeyType.Symbols
+                 || Key.VKey.KType == KeyType.Alfa)
+        {
+            SetKeyContentText(Key.VKey.UChar);
+        }
+        else
+        {
+            SetKeyContentPath(Key);
+        }
     }
 
-    private void SetContentText(string? text = null)
+    private void SetKeyContentText(string? text = null)
     {
         ControlBorder.Child = null;
 
@@ -147,27 +144,15 @@ public sealed partial class KeyControl : Panel
         ControlBorder.Child = tb;
     }
 
-    private void SetContentPath(KeyModel key)
+    private void SetKeyContentPath(KeyModel key)
     {
-        var size =  CalculateFontSize();
+        var size = CalculateFontSize();
 
         ControlBorder.Child = null;
 
-        var path = new Microsoft.UI.Xaml.Shapes.Path();
+        Microsoft.UI.Xaml.Shapes.Path? path = (key.VKey.GetPath?.Invoke()) ?? throw new Exception($"Path not found for key '{key.VKey.KeyId}'.");
+
         path.Stroke = Keyboard.KeyForeground;
-        path.StrokeThickness = 1;
-        path.Height = key.VKey.GeometryHeight;
-        path.Width = key.VKey.GeometryWidth;
-        
-        // For some reason if I use key.VKey.Geometry, it throws an exception randomly.
-        path.Data = key.VKey.KeyId switch
-        {
-            "Space" => KeyPathGeometry.Space,
-            "Back" => KeyPathGeometry.Back,
-            "Shift" => KeyPathGeometry.Shift,
-            "Enter" => KeyPathGeometry.Enter,
-            _ => null,
-        };
 
         // Binds path.Stroke to Keyboard.KeyForeground
         BindingOperations.SetBinding(path, Microsoft.UI.Xaml.Shapes.Path.StrokeProperty, new Binding()
@@ -186,6 +171,11 @@ public sealed partial class KeyControl : Panel
         };
     }
 
+    /// <summary>
+    /// Calculates the font size for the 'A' or 'a' character.
+    /// It will be used to set the size of the path.
+    /// </summary>
+    /// <returns></returns>
     private Size CalculateFontSize()
     {
         // Measure the height of a TextBlock with a single character to set the size of the path
@@ -202,14 +192,15 @@ public sealed partial class KeyControl : Panel
         return textBlock.DesiredSize;
     }
 
+    /// <inheritdoc />
     protected override Size MeasureOverride(Size availableSize)
     {
         ControlBorder.Measure(availableSize);
         ControlBorder.Child?.Measure(availableSize);
         return base.MeasureOverride(availableSize);
-
     }
 
+    /// <inheritdoc />
     protected override Size ArrangeOverride(Size finalSize)
     {
         ControlBorder.Arrange(new Rect(0, 0, finalSize.Width, finalSize.Height));

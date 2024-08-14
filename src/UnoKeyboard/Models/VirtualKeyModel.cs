@@ -9,18 +9,14 @@
 /// <param name="LChar">The lowercase character representation of the key.</param>
 /// <param name="UCode">The Unicode value of the uppercase character.</param>
 /// <param name="LCode">The Unicode value of the lowercase character.</param>
-/// <param name="Geometry">The path geometry of the key.</param>
-/// <param name="GeometryWidth">The width of the key's geometry.</param>
-/// <param name="GeometryHeight">The height of the key's geometry.</param>
+/// <param name="GetPath">A Func that returns a Path</param>
 public record VirtualKeyModel(string KeyId, 
                               KeyType KType,
                               string UChar, 
                               string LChar, 
                               int UCode, 
-                              int LCode, 
-                              PathGeometry? Geometry, 
-                              double GeometryWidth, 
-                              double GeometryHeight)
+                              int LCode,
+                              Func<Microsoft.UI.Xaml.Shapes.Path>? GetPath)
 {
     /// <summary>
     /// Gets the uppercase character value of the key.
