@@ -90,7 +90,7 @@ public sealed partial class KeyboardControl
     private void OnLosingFocus(object? sender, LosingFocusEventArgs args)
     {
         // THAT DOESN'T WORK FOR WINDOWS
-#if !WINDOWS
+#if HAS_UNO
         // When a KeyControl gets the focus, the event has to be canceled so the TextBox doesn't lose the focus.
         if ((args.NewFocusedElement is null || args.NewFocusedElement is KeyControl)
             && args.OldFocusedElement is TextBox)
