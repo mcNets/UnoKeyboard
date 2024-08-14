@@ -20,8 +20,14 @@ public static class KeyPathGeometry
     ///   ............. 6
     /// 
     /// </summary>
-    public static PathGeometry Space =>
-        new()
+    public static Microsoft.UI.Xaml.Shapes.Path Space()
+    {
+        var path = new Microsoft.UI.Xaml.Shapes.Path();
+        path.Width = 13;
+        path.Height = 7;
+        path.StrokeThickness = 1;
+        path.HorizontalAlignment = HorizontalAlignment.Left;
+        path.Data = new PathGeometry()
         {
             Figures =
             [
@@ -38,6 +44,8 @@ public static class KeyPathGeometry
                 },
             ]
         };
+        return path;
+    }
 
     /// <summary>
     /// Shift
@@ -58,8 +66,14 @@ public static class KeyPathGeometry
     ///   ......... 9
     ///   
     /// </summary>
-    public static PathGeometry Shift =>
-        new()
+    public static Microsoft.UI.Xaml.Shapes.Path Shift() 
+    {
+        var path = new Microsoft.UI.Xaml.Shapes.Path();
+        path.Width = 9;
+        path.Height = 10;
+        path.StrokeThickness = 1;
+        path.HorizontalAlignment = HorizontalAlignment.Left;
+        path.Data = new PathGeometry()
         {
             Figures =
             [
@@ -92,6 +106,8 @@ public static class KeyPathGeometry
                 },
             ]
         };
+        return path;
+    }
 
     /// <summary>
     /// Enter 
@@ -111,8 +127,14 @@ public static class KeyPathGeometry
     ///   ............. 8
     /// 
     /// </summary>
-    public static PathGeometry Enter =>
-        new()
+    public static Microsoft.UI.Xaml.Shapes.Path Enter ()
+    {
+        var path = new Microsoft.UI.Xaml.Shapes.Path();
+        path.Width = 13;
+        path.Height = 9;
+        path.StrokeThickness = 1;
+        path.HorizontalAlignment = HorizontalAlignment.Left;
+        path.Data = new PathGeometry()
         {
             Figures =
             [
@@ -146,6 +168,8 @@ public static class KeyPathGeometry
                 },
             ]
         };
+        return path;
+    }
 
     /// <summary>
     /// Back 
@@ -165,8 +189,14 @@ public static class KeyPathGeometry
     ///   .............. 8
     /// 
     /// </summary>
-    public static PathGeometry Back =>
-        new()
+    public static Microsoft.UI.Xaml.Shapes.Path Back()
+    {
+        var path = new Microsoft.UI.Xaml.Shapes.Path();
+        path.Width = 14;
+        path.Height = 9;
+        path.StrokeThickness = 1;
+        path.HorizontalAlignment = HorizontalAlignment.Left;
+        path.Data = new PathGeometry()
         {
             Figures =
             [
@@ -203,6 +233,8 @@ public static class KeyPathGeometry
                 },
             ]
         };
+        return path;
+    }
 
     // LeftArrow
     //     H=10 W=10
