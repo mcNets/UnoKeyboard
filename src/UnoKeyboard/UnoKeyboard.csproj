@@ -1,4 +1,4 @@
-<Project Sdk="Uno.Sdk">
+﻿<Project Sdk="Uno.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0;net8.0-windows10.0.19041;net8.0-browserwasm;net8.0-desktop</TargetFrameworks>
     <UnoSingleProject>true</UnoSingleProject>
@@ -7,6 +7,19 @@
     <GenerateLibraryLayout>true</GenerateLibraryLayout>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>UNO Keyboard for Desktop, Windows and WASM</Title>
+    <Authors>Joan Magnet</Authors>
+    <Description>UnoKeyboard is an on-screen virtual keyboard designed for Desktop, WASM, and Windows platforms.</Description>
+    <Copyright>Joan Magnet</Copyright>
+    <PackageProjectUrl>https://github.com/mcNets/UnoKeyboard</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageOutputPath>$(ProjectPath)/Packages</PackageOutputPath>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>nuget_icon.jpg</PackageIcon>
+    <FileVersion>1.0.1</FileVersion>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+	  <VersionPrefix>1.0.1</VersionPrefix>
 
     <!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
@@ -30,6 +43,17 @@
     -->
     <!-- <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.22621.28" />
     <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.22621.28" /> -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\nuget_icon.jpg">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 	
 </Project>
