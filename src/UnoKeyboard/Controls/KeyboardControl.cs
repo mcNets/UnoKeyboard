@@ -16,6 +16,8 @@ public sealed partial class KeyboardControl : Panel
         Loaded += (s, e) => { ApplyThemedResources(); };
     }
 
+    public event EventHandler<KeyEventArgs>? KeyPressed;
+
     private void ApplyThemedResources()
     {
         Background = (Brush)Application.Current.Resources["ControlSolidFillColorDefaultBrush"];

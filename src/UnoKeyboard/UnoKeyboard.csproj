@@ -14,12 +14,12 @@
     <Copyright>Joan Magnet</Copyright>
     <PackageProjectUrl>https://github.com/mcNets/UnoKeyboard</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageOutputPath>$(ProjectPath)/Packages</PackageOutputPath>
+    <PackageOutputPath>.\Packages</PackageOutputPath>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>nuget_icon.jpg</PackageIcon>
-    <FileVersion>1.0.1</FileVersion>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
-	  <VersionPrefix>1.0.1</VersionPrefix>
+    <FileVersion>1.0.2</FileVersion>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+	<VersionPrefix>1.0.2</VersionPrefix>
 
     <!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.

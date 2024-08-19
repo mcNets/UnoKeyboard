@@ -13,6 +13,16 @@ public sealed partial class KeyboardControl
             return;
         }
 
+        // User can cancel the event to prevent the default behavior.
+        if (KeyPressed is not null)
+        {
+            KeyPressed.Invoke(this, e);
+            if (e.Cancel)
+            {
+                return;
+            }
+        }
+
         switch (e.Key.VKey.KType)
         {
             case KeyType.Left:
@@ -61,7 +71,7 @@ public sealed partial class KeyboardControl
                 break;
 
             case KeyType.Enter:
-                // TODO: What to do with the Enter key?
+                // Must be handled by the KeyPressed event.
                 break;
 
             case KeyType.Space:

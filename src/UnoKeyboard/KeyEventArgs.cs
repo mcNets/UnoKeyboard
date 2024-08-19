@@ -11,6 +11,7 @@ public class KeyEventArgs : RoutedEventArgs
     {
         Key = key;
         IsShiftActive = isShiftActive;
+        Cancel = false;
     }
 
     /// <summary>
@@ -22,4 +23,9 @@ public class KeyEventArgs : RoutedEventArgs
     /// Indicates whether the shift key is active.
     /// </summary>
     public bool IsShiftActive { get; }
+
+    /// <summary>
+    /// Indicates whether the event should be canceled.
+    /// </summary>
+    public bool Cancel { get; set; }
 }
