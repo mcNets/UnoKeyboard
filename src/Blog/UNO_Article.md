@@ -11,7 +11,7 @@ UnoKeyboard is an on-screen keyboard control designed to run on Desktop, WASM, a
 - Theming support.
 - Custom appearance.
 
-## Como añadir el control a tu proyecto.
+## Adding the Control to Your Project.
 
 The control is available as a NuGet package [Nuget package](https://www.nuget.org/packages/UnoKeyboard) or can be integrated from the [Github source code](https://github.com/mcNets/UnoKeyboard).
 
@@ -80,7 +80,7 @@ Add a reference to the `xmlns:ukc="using:UnoKeyboard.Controls"` namespace and th
 
 ## Properties
 
-Here are some of the properties. For a complete list, refer to the control's documentation.
+Here are some of the properties. For a complete list, refer to the control's [documentation](https://github.com/mcNets/UnoKeyboard/blob/main/Properties.md).
 
 ### Height
 
