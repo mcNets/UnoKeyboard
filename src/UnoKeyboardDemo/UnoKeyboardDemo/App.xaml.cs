@@ -54,6 +54,7 @@ public partial class App : Application
         // Navigate using McWindowEx.RootFrame
         if (RootFrame.Content == null)
         {
+            RootFrame.NavigationFailed += OnNavigationFailed;
             RootFrame.Navigate(typeof(MainPage), args.Arguments);
         }
 
