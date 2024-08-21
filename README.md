@@ -1,43 +1,109 @@
 # UnoKeyboard
 
-UnoKeyboard is an on-screen virtual keyboard designed for Desktop, WASM, and Windows platforms.
+UnoKeyboard is an on-screen keyboard control designed to run on Desktop, WASM, and Windows platforms. It's primarily intended for touch-screen devices.
 
-![UnoKeyboardDark](UnoKeyboardLight.jpg) ![UnoKeyboardDark](UnoKeyboardDark.jpg) 
+![UnoKeyboardDark](https://github.com/mcNets/UnoKeyboard/blob/main/UnoKeyboardLight.jpg) ![UnoKeyboardDark](https://github.com/mcNets/UnoKeyboard/blob/main/UnoKeyboardDark.jpg)
 
 ## Features
 
-- Multi-platform support.
-- Customizable layout.
-- Theme support.
-- Customizable appearance (font and size).
+- Cross-platform.
+- Customizable design.
+- Theming support.
+- Custom appearance.
 
-## Usage
+## Adding the Control to Your Project.
 
-This library provides an extension method for the `Window` class to display the virtual keyboard. 
+The control is available as a NuGet package [Nuget package](https://www.nuget.org/packages/UnoKeyboard) or can be integrated from the [Github source code](https://github.com/mcNets/UnoKeyboard).
 
-The method generates a scaffold with the keyboard layout and adds it to the `Window` content. You can then use the new RootFrame to publish your actual content.
+### Using the AddKeyboard Extension Method
 
-To activate the main window, add the following line to your `App.xaml.cs` file. The control manages focus events using FocusManager, so the keyboard will be shown whenever any TextBox control gets the focus.
+The library provides an extension method for the Window class to automatically add the control to your project.
+
+The `AddKeyboard` method injects a two-row grid. The first row contains a `ScrollViewer`, and the second row displays the virtual keyboard. The content of the `ScrollViewer` is assigned to the `RootFrame` property of the `McWindowEx` class.
+
+- Add a reference to `McWindowEx.RootFrame` in your `App.xaml.cs` file:
 
 ```csharp
-// Once the keyboard is added to the window, users should use RootFrame to add new content.
-public static Frame RootFrame => McWindowEx.RootFrame;
-
-MainWindow.AddKeyboard(height: 300);
-
-// Navigate using McWindowEx.RootFrame
-if (RootFrame.Content == null)
-{
-    RootFrame.Navigate(typeof(MainPage), args.Arguments);
-}
+    public static Frame RootFrame => McWindowEx.RootFrame;
 ```
 
-The extension class `McWindowEx` introduces a new attached property `KeyboardType` that allows keyboard customization. Two default keyboards are provided:
+- Comment out the code that creates the main `Frame` in the `OnLaunched` method:
+
+```csharp
+    // Do not repeat app initialization when the Window already has content,
+    // just ensure that the window is active
+    //if (MainWindow.Content is not Frame rootFrame)
+    //{
+    //    // Create a Frame to act as the navigation context and navigate to the first page
+    //    rootFrame = new Frame();
+
+    //    // Place the frame in the current Window
+    //    MainWindow.Content = rootFrame;
+    //    rootFrame.NavigationFailed += OnNavigationFailed;
+    //}
+
+    //if (rootFrame.Content == null)
+    //{
+    //    // When the navigation stack isn't restored navigate to the first page,
+    //    // configuring the new page by passing required information as a navigation
+    //    // parameter
+    //    rootFrame.Navigate(typeof(MainPage), args.Arguments);
+    //}
+```
+
+- Call the `AddKeyboard` method and navigate to the main page:
+
+```csharp
+    // Add UnoKeyboard to the Window
+    MainWindow.AddKeyboard(height: 300);
+
+    // Navigate using McWindowEx.RootFrame
+    if (RootFrame.Content == null)
+    {
+        RootFrame.Navigate(typeof(MainPage), args.Arguments);
+        RootFrame.NavigationFailed += OnNavigationFailed;
+    }
+```
+
+From this point on, the virtual keyboard will automatically appear whenever a `TextBox` gains focus.
+
+### Using an XAML Control:
+
+Add a reference to the `xmlns:ukc="using:UnoKeyboard.Controls"` namespace and then add a new control to your file:
+
+```xml
+<ukc:UnoKeyboard x:Name="MyKeyboard"
+                 Height="300"
+                 Visibility="Collapsed"
+                 HandleFocusManager="True" />
+```
+
+## Properties
+
+Here are some of the properties. For a complete list, refer to the control's [documentation](https://github.com/mcNets/UnoKeyboard/blob/main/Properties.md).
+
+### Height
+
+This property defines the height of the virtual keyboard. **It's important to note that the height of each key depends on the keyboard's height**. For example, if the keyboard is 300px high and has 4 rows, each row will be::
+
+```
+(300 - (Padding.Top + Padding.Bottom)) / 4
+```
+
+Similarly, the width of each key is calculated based on the number of keys per row.
+
+### HandleFocusManager
+
+If the `HandleFocusManager` property is set to True, the control will automatically show and hide the virtual keyboard when a TextBox gains or loses focus. Otherwise, the keyboard must be shown and hidden manually.
+
+## Keyboard Type
+
+The `McWindowEx` extension class introduces a new attached property: `KeyboardType`, which allows for keyboard selection. Two default keyboards are available, but you can add more custom keyboards:
 
 - en-alfa
 - numeric
 
-To use a specific keyboard, set the attached property `KeyboardType` in your TextBox control. By default, the keyboard is set to `en-alfa`:
+To use a specific keyboard, set the `KeyboardType` attached property on your `TextBox` control. The default keyboard is `en-alfa`:
 
 ```xml
 <Page 
@@ -51,11 +117,11 @@ To use a specific keyboard, set the attached property `KeyboardType` in your Tex
 
 ## Customization
 
-Two static dictionaries are used to define the Keyyboard and the Keys. You can add more keys and keyboard layouts by adding new entries to these dictionaries.
+Two static dictionaries are used to define the keyboard and its keys. You can add more keys and keyboard layouts by adding new entries to these dictionaries.
 
 ### VirtualKeys
 
-[VirtualKeys.Key](src/UnoKeyboard/VirtualKeys.cs) dictionary defines the keys that will be displayed on the keyboard. Each key is defined by a [VirtualKeyModel](src/UnoKeyboard/Models/VirtualKeyModel.cs).
+The [VirtualKeys.Key](https://github.com/mcNets/UnoKeyboard/blob/main/src/UnoKeyboard/VirtualKeys.cs) dictionary dictionary defines the keys that will be displayed on the keyboard. Each key is defined by a [VirtualKeyModel](https://github.com/mcNets/UnoKeyboard/blob/main/src/UnoKeyboard/Models/VirtualKeyModel.cs).
 
 That is a reduced version of the dictionary:
 
@@ -64,32 +130,31 @@ public static class VirtualKeys
 {
     public static Dictionary<string, VirtualKeyModel> Key = new()
     {
-        { "N1", new VirtualKeyModel("N1", KeyType.Text, "1", "1", 0x0031, 0x0031, null, 0, 0) },
-        { "N2", new VirtualKeyModel("N2", KeyType.Text, "2", "2", 0x0032, 0x0032, null, 0, 0) },
+        { "N1", new VirtualKeyModel("N1", KeyType.Text, "1", "1", 0x0031, 0x0031, null) },
+        { "N2", new VirtualKeyModel("N2", KeyType.Text, "2", "2", 0x0032, 0x0032, null) },
     }
 }
 ```
 
-Now let say you want to add the key `|` to your own keyboard layout:
+For example, to add the `|` key to your custom keyboard layout:
 
 ```csharp
 VirtualKeys.Key.Add("|",                // Dictionary key
-    new VirtualKeyModel("|",            // Key Id
+    new VirtualKeyModel("|",            // Key ID
                         KeyType.Text,   // Type
-                        "|",            // Upper Case
-                        "|",            // Lower Case
-                        0x007C,         // Upper Case Unicode
-                        0x007C,         // Lower Case Unicode
-                        null,           // PathGeometry for special keys
-                        0,              // Width of geometry path.
-                        0));            // Height of geometry path.
+                        "|",            // Uppercase
+                        "|",            // Lowercase
+                        0x007C,         // Unicode uppercase
+                        0x007C,         // Unicode lowercase
+                        null));         // A Func<Microsoft.UI.Xaml.Shapes.Path>? that returns a Path
+                                        // used to draw special keys.
 ```
 
 ### Keyboards
 
-The [Keyboards.Keyboard](src/UnoKeyboard/Keyboards.cs) dictionary defines the keyboard layouts. Each keyboard is defined by a [KeyboardModel](src/UnoKeyboard/Models/KeyboardModel.cs).
+The [Keyboards.Keyboard](https://github.com/mcNets/UnoKeyboard/blob/main/src/UnoKeyboard/Keyboards.cs) dictionary defines the keyboard layouts. Each keyboard is defined by a [KeyboardModel](https://github.com/mcNets/UnoKeyboard/blob/main/src/UnoKeyboard/Models/KeyboardModel.cs).
 
-Lets add the new key to the keyboard layout:
+Let's add the new key to the keyboard layout:
 
 ```csharp
 Keyboards.Keyboard.Add("my_keyboard",   // Dictionary key
@@ -105,11 +170,6 @@ Keyboards.Keyboard.Add("my_keyboard",   // Dictionary key
                                      VirtualKeys.Get("|")), // Key
                       ]));
 ```
+For any questions or suggestions, feel free to contact me in the [Discusiones](https://github.com/mcNets/UnoKeyboard/discussions) section or open an [Issue](https://github.com/mcNets/UnoKeyboard/issues) on the GitHub repository.
 
-### Automatic Keyboard Appearance and Disappearance
-
-The on-screen keyboard automatically appears whenever a TextBox gains focus and disappears when it loses focus. This behavior is controlled by the `HandleFocusManager` property of the keyboard control.
-
-How it works:
-
-When HandleFocusManager is set to true, the keyboard control actively monitors the focus state of elements within your application. As soon as a TextBox receives focus, the keyboard is automatically displayed to facilitate user input. Conversely, when the focus shifts to another element, the keyboard gracefully disappears, providing a clean and uncluttered interface.
+Everyone is welcome to contribute to the project. Thank you for your interest!
