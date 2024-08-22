@@ -1,5 +1,8 @@
 # UnoKeyboard
 
+![GitHub release (latest by date)](https://img.shields.io/github/v/tag/mcNets/UnoKeyboard)
+[![NuGet](https://img.shields.io/nuget/v/UnoKeyboard)](https://www.nuget.org/packages/UnoKeyboard/)
+
 UnoKeyboard is an on-screen keyboard control designed to run on Desktop, WASM, and Windows platforms. It's primarily intended for touch-screen devices.
 
 ![UnoKeyboardDark](https://github.com/mcNets/UnoKeyboard/blob/main/UnoKeyboardLight.jpg) ![UnoKeyboardDark](https://github.com/mcNets/UnoKeyboard/blob/main/UnoKeyboardDark.jpg)
@@ -14,6 +17,15 @@ UnoKeyboard is an on-screen keyboard control designed to run on Desktop, WASM, a
 ## Adding the Control to Your Project.
 
 The control is available as a NuGet package [Nuget package](https://www.nuget.org/packages/UnoKeyboard) or can be integrated from the [Github source code](https://github.com/mcNets/UnoKeyboard).
+
+### How should I use the Control?
+
+The keyboard can be used in two different ways:
+
+- Using the AddKeyboard extension method.
+- Using a XAML control.
+
+If your project uses the default frame navigation, I would recommend using the AddKeyboard extension method. This method automatically shows and hides the keyboard when a TextBox gains or loses focus. On the other hand, if you prefer more control over the keyboard or if you are using other navigation methods, use the XAML control instead.
 
 ### Using the AddKeyboard Extension Method
 
