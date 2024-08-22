@@ -95,6 +95,7 @@ public static class Keyboards
                     new KeyModel(1, 2, 5, 1, VirtualKeys.Get("Semicolon")),
                     new KeyModel(1, 2, 6, 1, VirtualKeys.Get("Question")), 
                     new KeyModel(1, 2, 7, 1, VirtualKeys.Get("Dash")),
+                    new KeyModel(1, 2, 8, 1, VirtualKeys.Get("Exclamation")),
 
                     new KeyModel(1, 3, 0, 1, VirtualKeys.Get("Equal")),
                     new KeyModel(1, 3, 1, 1, VirtualKeys.Get("LCurly")),
