@@ -71,7 +71,7 @@ public sealed partial class KeyboardControl
                 break;
 
             case KeyType.Enter:
-                // Must be handled by the KeyPressed event.
+                Visibility = Visibility.Collapsed;
                 break;
 
             case KeyType.Space:

@@ -51,6 +51,7 @@ public static class VirtualKeys
         { "Slash",          new VirtualKeyModel("Slash",        KeyType.Text,       "/",    "/",    0x002F, 0x002F, null) },
         { "At",             new VirtualKeyModel("At",           KeyType.Text,       "@",    "@",    0x0040, 0x0040, null) },
         { "Hash",           new VirtualKeyModel("Hash",         KeyType.Text,       "#",    "#",    0x0023, 0x0023, null) },
+        { "Pound",          new VirtualKeyModel("Pound",        KeyType.Text,       "£",    "£",    0x00A3, 0x00A3, null) },
         { "Dollar",         new VirtualKeyModel("Dollar",       KeyType.Text,       "$",    "$",    0x0024, 0x0024, null) },
         { "Euro",           new VirtualKeyModel("Euro",         KeyType.Text,       "€",    "€",    0x20AC, 0x20AC, null) },
         { "Underscore",     new VirtualKeyModel("Underscore",   KeyType.Text,       "_",    "_",    0x005F, 0x005F, null) },
