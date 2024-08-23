@@ -99,8 +99,6 @@ public sealed partial class KeyboardControl
 
     private void OnLosingFocus(object? sender, LosingFocusEventArgs args)
     {
-        // THAT DOESN'T WORK FOR WINDOWS
-        // When a KeyControl gets the focus, the event has to be canceled so the TextBox doesn't lose the focus.
         if (args.OldFocusedElement == TextControl && Visibility == Visibility.Visible)
         {
             TextControl = null;
@@ -112,7 +110,6 @@ public sealed partial class KeyboardControl
     {
         if (args.NewFocusedElement is TextBox textBox)
         {
-
             // Gets the keyboard type from the attached property.
             var kbrIdProp = textBox.GetValue(McWindowEx.KeyboardIdProperty);
 
@@ -142,7 +139,6 @@ public sealed partial class KeyboardControl
             }
 
             TextControl = textBox;
-
             Visibility = Visibility.Visible;
         }
     }

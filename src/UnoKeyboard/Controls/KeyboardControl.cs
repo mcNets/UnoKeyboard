@@ -27,6 +27,7 @@ public sealed partial class KeyboardControl : Panel
         KeySpecialKeyBackground = (Brush)Application.Current.Resources["AccentFillColorTertiaryBrush"];
     }
 
+    /// <inheritdoc/>
     protected override Size MeasureOverride(Size availableSize)
     {
         if (Keyboard == null)
@@ -62,6 +63,7 @@ public sealed partial class KeyboardControl : Panel
         return base.MeasureOverride(availableSize);
     }
 
+    /// <inheritdoc/>
     protected override Size ArrangeOverride(Size finalSize)
     {
         if (Keyboard == null || Children.Count == 0 )
@@ -101,6 +103,9 @@ public sealed partial class KeyboardControl : Panel
         return base.ArrangeOverride(finalSize);
     }
 
+    /// <summary>
+    /// Repaints the keyboard control.
+    /// </summary>
     private void InvalidateKeyboard()
     {
         if (Keyboard == null)

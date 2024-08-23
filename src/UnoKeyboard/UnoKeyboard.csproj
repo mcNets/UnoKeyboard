@@ -17,10 +17,7 @@
 		<PackageOutputPath>.\Packages</PackageOutputPath>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageIcon>nuget_icon.jpg</PackageIcon>
-		<Version>1.0.4</Version>
-		<FileVersion>1.0.4</FileVersion>
-		<AssemblyVersion>1.0.4</AssemblyVersion>
-		<VersionPrefix>1.0.4</VersionPrefix>
+		<Version>1.0.5</Version>
 
 		<!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.

@@ -80,7 +80,11 @@ public sealed partial class KeyboardControl
     public bool IsShiftActive
     {
         get { return (bool)GetValue(IsShiftActiveProperty); }
-        set { SetValue(IsShiftActiveProperty, value); }
+        set
+        {
+            SetValue(IsShiftActiveProperty, value);
+            InvalidateKeyboard();
+        }
     }
 
     /// <summary>
@@ -272,7 +276,7 @@ public sealed partial class KeyboardControl
                                     typeof(KeyboardControl),
                                     new PropertyMetadata(false, OnHandleFocusManagerChanged));
 
-    
+
     /// <summary>
     /// Called when the HandleFocusManager property changes.
     /// Subscribes or unsubscribes to the focus manager events.
@@ -281,7 +285,8 @@ public sealed partial class KeyboardControl
     /// <param name="args"></param>
     private static void OnHandleFocusManagerChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
     {
-        if (dependencyObject is not KeyboardControl ctl) { return; }
+        if (dependencyObject is not KeyboardControl ctl)
+        { return; }
 
         if (ctl.HandleFocusManager)
         {

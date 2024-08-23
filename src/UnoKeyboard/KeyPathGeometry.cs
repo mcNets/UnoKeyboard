@@ -235,10 +235,4 @@ public static class KeyPathGeometry
         };
         return path;
     }
-
-    // LeftArrow
-    //     H=10 W=10
-    //     Data="M2,5 L4,1 M2,5 L4,9 M2,5 L9,5"
-    //
-
 }
