@@ -71,20 +71,11 @@ public sealed partial class KeyControl : Panel
             Mode = BindingMode.OneWay,
         });
 
-        this.Tapped += (s, e) =>
+        this.PointerReleased += (s, e) =>
         {
-#if HAS_UNO
-            Focus(FocusState.Programmatic);
-#endif
+            e.Handled = true;
 
             KeyPressed?.Invoke(this, new KeyEventArgs(Key, IsShiftActive));
-
-#if !HAS_UNO
-            if (Keyboard.TextControl != null)
-            {
-                Keyboard.TextControl.Focus(FocusState.Programmatic);
-            }
-#endif
         };
     }
 

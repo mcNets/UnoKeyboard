@@ -79,7 +79,7 @@ public sealed partial class KeyboardControl
                 TextControl.Text = TextControl.Text.Insert(currentPos, " ");
                 TextControl.SelectionStart = currentPos + 1;
                 break;
-                
+
             case KeyType.Text:
                 currentPos = TextControl.SelectionStart;
                 TextControl.Text = TextControl.Text.Insert(currentPos, IsShiftActive ? e.Key.VKey.UValue : e.Key.VKey.LValue);
@@ -100,18 +100,11 @@ public sealed partial class KeyboardControl
     private void OnLosingFocus(object? sender, LosingFocusEventArgs args)
     {
         // THAT DOESN'T WORK FOR WINDOWS
-#if HAS_UNO
         // When a KeyControl gets the focus, the event has to be canceled so the TextBox doesn't lose the focus.
-        if ((args.NewFocusedElement is null || args.NewFocusedElement is KeyControl)
-            && args.OldFocusedElement is TextBox)
+        if (args.OldFocusedElement == TextControl && Visibility == Visibility.Visible)
         {
-            args.Cancel = true;
-            return;
-        }
-#endif 
-        if (Visibility == Visibility.Visible)
-        {
-            DispatcherQueue?.TryEnqueue(() => Visibility = Visibility.Collapsed);
+            TextControl = null;
+            Visibility = Visibility.Collapsed;
         }
     }
 
@@ -119,40 +112,38 @@ public sealed partial class KeyboardControl
     {
         if (args.NewFocusedElement is TextBox textBox)
         {
-            DispatcherQueue?.TryEnqueue(() =>
-            {
-                // Gets the keyboard type from the attached property.
-                var kbrIdProp = textBox.GetValue(McWindowEx.KeyboardIdProperty);
 
-                if (kbrIdProp is string keyboardId)
+            // Gets the keyboard type from the attached property.
+            var kbrIdProp = textBox.GetValue(McWindowEx.KeyboardIdProperty);
+
+            if (kbrIdProp is string keyboardId)
+            {
+                if (keyboardId == "None")
                 {
-                    if (keyboardId == "None")
-                    {
-                        if (Keyboard is null || Keyboard.Id != Keyboards.Keyboard.First().Key)
-                        {
-                            _currentPage = 0;
-                            Keyboard = Keyboards.Keyboard.First().Value;
-                        }
-                        else
-                        {
-                            CurrentPage = 0;
-                        }
-                    }
-                    else if (Keyboard is null || Keyboard.Id != keyboardId)
+                    if (Keyboard is null || Keyboard.Id != Keyboards.Keyboard.First().Key)
                     {
                         _currentPage = 0;
-                        Keyboard = Keyboards.Keyboard[keyboardId];
+                        Keyboard = Keyboards.Keyboard.First().Value;
                     }
                     else
                     {
                         CurrentPage = 0;
                     }
                 }
+                else if (Keyboard is null || Keyboard.Id != keyboardId)
+                {
+                    _currentPage = 0;
+                    Keyboard = Keyboards.Keyboard[keyboardId];
+                }
+                else
+                {
+                    CurrentPage = 0;
+                }
+            }
 
-                TextControl = textBox;
+            TextControl = textBox;
 
-                Visibility = Visibility.Visible;
-            });
+            Visibility = Visibility.Visible;
         }
     }
 }
