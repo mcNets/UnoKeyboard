@@ -1,6 +1,6 @@
 # UnoKeyboard
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/tag/mcNets/UnoKeyboard)
+![Latest Release](https://img.shields.io/github/v/release/mcNets/UnoKeyboard?label=Latest%20Release&color=green) 
 [![NuGet](https://img.shields.io/nuget/v/UnoKeyboard)](https://www.nuget.org/packages/UnoKeyboard/)
 
 UnoKeyboard is an on-screen keyboard control designed to run on Desktop, WASM, and Windows platforms. It's primarily intended for touch-screen devices.
