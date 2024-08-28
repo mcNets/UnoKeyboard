@@ -71,8 +71,27 @@ public sealed partial class KeyControl : Panel
             Mode = BindingMode.OneWay,
         });
 
+        // Change key background when the key is pressed
+        this.PointerPressed += (s, e) =>
+        {
+            //ControlBorder.Background = new SolidColorBrush(Colors.DimGray);
+            if (ControlBorder.Background is SolidColorBrush originalBrush)
+            {
+                // Obtener el color original
+                var originalColor = originalBrush.Color;
+
+                // Modificar el canal alfa, por ejemplo, al 50%
+                var newColor = Windows.UI.Color.FromArgb(50, originalColor.R, originalColor.G, originalColor.B);
+
+                // Aplicar el nuevo color al fondo
+                ControlBorder.Background = new SolidColorBrush(newColor);
+            }
+        };
+
         this.PointerReleased += (s, e) =>
         {
+            ControlBorder.Background = Keyboard.KeyBackground;
+
             e.Handled = true;
 
             KeyPressed?.Invoke(this, new KeyEventArgs(Key, IsShiftActive));
