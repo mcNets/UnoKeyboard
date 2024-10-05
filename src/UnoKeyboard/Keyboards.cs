@@ -18,6 +18,8 @@ public static class Keyboards
                 10, // Max. keys per line
                 [
                     // new KeyModel(Page, Row, Column, ColumnSpan, VirtualKey)
+
+                    // Page 0, Row 0
                     new KeyModel(0, 0, 0, 1, VirtualKeys.Get("N1")),
                     new KeyModel(0, 0, 1, 1, VirtualKeys.Get("N2")),
                     new KeyModel(0, 0, 2, 1, VirtualKeys.Get("N3")),
@@ -29,6 +31,7 @@ public static class Keyboards
                     new KeyModel(0, 0, 8, 1, VirtualKeys.Get("N9")),
                     new KeyModel(0, 0, 9, 1, VirtualKeys.Get("N0")),
 
+                    // Page 0, Row 1
                     new KeyModel(0, 1, 0, 1, VirtualKeys.Get("Q")),
                     new KeyModel(0, 1, 1, 1, VirtualKeys.Get("W")),
                     new KeyModel(0, 1, 2, 1, VirtualKeys.Get("E")),
@@ -40,6 +43,7 @@ public static class Keyboards
                     new KeyModel(0, 1, 8, 1, VirtualKeys.Get("O")),
                     new KeyModel(0, 1, 9, 1, VirtualKeys.Get("P")),
 
+                    // Page 0, Row 2
                     new KeyModel(0, 2, 0, 1, VirtualKeys.Get("A")),
                     new KeyModel(0, 2, 1, 1, VirtualKeys.Get("S")),
                     new KeyModel(0, 2, 2, 1, VirtualKeys.Get("D")),
@@ -49,7 +53,8 @@ public static class Keyboards
                     new KeyModel(0, 2, 6, 1, VirtualKeys.Get("J")),
                     new KeyModel(0, 2, 7, 1, VirtualKeys.Get("K")),
                     new KeyModel(0, 2, 8, 1, VirtualKeys.Get("L")),
-
+                    
+                    // Page 0, Row 3
                     new KeyModel(0, 3, 0, 1, VirtualKeys.Get("Shift")),
                     new KeyModel(0, 3, 1, 1, VirtualKeys.Get("Z")),
                     new KeyModel(0, 3, 2, 1, VirtualKeys.Get("X")),
@@ -61,11 +66,13 @@ public static class Keyboards
                     new KeyModel(0, 3, 8, 1, VirtualKeys.Get("Point")),
                     new KeyModel(0, 3, 9, 1, VirtualKeys.Get("Back")),
 
+                    // Page 0, Row 4
                     new KeyModel(0, 4, 0, 2, VirtualKeys.Get("Symbols")),
                     new KeyModel(0, 4, 1, 5, VirtualKeys.Get("Space")),
                     new KeyModel(0, 4, 2, 1, VirtualKeys.Get("Comma")),
                     new KeyModel(0, 4, 3, 2, VirtualKeys.Get("Enter")),
 
+                    // Page 1, Row 0
                     new KeyModel(1, 0, 0, 1, VirtualKeys.Get("N1")),
                     new KeyModel(1, 0, 1, 1, VirtualKeys.Get("N2")),
                     new KeyModel(1, 0, 2, 1, VirtualKeys.Get("N3")),
@@ -77,16 +84,19 @@ public static class Keyboards
                     new KeyModel(1, 0, 8, 1, VirtualKeys.Get("N9")),
                     new KeyModel(1, 0, 9, 1, VirtualKeys.Get("N0")),
 
+                    // Page 1, Row 1
                     new KeyModel(1, 1, 0, 1, VirtualKeys.Get("At")),
-                    new KeyModel(1, 1, 1, 1, VirtualKeys.Get("Hash")),
-                    new KeyModel(1, 1, 2, 1, VirtualKeys.Get("Dollar")),
-                    new KeyModel(1, 1, 3, 1, VirtualKeys.Get("Pound")),
-                    new KeyModel(1, 1, 4, 1, VirtualKeys.Get("Euro")),
-                    new KeyModel(1, 1, 5, 1, VirtualKeys.Get("Plus")),
-                    new KeyModel(1, 1, 6, 1, VirtualKeys.Get("Dash")),
-                    new KeyModel(1, 1, 7, 1, VirtualKeys.Get("Asterisk")),
-                    new KeyModel(1, 1, 8, 1, VirtualKeys.Get("Slash")),
+                    new KeyModel(1, 1, 1, 1, VirtualKeys.Get("Quote")),
+                    new KeyModel(1, 1, 2, 1, VirtualKeys.Get("Hash")),
+                    new KeyModel(1, 1, 3, 1, VirtualKeys.Get("Dollar")),
+                    new KeyModel(1, 1, 4, 1, VirtualKeys.Get("Pound")),
+                    new KeyModel(1, 1, 5, 1, VirtualKeys.Get("Euro")),
+                    new KeyModel(1, 1, 6, 1, VirtualKeys.Get("Plus")),
+                    new KeyModel(1, 1, 7, 1, VirtualKeys.Get("Dash")),
+                    new KeyModel(1, 1, 8, 1, VirtualKeys.Get("Asterisk")),
+                    new KeyModel(1, 1, 9, 1, VirtualKeys.Get("Slash")),
                     
+                    // Page 1, Row 2
                     new KeyModel(1, 2, 0, 1, VirtualKeys.Get("Underscore")),
                     new KeyModel(1, 2, 1, 1, VirtualKeys.Get("LParenthesis")),
                     new KeyModel(1, 2, 2, 1, VirtualKeys.Get("RParenthesis")),
@@ -96,7 +106,9 @@ public static class Keyboards
                     new KeyModel(1, 2, 6, 1, VirtualKeys.Get("Colon")),
                     new KeyModel(1, 2, 7, 1, VirtualKeys.Get("Semicolon")),
                     new KeyModel(1, 2, 8, 1, VirtualKeys.Get("Exclamation")),
+                    new KeyModel(1, 2, 9, 1, VirtualKeys.Get("Pipe")),
 
+                    // Page 1, Row 3
                     new KeyModel(1, 3, 0, 1, VirtualKeys.Get("Equal")),
                     new KeyModel(1, 3, 1, 1, VirtualKeys.Get("LCurly")),
                     new KeyModel(1, 3, 2, 1, VirtualKeys.Get("RCurly")),
@@ -104,8 +116,11 @@ public static class Keyboards
                     new KeyModel(1, 3, 4, 1, VirtualKeys.Get("RSquare")),
                     new KeyModel(1, 3, 5, 1, VirtualKeys.Get("Percent")),
                     new KeyModel(1, 3, 6, 1, VirtualKeys.Get("Question")), 
-                    new KeyModel(1, 3, 7, 1, VirtualKeys.Get("Back")),
+                    new KeyModel(1, 3, 7, 1, VirtualKeys.Get("Tilde")), 
+                    new KeyModel(1, 3, 8, 1, VirtualKeys.Get("Caret")), 
+                    new KeyModel(1, 3, 9, 1, VirtualKeys.Get("Back")),
 
+                    // Page 1, Row 4
                     new KeyModel(1, 4, 0, 2, VirtualKeys.Get("Alfa")),
                     new KeyModel(1, 4, 1, 5, VirtualKeys.Get("Space")),
                     new KeyModel(1, 4, 2, 1, VirtualKeys.Get("Comma")),

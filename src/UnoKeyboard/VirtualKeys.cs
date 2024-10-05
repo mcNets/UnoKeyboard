@@ -72,13 +72,16 @@ public static class VirtualKeys
         { "LCurly",         new VirtualKeyModel("LCurly",       KeyType.Text,       "{",    "{",    0x007B, 0x007B, null) },
         { "RCurly",         new VirtualKeyModel("RCurly",       KeyType.Text,       "}",    "}",    0x007D, 0x007D, null) },
         { "Backslash",      new VirtualKeyModel("Backslash",    KeyType.Text,       "\\",   "\\",   0x005C, 0x005C, null) },
-        { "Quote",          new VirtualKeyModel("Quote",        KeyType.Text,       "\"",   "\"",   0x002A, 0x002A, null) },
+        { "Quote",          new VirtualKeyModel("Quote",        KeyType.Text,       "\"",   "\"",   0x0022, 0x0022, null) },
         { "Space",          new VirtualKeyModel("Space",        KeyType.Space,      " ",    " ",    0x0000, 0x0000, KeyPathGeometry.Space) },
         { "Enter",          new VirtualKeyModel("Enter",        KeyType.Enter,      "",     "",     0x0000, 0x0000, KeyPathGeometry.Enter) },
         { "Shift",          new VirtualKeyModel("Shift",        KeyType.Shift,      "",     "",     0x0000, 0x0000, KeyPathGeometry.Shift) }, 
         { "Back",           new VirtualKeyModel("Back",         KeyType.Back,       "",     "",     0x0000, 0x0000, KeyPathGeometry.Back) },
         { "Symbols",        new VirtualKeyModel("Symbols",      KeyType.Symbols,    "&123", "&123", 0x0002, 0x0002, null) },
-        { "Alfa",           new VirtualKeyModel("Alfa",         KeyType.Alfa,       "ABC",  "ABC",  0x0001, 0x0001, null) }
+        { "Alfa",           new VirtualKeyModel("Alfa",         KeyType.Alfa,       "ABC",  "ABC",  0x0001, 0x0001, null) },
+        { "Caret",          new VirtualKeyModel("Caret",        KeyType.Text,       "^",    "^",    0x005E, 0x005E, null) },
+        { "Tilde",          new VirtualKeyModel("Tilde",        KeyType.Text,       "~",    "~",    0x007E, 0x007E, null) },
+        { "Pipe",           new VirtualKeyModel("Pipe",         KeyType.Text,       "|",    "|",    0x007C, 0x007C, null) },
     };
 
     /// <summary>
