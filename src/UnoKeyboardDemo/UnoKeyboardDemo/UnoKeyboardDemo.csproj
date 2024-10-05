@@ -39,6 +39,10 @@
       ThemeService;
     </UnoFeatures>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
+  </PropertyGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\..\UnoKeyboard\UnoKeyboard.csproj" />

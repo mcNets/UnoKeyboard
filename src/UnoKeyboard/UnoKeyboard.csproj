@@ -17,7 +17,7 @@
 		<PackageOutputPath>.\Packages</PackageOutputPath>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageIcon>nuget_icon.jpg</PackageIcon>
-		<Version>1.0.5</Version>
+		<Version>1.0.6</Version>
 
 		<!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
@@ -43,6 +43,10 @@
     <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.22621.28" /> -->
 	</ItemGroup>
 
+	<PropertyGroup>
+		<WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
+	</PropertyGroup>
+	
 	<ItemGroup>
 		<None Include="..\..\nuget_icon.jpg">
 			<Pack>True</Pack>
