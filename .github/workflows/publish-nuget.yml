@@ -24,9 +24,6 @@ jobs:
     - name: Build project
       run: dotnet build src/UnoKeyboard/UnoKeyboard.csproj --configuration Release
 
-    - name: Pack project
-      run: dotnet pack src/UnoKeyboard/UnoKeyboard.csproj --configuration Release
-
     - name: List packaged files
       run: ls -la src/UnoKeyboard/Packages
 
