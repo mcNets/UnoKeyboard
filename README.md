@@ -9,7 +9,7 @@ UnoKeyboard is an on-screen keyboard control designed to run on Desktop, WASM, a
 
 ## Changelog
 
-You can review the latest changes in the [Changelog]([https://github.com/mcNets/UnoKeyboard/blob/main/Changelog.md).
+You can review the latest changes in the [Changelog](https://github.com/mcNets/UnoKeyboard/blob/main/Changelog.md).
 
 ## Features
 
