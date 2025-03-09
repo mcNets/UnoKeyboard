@@ -7,6 +7,10 @@ UnoKeyboard is an on-screen keyboard control designed to run on Desktop, WASM, a
 
 ![UnoKeyboardDark](https://github.com/mcNets/UnoKeyboard/blob/main/UnoKeyboardLight.jpg) ![UnoKeyboardDark](https://github.com/mcNets/UnoKeyboard/blob/main/UnoKeyboardDark.jpg)
 
+## Changelog
+
+You can review the latest changes in the [Changelog]([https://github.com/mcNets/UnoKeyboard/blob/main/Changelog.md).
+
 ## Features
 
 - Cross-platform.
