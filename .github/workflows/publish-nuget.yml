@@ -19,13 +19,13 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore src/UnoKeyboardDemo/UnoKeyboardDemo/UnoKeyboardDemo.csproj
+      run: dotnet restore src/UnoKeyboard/UnoKeyboard.csproj
 
     - name: Build project
-      run: dotnet build src/UnoKeyboardDemo/UnoKeyboardDemo/UnoKeyboardDemo.csproj --configuration Release
+      run: dotnet build src/UnoKeyboard/UnoKeyboard.csproj --configuration Release
 
     - name: Pack project
-      run: dotnet pack src/UnoKeyboardDemo/UnoKeyboardDemo/UnoKeyboardDemo.csproj --configuration Release
+      run: dotnet pack src/UnoKeyboard/UnoKeyboard.csproj --configuration Release
 
     - name: List packaged files
       run: ls -la src/UnoKeyboard/Packages
