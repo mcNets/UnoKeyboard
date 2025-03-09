@@ -1,0 +1,33 @@
+name: Publish NuGet Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore src/UnoKeyboardDemo/UnoKeyboardDemo/UnoKeyboardDemo.csproj
+
+    - name: Build project
+      run: dotnet build src/UnoKeyboardDemo/UnoKeyboardDemo/UnoKeyboardDemo.csproj --configuration Release
+
+    - name: Pack project
+      run: dotnet pack src/UnoKeyboardDemo/UnoKeyboardDemo/UnoKeyboardDemo.csproj --configuration Release --output ./nupkg
+
+    - name: Publish to NuGet
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
