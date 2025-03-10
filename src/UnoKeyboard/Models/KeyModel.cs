@@ -1,4 +1,4 @@
-namespace UnoKeyboard.Models;
+namespace UnoKeyboard;
 
 /// <summary>
 /// Represents a key in the keyboard.

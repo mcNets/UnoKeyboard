@@ -1,4 +1,4 @@
-namespace UnoKeyboard.Models;
+namespace UnoKeyboard;
 
 /// <summary>
 /// Dictionary of virtual keys.
