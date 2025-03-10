@@ -1,6 +1,4 @@
-﻿using UnoKeyboard.Models;
-
-namespace UnoKeyboard.Controls;
+﻿namespace UnoKeyboard;
 
 public sealed partial class KeyControl
 {

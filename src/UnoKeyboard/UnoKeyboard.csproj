@@ -7,17 +7,20 @@
 		<GenerateLibraryLayout>true</GenerateLibraryLayout>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Title>UNO Keyboard for Desktop, Windows and WASM</Title>
 		<Authors>Joan Magnet</Authors>
 		<Description>UnoKeyboard is an on-screen virtual keyboard designed for Desktop, WASM, and Windows platforms.</Description>
 		<Copyright>Joan Magnet</Copyright>
+		
 		<PackageProjectUrl>https://github.com/mcNets/UnoKeyboard</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageOutputPath>.\Packages</PackageOutputPath>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageIcon>nuget_icon.jpg</PackageIcon>
-		<Version>1.0.7</Version>
+		
+		<Version>1.0.8</Version>
 
 		<!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.

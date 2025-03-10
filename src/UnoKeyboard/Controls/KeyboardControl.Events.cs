@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Input;
 
-namespace UnoKeyboard.Controls;
+namespace UnoKeyboard;
 
 public sealed partial class KeyboardControl
 {

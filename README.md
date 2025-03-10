@@ -85,13 +85,42 @@ From this point on, the virtual keyboard will automatically appear whenever a `T
 
 ### Using an XAML Control:
 
-Add a reference to the `xmlns:ukc="using:UnoKeyboard.Controls"` namespace and then add a new control to your file:
+Add a reference to the `xmlns:ukb="using:UnoKeyboard"` namespace and then add a new control to your file. The `HandleFocusManager` property is used to automatically show and hide the keyboard when a `TextBox` gains or loses focus. You should wrap your content inside a `ScrollViewer` to ensure that the keyboard does not cover the `TextBox` control.
 
 ```xml
-<ukc:UnoKeyboard x:Name="MyKeyboard"
-                 Height="300"
-                 Visibility="Collapsed"
-                 HandleFocusManager="True" />
+<Grid>
+<Grid.RowDefinitions>
+    <RowDefinition Height="*" />
+    <RowDefinition Height="Auto" />
+</Grid.RowDefinitions>
+
+<!-- Wrap your content inside a ScrollViewer -->
+<ScrollViewer >
+
+    <StackPanel Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center">
+
+        <TextBox Margin="30" FontSize="20" MaxLength="100" Header="Some question here:"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+            <Button Content="OK" Width="100" />
+
+            <Button Content="Cancel" Width="100" />
+
+        </StackPanel>
+
+    </StackPanel>
+
+</ScrollViewer>
+
+<!-- KeyboardControl initially collapsed. -->
+<ukb:KeyboardControl Grid.Row="1"
+                     Height="300"
+                     KeyFontSize="20"
+                     HandleFocusManager="True"
+                     Visibility="Collapsed" />
+
+</Grid>
 ```
 
 ## Properties
@@ -123,12 +152,12 @@ To use a specific keyboard, set the `KeyboardType` attached property on your `Te
 
 ```xml
 <Page 
-    xmlns:mck="using:UnoKeyboard" />
+    xmlns:ukb="using:UnoKeyboard" />
 
 <TextBox Width="200"
          VerticalAlignment="Center"
          FontSize="30"
-         mck:McWindowEx.KeyboardType="numeric" />
+         ukb:McWindowEx.KeyboardType="numeric" />
 ```
 
 ## Customization

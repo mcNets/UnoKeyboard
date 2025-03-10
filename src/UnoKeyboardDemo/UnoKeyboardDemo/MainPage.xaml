@@ -4,7 +4,6 @@
       xmlns:local="using:UnoKeyboardDemo"
       xmlns:utu="using:Uno.Toolkit.UI"
       xmlns:mck="using:UnoKeyboard"
-      xmlns:mckct="using:UnoKeyboard.Controls"
       FontSize="40"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 

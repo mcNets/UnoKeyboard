@@ -1,9 +1,8 @@
 ﻿using Microsoft.UI;
 using Microsoft.UI.Xaml.Data;
-using UnoKeyboard.Models;
 using Windows.Foundation;
 
-namespace UnoKeyboard.Controls;
+namespace UnoKeyboard;
 
 public sealed partial class KeyControl : Panel
 {
