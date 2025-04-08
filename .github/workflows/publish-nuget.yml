@@ -8,10 +8,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: [8.0.x, 9.0.x]
-
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -19,12 +16,12 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: ${{ matrix.dotnet-version }}
+        dotnet-version: '9.0.x'
 
     - name: Restore dependencies
       run: dotnet restore src/UnoKeyboard/UnoKeyboard.csproj
 
-    - name: Build project with .NET ${{ matrix.dotnet-version }}
+    - name: Build project with
       run: dotnet build src/UnoKeyboard/UnoKeyboard.csproj --configuration Release
 
     - name: List packaged files
