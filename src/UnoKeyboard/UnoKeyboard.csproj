@@ -1,6 +1,15 @@
 ﻿<Project Sdk="Uno.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net8.0;net8.0-windows10.0.19041;net8.0-browserwasm;net8.0-desktop</TargetFrameworks>
+		<TargetFrameworks>
+			net8.0;
+			net8.0-windows10.0.19041;
+			net8.0-browserwasm;
+			net8.0-desktop;
+			net9.0;
+			net9.0-windows10.0.19041;
+			net9.0-browserwasm;
+			net9.0-desktop;
+		</TargetFrameworks>
 		<UnoSingleProject>true</UnoSingleProject>
 		<OutputType>Library</OutputType>
 		<!-- Ensures the .xr.xml files are generated in a proper layout folder -->
@@ -20,7 +29,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageIcon>nuget_icon.jpg</PackageIcon>
 		
-		<Version>1.0.8</Version>
+		<Version>1.0.9</Version>
 
 		<!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
@@ -46,9 +55,9 @@
     <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.22621.28" /> -->
 	</ItemGroup>
 
-	<PropertyGroup>
+	<!-- <PropertyGroup>
 		<WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
-	</PropertyGroup>
+	</PropertyGroup> -->
 	
 	<ItemGroup>
 		<None Include="..\..\nuget_icon.jpg">

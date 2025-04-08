@@ -1,9 +1,9 @@
 <Project Sdk="Uno.Sdk">
   <PropertyGroup>
     <TargetFrameworks>
-      net8.0-windows10.0.19041;
-      net8.0-desktop;
-      net8.0-browserwasm;
+      net9.0-windows10.0.19041;
+      net9.0-desktop;
+      net9.0-browserwasm;
     </TargetFrameworks>
 
     <OutputType>Exe</OutputType>
@@ -40,9 +40,9 @@
     </UnoFeatures>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!-- <PropertyGroup>
     <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
-  </PropertyGroup>
+  </PropertyGroup> -->
   
   <ItemGroup>
     <ProjectReference Include="..\..\UnoKeyboard\UnoKeyboard.csproj" />

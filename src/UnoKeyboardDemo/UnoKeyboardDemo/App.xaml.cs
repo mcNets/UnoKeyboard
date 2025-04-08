@@ -24,7 +24,7 @@ public partial class App : Application
         MainWindow = new Window();
         
 #if DEBUG
-        MainWindow.EnableHotReload();
+        MainWindow.UseStudio();
 #endif
 
         // Do not repeat app initialization when the Window already has content,
