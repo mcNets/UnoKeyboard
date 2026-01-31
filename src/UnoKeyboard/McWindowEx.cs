@@ -8,6 +8,7 @@ using KeyboardId = System.String;
 public static class McWindowEx
 {
     private static KeyboardControl _keyboard = new();
+    private static ScrollViewer? _scrollViewer;
 
     public static KeyboardControl Keyboard => _keyboard;
 
@@ -29,14 +30,15 @@ public static class McWindowEx
             }
         };
 
-        // Row 0 = ScrollViewer warpping the RootFram.
-        ScrollViewer scrollViewer = new()
+        // Row 0 = ScrollViewer wrapping the RootFrame.
+        // ScrollViewer is only enabled when keyboard is visible to prevent scroll issues
+        _scrollViewer = new ScrollViewer
         {
-            VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
-            HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+            VerticalScrollBarVisibility = ScrollBarVisibility.Disabled,
+            HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
             Content = RootFrame
         };
-        Grid.SetRow(scrollViewer, 0);
+        Grid.SetRow(_scrollViewer, 0);
 
         // Row 1 = Keyboard
         _keyboard.Visibility = Visibility.Collapsed;
@@ -46,10 +48,23 @@ public static class McWindowEx
         if (fontSize > 0) { _keyboard.KeyFontSize = fontSize; }
         Grid.SetRow(_keyboard, 1);
 
-        mainGrid.Children.Add(scrollViewer);
+        // Subscribe to keyboard visibility changes to enable/disable scrolling
+        _keyboard.RegisterPropertyChangedCallback(UIElement.VisibilityProperty, OnKeyboardVisibilityChanged);
+
+        mainGrid.Children.Add(_scrollViewer);
         mainGrid.Children.Add(_keyboard);
 
         window.Content = mainGrid;
+    }
+
+    private static void OnKeyboardVisibilityChanged(DependencyObject sender, DependencyProperty dp)
+    {
+        if (_scrollViewer == null) return;
+
+        // Enable vertical scrolling only when keyboard is visible
+        _scrollViewer.VerticalScrollBarVisibility = _keyboard.Visibility == Visibility.Visible
+            ? ScrollBarVisibility.Auto
+            : ScrollBarVisibility.Disabled;
     }
 
     /// <summary>
