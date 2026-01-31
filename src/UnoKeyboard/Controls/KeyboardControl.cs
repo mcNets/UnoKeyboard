@@ -12,9 +12,16 @@ public sealed partial class KeyboardControl : Panel
     {
         Visibility = Visibility.Collapsed;
 
-        ActualThemeChanged += (s, e) => { ApplyThemedResources(); };
+        ActualThemeChanged += (s, e) =>
+        {
+            // Retard per assegurar que els recursos estan carregats
+            DispatcherQueue.TryEnqueue(() => ApplyThemedResources());
+        };
 
-        Loaded += (s, e) => { ApplyThemedResources(); };
+        Loaded += (s, e) =>
+        {
+            DispatcherQueue.TryEnqueue(() => ApplyThemedResources());
+        };
     }
 
     public event EventHandler<KeyEventArgs>? KeyPressed;
