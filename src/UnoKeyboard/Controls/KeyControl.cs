@@ -38,13 +38,7 @@ public sealed partial class KeyControl : Panel
             Mode = BindingMode.OneWay,
         });
 
-        // Binds ControlBorder.Background to Keyboard.KeyBackground
-        BindingOperations.SetBinding(ControlBorder, Border.BackgroundProperty, new Binding()
-        {
-            Source = Keyboard,
-            Path = new PropertyPath("KeyBackground"),
-            Mode = BindingMode.OneWay,
-        });
+        // Note: Background binding is removed - manually managed in UpdateKeyBackground()
 
         // Binds ControlBorder.BorderBrush to Keyboard.KeyBorderBrush
         BindingOperations.SetBinding(ControlBorder, Border.BorderBrushProperty, new Binding()
@@ -89,7 +83,7 @@ public sealed partial class KeyControl : Panel
 
         this.PointerReleased += (s, e) =>
         {
-            ControlBorder.Background = Keyboard.KeyBackground;
+            UpdateKeyBackground();
 
             e.Handled = true;
 
@@ -99,6 +93,8 @@ public sealed partial class KeyControl : Panel
 
     private void InvalidateKey()
     {
+        UpdateKeyBackground();
+
         if (Key.VKey.KType == KeyType.Text)
         {
             SetKeyContentText();
@@ -111,6 +107,28 @@ public sealed partial class KeyControl : Panel
         else
         {
             SetKeyContentPath(Key);
+        }
+    }
+
+    /// <summary>
+    /// Updates the background based on whether this is a special key or regular key.
+    /// </summary>
+    public void UpdateKeyBackground()
+    {
+        if (Key == null)
+        {
+            return;
+        }
+
+        bool isSpecialKey = Key.VKey.KType != KeyType.Text;
+
+        if (isSpecialKey && Keyboard.KeySpecialKeyBackground != null)
+        {
+            ControlBorder.Background = Keyboard.KeySpecialKeyBackground;
+        }
+        else
+        {
+            ControlBorder.Background = Keyboard.KeyBackground;
         }
     }
 

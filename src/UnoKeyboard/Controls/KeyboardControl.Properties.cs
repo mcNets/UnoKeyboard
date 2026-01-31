@@ -111,7 +111,15 @@ public sealed partial class KeyboardControl
         DependencyProperty.Register(nameof(KeyBackground),
                                     typeof(Brush),
                                     typeof(KeyboardControl),
-                                    new PropertyMetadata(null));
+                                    new PropertyMetadata(null, OnKeyBackgroundChanged));
+
+    private static void OnKeyBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is KeyboardControl ctl)
+        {
+            ctl.UpdateChildKeyBackgrounds();
+        }
+    }
 
     /// <summary>
     /// Gets or sets the brush used to draw the text of the keys.
@@ -255,7 +263,15 @@ public sealed partial class KeyboardControl
         DependencyProperty.Register(nameof(KeySpecialKeyBackground),
                                     typeof(Brush),
                                     typeof(KeyboardControl),
-                                    new PropertyMetadata(null));
+                                    new PropertyMetadata(null, OnKeySpecialKeyBackgroundChanged));
+
+    private static void OnKeySpecialKeyBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is KeyboardControl ctl)
+        {
+            ctl.UpdateChildKeyBackgrounds();
+        }
+    }
 
     /// <summary>
     /// Gets or sets a value indicating whether to handle focus manager.

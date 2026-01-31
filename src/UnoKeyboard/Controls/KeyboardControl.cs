@@ -127,10 +127,24 @@ public sealed partial class KeyboardControl : Panel
         for (int x = 0; x < keys.Count; x++)
         {
             var key = new KeyControl(this) { Key = keys[x] };
-            
+
             key.KeyPressed = OnKeyClicked;
 
             Children.Add(key);
+        }
+    }
+
+    /// <summary>
+    /// Updates the background of all child KeyControl elements when theme changes.
+    /// </summary>
+    private void UpdateChildKeyBackgrounds()
+    {
+        foreach (var child in Children)
+        {
+            if (child is KeyControl keyControl)
+            {
+                keyControl.UpdateKeyBackground();
+            }
         }
     }
 }
