@@ -6,39 +6,38 @@
       xmlns:mck="using:UnoKeyboard"
       FontSize="40"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    
+    <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="20">
 
-  <StackPanel HorizontalAlignment="Center"
-              VerticalAlignment="Center"
-              Spacing="20">
+        <TextBlock Text="UNO Keyboard"
+                   FontSize="30"
+                   HorizontalAlignment="Center" />
 
-  <TextBlock Text="UNO Keyboard"
-             FontSize="30"
-             HorizontalAlignment="Center" />
+        <Button x:Name="ThemeButton"
+                HorizontalAlignment="Center"
+                Click="Theme_Click"
+                Width="50"
+                Height="50">
+            <Button.Content>
+                <PathIcon x:Name="IconTheme"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch" />
+            </Button.Content>
+        </Button>
 
-    <Button x:Name="ThemeButton"
-            HorizontalAlignment="Center"
-            Click="Theme_Click"
-            Width="50"
-            Height="50">
-      <Button.Content>
-        <PathIcon x:Name="IconTheme"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"/>
-      </Button.Content>
-    </Button>
+        <TextBox Width="400"
+                 VerticalAlignment="Center"
+                 FontSize="30"
+                 Header="Numeric keyboard:"
+                 mck:McWindowEx.KeyboardType="numeric" />
 
-    <TextBox Width="400"
-             VerticalAlignment="Center"
-             FontSize="30"
-             Header="Numeric keyboard:"
-             mck:McWindowEx.KeyboardType="numeric" />
+        <TextBox Width="400"
+                 FontSize="30"
+                 VerticalAlignment="Center"
+                 Header="Alphanumeric keyboard:"
+                 mck:McWindowEx.KeyboardType="en-alfa" />
 
-    <TextBox Width="400"
-             FontSize="30"
-             VerticalAlignment="Center"
-             Header="Alphanumeric keyboard:"
-             mck:McWindowEx.KeyboardType="en-alfa" />
-
-  </StackPanel>
-
+    </StackPanel>
 </Page>

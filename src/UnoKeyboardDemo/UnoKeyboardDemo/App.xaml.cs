@@ -1,9 +1,11 @@
 using System;
 using Microsoft.Extensions.Logging;
 using Uno.Resizetizer;
+using UnoKeyboard;
 using Windows.UI.ViewManagement;
 
 namespace UnoKeyboardDemo;
+
 public partial class App : Application
 {
     /// <summary>
@@ -22,10 +24,10 @@ public partial class App : Application
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         MainWindow = new Window();
-        
 #if DEBUG
         MainWindow.UseStudio();
 #endif
+
 
         // Do not repeat app initialization when the Window already has content,
         // just ensure that the window is active
@@ -59,10 +61,10 @@ public partial class App : Application
         }
 
         MainWindow.SetWindowIcon();
-
         // Ensure the current window is active
         MainWindow.Activate();
 
+        // Enter full screen on Unix platforms
         if (Environment.OSVersion.Platform == PlatformID.Unix)
         {
             ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
@@ -96,8 +98,11 @@ public partial class App : Application
         {
 #if __WASM__
             builder.AddProvider(new global::Uno.Extensions.Logging.WebAssembly.WebAssemblyConsoleLoggerProvider());
-#elif __IOS__ || __MACCATALYST__
+#elif __IOS__
             builder.AddProvider(new global::Uno.Extensions.Logging.OSLogLoggerProvider());
+
+            // Log to the Visual Studio Debug console
+            builder.AddConsole();
 #else
             builder.AddConsole();
 #endif

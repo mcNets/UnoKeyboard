@@ -1,13 +1,18 @@
+using Uno.UI.Hosting;
+
 namespace UnoKeyboardDemo;
 
 public class Program
 {
-    private static App? _app;
-
-    public static int Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        Microsoft.UI.Xaml.Application.Start(_ => _app = new App());
+        App.InitializeLogging();
 
-        return 0;
+        var host = UnoPlatformHostBuilder.Create()
+            .App(() => new App())
+            .UseWebAssembly()
+            .Build();
+
+        await host.RunAsync();
     }
 }

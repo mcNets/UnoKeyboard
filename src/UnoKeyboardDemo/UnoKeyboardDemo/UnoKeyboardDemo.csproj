@@ -1,10 +1,6 @@
 <Project Sdk="Uno.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>
-      net9.0-windows10.0.19041;
-      net9.0-desktop;
-      net9.0-browserwasm;
-    </TargetFrameworks>
+    <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-windows10.0.26100;net9.0-browserwasm;net9.0-desktop</TargetFrameworks>
 
     <OutputType>Exe</OutputType>
     <UnoSingleProject>true</UnoSingleProject>
@@ -12,10 +8,14 @@
     <!-- Display name -->
     <ApplicationTitle>UnoKeyboardDemo</ApplicationTitle>
     <!-- App Identifier -->
-    <ApplicationId>com.mcnets.UnoKeyboardDemo</ApplicationId>
+    <ApplicationId>com.companyname.UnoKeyboardDemo</ApplicationId>
     <!-- Versions -->
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
+    <!-- Package Publisher -->
+    <ApplicationPublisher>mcnets</ApplicationPublisher>
+    <!-- Package Description -->
+    <Description>UnoKeyboardDemo powered by Uno Platform.</Description>
     <!--
       If you encounter this error message:
 
@@ -37,13 +37,9 @@
       Toolkit;
       Mvvm;
       ThemeService;
+      SkiaRenderer;
     </UnoFeatures>
   </PropertyGroup>
-
-  <!-- <PropertyGroup>
-    <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
-  </PropertyGroup> -->
-  
   <ItemGroup>
     <ProjectReference Include="..\..\UnoKeyboard\UnoKeyboard.csproj" />
   </ItemGroup>

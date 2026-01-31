@@ -27,6 +27,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    // Note: In order to select this profile, you'll need to comment the `Packaged` profile below until this is fixed: https://aka.platform.uno/wasdk-maui-debug-profile-issue
     "UnoKeyboardDemo (WinAppSDK Unpackaged)": {
       "commandName": "Project",
       "compatibleTargetFramework": "windows"
@@ -41,7 +42,7 @@
     },
     "UnoKeyboardDemo (Desktop WSL2)": {
       "commandName": "WSL2",
-      "commandLineArgs": "{ProjectDir}/bin/Debug/net8.0-desktop/UnoKeyboardDemo.dll",
+      "commandLineArgs": "{ProjectDir}/bin/Debug/net9.0-desktop/UnoKeyboardDemo.dll",
       "distributionName": "",
       "compatibleTargetFramework": "desktop"
     }
