@@ -61,10 +61,17 @@ public static class McWindowEx
     {
         if (_scrollViewer == null) return;
 
-        // Enable vertical scrolling only when keyboard is visible
-        _scrollViewer.VerticalScrollBarVisibility = _keyboard.Visibility == Visibility.Visible
-            ? ScrollBarVisibility.Auto
-            : ScrollBarVisibility.Disabled;
+        if (_keyboard.Visibility == Visibility.Visible)
+        {
+            // Enable vertical scrolling when keyboard is visible
+            _scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+        }
+        else
+        {
+            // Disable vertical scrolling and reset scroll position when keyboard is hidden
+            _scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+            _scrollViewer.ChangeView(null, 0, null, disableAnimation: true);
+        }
     }
 
     /// <summary>
